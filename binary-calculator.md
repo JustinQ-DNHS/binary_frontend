@@ -7,9 +7,118 @@ hide: true
 ---
 
 <style>
-    td {
+    /* General Table and Cell Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    th, td {
         text-align: center;
         vertical-align: middle;
+        padding: 12px;
+        border: 2px solid #333;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    td {
+        background-color: #f2f2f2;
+    }
+
+    /* Button Styles */
+    .calc-button {
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .calc-button:hover {
+        background-color: #0056b3;
+    }
+
+    .button {
+        padding: 10px;
+        font-size: 16px;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .button:active {
+        background-color: #218838;
+    }
+
+    .button.off {
+        background-color: #dc3545;
+    }
+
+    .button.off:active {
+        background-color: #c82333;
+    }
+
+    /* Input Field Styles */
+    input[type="text"] {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        font-size: 20px;
+        background-color: #e9ecef;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: #333;
+    }
+
+    /* Image and Bulb Styles */
+    img {
+        width: 40px;
+        height: auto;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Turned on Bulb Effect */
+    img.on {
+        opacity: 1;
+    }
+
+    img.off {
+        opacity: 0.5;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        table {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .calc-button {
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .button {
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+        }
     }
 </style>
 
@@ -39,29 +148,29 @@ hide: true
 <table>
     <thead>
         <tr>
-            <th><img id="bulb0" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt0" onclick="javascript:toggleBit(0)">Turn on</div>
+            <th><img id="bulb0" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt0" onclick="javascript:toggleBit(0)">Turn on</div>
             </th>
-            <th><img id="bulb1" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt1" onclick="javascript:toggleBit(1)">Turn on</div>
+            <th><img id="bulb1" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt1" onclick="javascript:toggleBit(1)">Turn on</div>
             </th>
-            <th><img id="bulb2" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt2" onclick="javascript:toggleBit(2)">Turn on</div>
+            <th><img id="bulb2" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt2" onclick="javascript:toggleBit(2)">Turn on</div>
             </th>
-            <th><img id="bulb3" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt3" onclick="javascript:toggleBit(3)">Turn on</div>
+            <th><img id="bulb3" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt3" onclick="javascript:toggleBit(3)">Turn on</div>
             </th>
-            <th><img id="bulb4" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt4" onclick="javascript:toggleBit(4)">Turn on</div>
+            <th><img id="bulb4" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt4" onclick="javascript:toggleBit(4)">Turn on</div>
             </th>
-            <th><img id="bulb5" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt5" onclick="javascript:toggleBit(5)">Turn on</div>
+            <th><img id="bulb5" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt5" onclick="javascript:toggleBit(5)">Turn on</div>
             </th>
-            <th><img id="bulb6" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt6" onclick="javascript:toggleBit(6)">Turn on</div>
+            <th><img id="bulb6" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt6" onclick="javascript:toggleBit(6)">Turn on</div>
             </th>
-            <th><img id="bulb7" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
-                <div class="button" id="butt7" onclick="javascript:toggleBit(7)">Turn on</div>
+            <th><img id="bulb7" src="/portfolio_2025/images/bulb_off.png" alt="" class="off" />
+                <div class="button off" id="butt7" onclick="javascript:toggleBit(7)">Turn on</div>
             </th>
         </tr>
     </thead>
@@ -85,89 +194,84 @@ hide: true
     const MSG_ON = "Turn on";
     const IMAGE_ON = "/portfolio_2025/images/bulb_on.gif";
     const MSG_OFF = "Turn off";
-    const IMAGE_OFF = "/portfolio_2025/images/bulb_off.png"
+    const IMAGE_OFF = "/portfolio_2025/images/bulb_off.png";
 
-    // return string with current value of each bit
     function getBits() {
         let bits = "";
-        for(let i = 0; i < BITS; i++) {
+        for (let i = 0; i < BITS; i++) {
             bits = bits + document.getElementById('digit' + i).value;
         }
         return bits;
     }
-    // setter for Document Object Model (DOM) values
+
     function setConversions(binary) {
         document.getElementById('binary').innerHTML = binary;
-        // Octal conversion
         document.getElementById('octal').innerHTML = parseInt(binary, 2).toString(8);
-        // Hexadecimal conversion
         document.getElementById('hexadecimal').innerHTML = parseInt(binary, 2).toString(16);
-        // Decimal conversion
         document.getElementById('decimal').innerHTML = parseInt(binary, 2).toString();
     }
-    // convert decimal to base 2 using modulo with divide method
+
     function decimal_2_base(decimal, base) {
         let conversion = "";
-        // loop to convert to base
         do {
-            let digit = decimal % base;           // obtain right most digit
-            conversion = "" + digit + conversion; // what does this do? inserts digit to front of string
-            decimal = ~~(decimal / base);         // what does this do? divides by base what is ~~? force whole number
-        } while (decimal > 0);                    // why while at the end? 0 pads front of binary number
-            // loop to pad with zeros
-            if (base === 2) {                     // only pad for binary conversions
-                for (let i = 0; conversion.length < BITS; i++) {
-                    conversion = "0" + conversion;
+            let digit = decimal % base;
+            conversion = "" + digit + conversion;
+            decimal = ~~(decimal / base);
+        } while (decimal > 0);
+
+        if (base === 2) {
+            for (let i = 0; conversion.length < BITS; i++) {
+                conversion = "0" + conversion;
             }
         }
         return conversion;
     }
-    // toggle selected bit and recalculate
+
     function toggleBit(i) {
-        //alert("Digit action: " + i );
         const dig = document.getElementById('digit' + i);
         const image = document.getElementById('bulb' + i);
         const butt = document.getElementById('butt' + i);
-        // Change digit and visual
+
         if (image.src.match(IMAGE_ON)) {
             dig.value = 0;
             image.src = IMAGE_OFF;
             butt.innerHTML = MSG_ON;
+            butt.classList.add('off');
         } else {
             dig.value = 1;
             image.src = IMAGE_ON;
             butt.innerHTML = MSG_OFF;
+            butt.classList.remove('off');
         }
-        // Binary numbers
+
         const binary = getBits();
         setConversions(binary);
     }
-    // add is positive integer, subtract is negative integer
+
     function add(n) {
         let binary = getBits();
-        // convert to decimal and do math
         let decimal = parseInt(binary, 2);
-        if (n > 0) {  // PLUS
-            decimal = MAX === decimal ? 0 : decimal += n; // OVERFLOW or PLUS
-        } else  {     // MINUS
-            decimal = 0 === decimal ? MAX : decimal += n; // OVERFLOW or MINUS
+        if (n > 0) {
+            decimal = MAX === decimal ? 0 : decimal += n;
+        } else {
+            decimal = 0 === decimal ? MAX : decimal += n;
         }
-        // convert the result back to binary
+
         binary = decimal_2_base(decimal, 2);
-        // update conversions
         setConversions(binary);
-        // update bits
+
         for (let i = 0; i < binary.length; i++) {
             let digit = binary.substr(i, 1);
             document.getElementById('digit' + i).value = digit;
             if (digit === "1") {
                 document.getElementById('bulb' + i).src = IMAGE_ON;
                 document.getElementById('butt' + i).innerHTML = MSG_OFF;
+                document.getElementById('butt' + i).classList.remove('off');
             } else {
                 document.getElementById('bulb' + i).src = IMAGE_OFF;
                 document.getElementById('butt' + i).innerHTML = MSG_ON;
+                document.getElementById('butt' + i).classList.add('off');
             }
         }
     }
 </script>
-</html>

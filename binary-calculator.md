@@ -1,5 +1,10 @@
-
-
+---
+layout: post
+title: Binary Calculator
+search_exclude: true
+description: Binary Calculator
+hide: true
+---
 
 <style>
     td {

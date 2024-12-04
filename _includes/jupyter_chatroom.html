@@ -1,0 +1,129 @@
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: black;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .nav-button {
+        padding: 10px 20px;
+        background-color: #7a3e9d; 
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .nav-button:hover {
+        background-color: #a64ca6; 
+    }
+
+    .chatroom {
+        width: 400px;
+        margin: 20px auto;
+        border: 2px solid purple;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    header {
+        background-color: purple;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        width: 30px;
+        margin-right: 10px;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .messages {
+        height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #1a1a1a; 
+    }
+
+    input[type="text"] {
+        width: calc(100% - 100px);
+        padding: 10px;
+        border: none;
+        border-top: 1px solid purple;
+        background-color: #333;
+        color: white;
+    }
+
+    button {
+        padding: 10px;
+        background-color: purple;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #7a3e9d; 
+    }
+</style>
+
+<div class="nav-buttons">
+    <a href="/flocker_frontend/shared_interests/jupyter/home/" class="nav-button">Home</a>
+    <a href="/flocker_frontend/shared_interests/jupyter/chatroom/" class="nav-button">Chatroom</a>
+    <a href="/flocker_frontend/shared_interests/jupyter/timer/" class="nav-button">School Timer</a>
+    <a href="/flocker_frontend/shared_interests/jupyter/resources/" class="nav-button">Resources</a>
+</div>
+
+<div class="chatroom">
+    <header>
+        <img id="jupiter" src="/flocker_frontend/images/jupiter.jpg" alt="jupyter" width="50" height="auto">
+        <h1>Jupyter</h1>
+    </header>
+    <div class="messages" id="messages">
+        <!-- Messages will appear here -->
+    </div>
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button id="sendButton">Send</button>
+</div>
+<script>
+    const sendButton = document.getElementById('sendButton');
+    const messageInput = document.getElementById('messageInput');
+    const messagesContainer = document.getElementById('messages');
+
+    sendButton.addEventListener('click', () => {
+        const messageText = messageInput.value;
+        if (messageText.trim() !== '') {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = messageText;
+            messagesContainer.appendChild(messageElement);
+            messageInput.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight; 
+        }
+    });
+
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+</script>
+ 

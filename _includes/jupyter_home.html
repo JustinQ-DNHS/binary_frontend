@@ -1,0 +1,80 @@
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: black;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 20px; /* Add padding to prevent overlap */
+        box-sizing: border-box;
+    }
+
+    .home-container {
+        text-align: center;
+    }
+
+    .title {
+        font-size: 36px;
+        color: #a64ca6;
+        margin-top: 20px; /* Adjusts spacing above the title */
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+        color: #7a3e9d;
+        margin-bottom: 30px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background-color: #7a3e9d;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-button:hover {
+        background-color: #a64ca6;
+    }
+
+    .logo {
+        width: 100px;
+        margin-bottom: 20px;
+        margin-top: 20px; /* Extra space above logo to avoid overlap */
+        animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+</style>
+
+<div class="home-container">
+    <img class="logo" src="/flocker_frontend/images/jupiter.jpg" alt="jupyter logo">
+    <h1 class="title">Welcome to Jupyter Home</h1>
+    <p class="subtitle">Explore your tools below</p>
+
+    <div class="nav-buttons">
+        <a href="/flocker_frontend/shared_interests/jupyter/chatroom/" class="nav-button">Chatroom</a>
+        <a href="/flocker_frontend/shared_interests/jupyter/timer/" class="nav-button">School Timer</a>
+        <a href="/flocker_frontend/shared_interests/jupyter/resources/" class="nav-button">Resources</a>
+    </div>
+</div>

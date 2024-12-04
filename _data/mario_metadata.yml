@@ -1,0 +1,65 @@
+# Metadata to describe animations in sprite file images/mario_animations.png
+- Rest:
+  row: 0
+  col: 0
+  frames: 15
+- RestL:
+  row: 1
+  col: 0
+  frames: 15
+- Walk:
+  row: 2
+  col: 0
+  frames: 8
+- Tada:
+  row: 2
+  col: 11
+  frames: 3
+- WalkL:
+  row: 3
+  col: 0
+  frames: 8
+- TadaL:
+  row: 3
+  col: 11
+  frames: 3
+- Run1:
+  row: 4
+  col: 0
+  frames: 15
+- Run1L:
+  row: 5
+  col: 0
+  frames: 15
+- Run2:
+  row: 6
+  col: 0
+  frames: 15
+- Run2L:
+  row: 7
+  col: 0
+  frames: 15
+- Puff:
+  row: 8
+  col: 0
+  frames: 15
+- PuffL:
+  row: 9
+  col: 0
+  frames: 15
+- Cheer:
+  row: 10
+  col: 0
+  frames: 15
+- CheerL:
+  row: 11
+  col: 0
+  frames: 15
+- Flip:
+  row: 12
+  col: 0
+  frames: 15
+- FlipL:
+  row: 13
+  col: 0
+  frames: 15

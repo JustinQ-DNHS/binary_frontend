@@ -1,0 +1,235 @@
+# course illustrations
+introduction_tools: &introduction_tools |
+    +-----------------+
+    | Laptop, OS      |
+    | Tool Setup      | 
+    +-----------------+
+       |
+       | VS Code,  Markdown, Jupyter Notebook (.ipynb), JavaScript (.md, .html)
+       v
+    +-----------------+
+    | VS Code, Develop|
+    | Code Editor     | 
+    +-----------------+
+       |
+       | Write code, make, run localhost, test, debug
+       v
+    +-----------------+
+    | VS Code, Git    |
+    | Version Control |       | 
+    +-----------------+
+       |
+       | Commit local versions, comment, show changes, reset branch
+       v
+    +-----------------+
+    | VS Code, Project|
+    | GitHub Sync     |
+    +-----------------+
+       |
+       | Push changes to GitHub cloud Repository (repo
+       v
+    +-----------------+
+    | GitHub,  Collab |
+    | Shared Code     |
+    +-----------------+
+       |
+       | Tracking GitHub pages Actions, understanding Jekyll build files
+       v
+    +-----------------+
+    | GitHub Pages    | ->  Highlight languages, coding, and course skills, with Awesome Style
+    | Showcase Project| ->  Share project with the world
+    +-----------------+
+
+college_board_fundamentals: &college_board_fundamentals |
+  College Board Basic Programming Units
+  -------------------------------------      
+    Fundamentals of Programming
+    +------------------+
+    | CB Unit 1        |
+    | Primitive Types  | --> Types appear in Code
+    | 2.5%-5%          |
+    +------------------+
+    +------------------+
+    | Unit 3           |
+    | Booleans and Ifs | --> Understand De Morgan's Law
+    | 15%-17.5%        |
+    +------------------+
+    +------------------+
+    | Unit 4           |
+    | Iteration        | --> String Iteration, repeat until expression
+    | 17.5%-22.5%      |
+    +------------------+
+    +------------------+
+    | Unit 10 - Part 1 |
+    | Recursion        | --> Base case and recursive call
+    | 5%-7.5%          |
+    +------------------+
+            |
+    Fundamentals of Java
+    +------------------+
+    | Unit 2           |
+    | Using Objects    | --> Instance vs Static Methods, Java and 3rd party Methods ... 
+    | 5%-7.5%          |
+    +------------------+
+    +------------------+
+    | Unit 5           |
+    | Writing Classes  | --> Diagram a Class, constructor, setters, ... 
+    | 5%-7.5%          |
+    +------------------+
+    +------------------+
+    | Unit 9           |
+    | Inheritance      | --> Extend class, polymorphism, super, this, ...
+    | 5%-7.5%          |
+    +------------------+
+  
+data_structures: &data_structures |
+  Required Data Structures for Course
+  -----------------------------------
+    College Board Units
+    +------------------+
+    | Unit 6           |
+    | Array            | --> Linear data structure, fixed size, algos, ...
+    | 5%-7.5%          |
+    +------------------+
+    +------------------+
+    | Unit 7           |
+    | ArrayList        | --> Linear and dynamic size, Collection Framework 
+    | 2.5%-7.5%        |
+    +------------------+
+    +------------------+
+    | Unit 8           |
+    | 2D Array         | --> 2D Linear data structure, col/row order
+    | 7.5%-10%         |
+    +------------------+
+    +------------------+
+    | Unit 10 - Part 2 |
+    | Search/Sort      | --> Bubble, Selection, Insertion, Merge
+    | 5%-7.5%          |
+    +------------------+
+            |            
+    College Articulated Requirements, B or better
+    +------------------+
+    | Java Fundamental |
+    | HashMap          | --> Key-value data structure
+    |                  |
+    +------------------+
+    +------------------+
+    | Algorithmic      |
+    | Queue,Stack,...  | --> Collections Framework
+    |                  |
+    +------------------+
+    +--------------------+
+    | Abstract Data Type |
+    | Graph              | --> Nodes, Vertices, Edges
+    |                    |
+    +--------------------+
+
+frq_types: &frq_types |
+  Required FRQ Types by College Board
+  -----------------------------------
+  Each FRQ writes program code, uses expressions, conditions, and iteration 
+  +--------------------+
+  | Methods and        |
+  | Control Structures | -->  Algoritmic challenge, use objects, call methods, ...
+  | Units #1-#4        |
+  +--------------------+
+  +--------------------+
+  | Classes            |
+  |                    | -->  Define a new type by creating a class ...
+  | Units #2,#5,#9     |
+  +--------------------+
+  +--------------------+
+  | Arrays /           |
+  | ArrayLists         | -->  Create, manipulate elements in 1D array or ArrayList, ...
+  | Units #6,#7        |
+  +--------------------+
+  +--------------------+
+  | 2D Array           |
+  |                    | -->  Create, traverse, and manipulate elements in 2D array, ...
+  | Units #6,#7        |
+  +--------------------+
+
+web_dev_layers: &web_dev_layers |
+    +---------------+
+    | GitHub Pages  |
+    | Design, Layout|
+    |   Frontend    |
+    +---------------+
+          |
+          | User presentation, style 
+          | Actions
+          v
+    +--------------+
+    |  JavaScript  |
+    | Logic/Events |
+    +--------------+
+          |
+          | Functionality, interactivity
+          | Sends HTTP requests/responses
+          v
+    +----------------+
+    | AWS EC2 Server |
+    |  Java / Spring |
+    |    Backend     |
+    +----------------+
+          |
+          | Server-Side Processing
+          | Analysis, POJOs, ORM, JPA
+          | Communicate with AWS Services
+          v
+    +----------------+
+    |  AWS Services  |
+    |   Store Data   |
+    +----------------+
+
+# CSA course meta data
+Sprint1:
+  title: Tools and Software Development Processes
+  description: Students should have experience in blogging, coding with Jupyter Notebooks, and GitHub Pages. Understanding of Linux, Python, Markdown, HTML, and JavaScript is expected. Students have previously established a foundation using essential tools and software development processes. Weeks 0-2 will provide a quick review,  prior to students starting their College Board CSA and Full Stack Web Development with Java journey.
+  illustration: *introduction_tools
+  start: 0
+  end: 2
+Sprint2:
+  title: Java Mini-labs
+  description: Students should have an understanding of Fundamentals of Programming from Python, JavaScript, or other backgrounds. In this Sprint, students will become familiar with Java types, booleans, iteration, recursion, using and writing objects through Mini-labs. These labs will introduce AP required aspects of Java, FRQ requirements, and review College Board's 10 Sprints online.  Additionally, student will be introduced to Java/Spring through Teacher Tech Talks and Sample Project.
+  illustration: *college_board_fundamentals
+  start: 3
+  end: 7
+Sprint3:
+  title: Individual/Team Projects, N@tM
+  description: In this Sprint, students will continue to become familiar with Java development as they learn Web Development using the Spring Framework. Coding will focus on Restful APIs, receiving requests, working with data, and responding to requests. This will teach key Java concepts while using Java Spring framework elements such as a Rest Controller, Plain Old Java Objects (POJOs), Object Relational Model (ORM), and Java Persistent API (JPA).
+  illustration: *web_dev_layers
+  start: 8
+  end: 12
+Sprint4:
+  title: Warm-up Data Analysis and Sort Project
+  description: Trimester 2 will begin with a Mini-project on Sorting and Analysis. Focusing on frontend JavaScript Visualization; Backend Java Sorting, Inheritance, and Polymorphic behavior.
+  start: 13
+  end: 16
+Sprint5:
+  title: Creative Development Ideas and Concepts
+  description: This will be the most creative portion of the year for CSA students. The objective of these weeks is to explore, create ideas, and code concepts that have the growth potential to enable a two-trimester project. Consider frontend design, draw.io database modeling, API plans, JWT designs, big data solutions, and future usefulness. The ideas and code that are most liked by Teachers and Students will be continued and used for N@tM projects. Students should be able to talk about design, do fe/be coding, add data and data structure, add database features, and perform weekly live reviews.
+  start: 17
+  end: 19
+Sprint6:
+  title: Passion Project v1.0 and N@tM Demo
+  description: Each person within "Student Teams" will have their own specialty within their student project that shows Full Stack competency, with a specific focus on Java as backend. Intentions for this period are to have the freedom of a creative project, driven by your individual Issues and team Scrum Board.
+  start: 20
+  end: 24
+Sprint7: 
+  title: Data Structures
+  description: A focus on Data Structures that relate to the AP exam. A key requirement is to make your own Algorithmic sorting video. The theme is to produce work that can help you pass the AP Exam and improve your Passion Project. Each student must cover key concepts from the Four AP FRQ types, contain a key Data Structure, and utilize Sorting.
+  illustration: *data_structures
+  start: 25
+  end: 29
+Sprint8:
+  title: AP Weeks
+  description: Students will lead several study sessions (20-minute test, followed by review) the week before the exam. In any break in study, students will transition activities back to their final project.
+  illustration: *frq_types
+  start: 30
+  end: 33
+Sprint9:
+  title: Passion Project v2.0 and N@tM
+  description: Wrap up your preferred project and data structures. There will be an opportunity to contribute and be published to the NightHawk Coding Society. If your project is selected, then you will receive a high 'A' on the final project.
+  start: 34
+  end: 37

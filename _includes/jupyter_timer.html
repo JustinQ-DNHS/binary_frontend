@@ -1,0 +1,145 @@
+<div id="progressContainer">
+    <div class="nav-buttons">
+        <a href="/flocker_frontend/shared_interests/jupyter/home/" class="nav-button">Home</a>
+        <a href="/flocker_frontend/shared_interests/jupyter/chatroom/" class="nav-button">Chatroom</a>
+        <a href="/flocker_frontend/shared_interests/jupyter/timer/" class="nav-button">School Timer</a>
+        <a href="/flocker_frontend/shared_interests/jupyter/resources/" class="nav-button">Resources</a>
+    </div>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #progressContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 30px;
+        justify-content: center;
+    }
+
+    .nav-button {
+        padding: 10px 20px;
+        background-color: #7a3e9d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-button:hover {
+        background-color: #a64ca6;
+    }
+
+    svg {
+        margin-bottom: -40px;
+    }
+
+    #timeText {
+        font-size: 20px;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-shadow: 0 0 5px purple, 0 0 10px purple;
+        padding: 10px;
+    }
+
+    .glow {
+        filter: drop-shadow(0 0 5px purple) drop-shadow(0 0 10px purple);
+    }
+</style>
+
+<script>
+    const schoolStart = new Date();
+    schoolStart.setHours(8, 35, 0, 0);
+
+    const schoolEnd = new Date();
+    schoolEnd.setHours(15, 45, 0, 0);
+
+    const radius = 150;
+    const circumference = 2 * Math.PI * radius;
+
+    const svgNamespace = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNamespace, "svg");
+    svg.setAttribute("width", radius * 2 + 40);
+    svg.setAttribute("height", radius * 2 + 40);
+
+    const circle = document.createElementNS(svgNamespace, "circle");
+    circle.setAttribute("cx", radius + 20);
+    circle.setAttribute("cy", radius + 20);
+    circle.setAttribute("r", radius);
+    circle.setAttribute("stroke", "lightgray");
+    circle.setAttribute("stroke-width", "15");
+    circle.setAttribute("fill", "none");
+
+    const progressCircle = document.createElementNS(svgNamespace, "circle");
+    progressCircle.setAttribute("cx", radius + 20);
+    progressCircle.setAttribute("cy", radius + 20);
+    progressCircle.setAttribute("r", radius);
+    progressCircle.setAttribute("stroke", "purple");
+    progressCircle.setAttribute("stroke-width", "15");
+    progressCircle.setAttribute("fill", "none");
+    progressCircle.setAttribute("stroke-dasharray", circumference);
+    progressCircle.setAttribute("stroke-dashoffset", circumference);
+    progressCircle.classList.add("glow");
+
+    svg.appendChild(circle);
+    svg.appendChild(progressCircle);
+    document.getElementById('progressContainer').appendChild(svg);
+
+    const text = document.createElement("div");
+    text.id = "timeText";
+    text.textContent = "Hours Left of School";
+    document.getElementById('progressContainer').appendChild(text);
+
+    function updateProgress() {
+        const now = new Date();
+        const totalSchoolTime = schoolEnd - schoolStart;
+        let elapsedSchoolTime = 0;
+
+        if (now >= schoolStart && now < schoolEnd) {
+            elapsedSchoolTime = now - schoolStart;
+        } else if (now >= schoolEnd) {
+            elapsedSchoolTime = totalSchoolTime;
+        }
+
+        const progress = (elapsedSchoolTime / totalSchoolTime) * circumference;
+        progressCircle.setAttribute("stroke-dashoffset", circumference - progress);
+
+        let message;
+        if (now < schoolStart) {
+            message = `School starts in ${Math.floor((schoolStart - now) / 60000)} minutes.`;
+        } else if (now < schoolEnd) {
+            message = `Hours left of school: ${Math.ceil((schoolEnd - now) / 60000 / 60)} hour(s).`;
+        } else {
+            message = 'School is over for the day.';
+        }
+
+        document.getElementById('timeText').textContent = message;
+    }
+
+    updateProgress();
+    setInterval(updateProgress, 60000);
+</script>

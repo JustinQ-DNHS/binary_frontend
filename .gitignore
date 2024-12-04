@@ -1,0 +1,22 @@
+_site
+*.pyc
+__pycache__/
+_posts/**/*_IPYNB_2_.md
+_posts/**/*_GithubIssue_.md
+_posts/**/*_GithubIssue.md
+_posts/**/*_GithubPR.md
+_posts/**/*-by_author.json
+nohup.out
+Gemfile.lock
+node_modules
+.DS_Store
+.env
+_posts/2024-06-25-RDS-and-Flask-Setup-
+venv/
+port_venv/
+verifyTools.md
+<<<<<<< HEAD
+_notebooks/CSP/big-ideas/big-idea-3-part-1-fundamentals/Period3/2024-9-27-fundamentals-3.6.4.ipynb
+=======
+.vscode/
+>>>>>>> 88831ad3aa2f3fa9b6edb5e71b494c3cd7c97963

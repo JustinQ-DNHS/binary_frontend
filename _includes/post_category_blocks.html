@@ -1,0 +1,38 @@
+{% if site.categories.size > 0 %}
+<h2>Categories</h2>
+
+  <!-- Initialize an empty array to hold categories -->
+  {% assign categories = "" | split:"" %}
+  {% for c in site.categories %}
+    <!-- Push each category name into the categories array -->
+    {% assign categories = categories | push: c[0] %}
+  {% endfor %}
+  <!-- Sort the categories array naturally -->
+  {% assign categories = categories | sort_natural %}
+
+  <!-- Start the unordered list with class 'post-list' style -->
+  <ul class="post-list">
+    {% for category in categories %}
+    <li>
+      <!-- Box shadow and rounded corners, using Primer CSS classes https://github.com/primer/css -->
+      <div class="Box box-shadow-medium rounded-1 col-12">
+        <div class="col-8 d-table-cell p-3">
+
+          <h3><a href="#{{ category }}">{{ category }}</a></h3>
+          {% for post in site.categories[category] %}
+          {% if post.hide != true %}
+          {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+          <!-- Post meta information with title and date -->
+          <p class="post-meta post-meta-title">
+            <a class="page-meta" href="{{ site.baseurl }}{{ post.url }}"> {{post.title}}</a>  • {{ post.date | date: date_format }}
+          </p>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+
+  </ul>
+
+{% endif %}

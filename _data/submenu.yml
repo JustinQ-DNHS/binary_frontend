@@ -1,0 +1,12 @@
+# ONLY CSP ALLOWED IN HERE!
+lesson3_6: 
+    set1: ["csp/big-idea/p5/3-6", "Pseudocode + Hacks"]
+    set2: ["csp/big-idea/p5/3-6-1", "If Statements"]
+    set3: ["csp/big-idea/p5/3-6-2", "If Else Statements"]
+
+lesson3_1:
+    set1: ["csp/big-idea/3.1/p5/objectives", "Objectives"]
+    set2: ["csp/big-idea/3.1/p5/py/info", "Python Info"]
+    set3: ["csp/big-idea/3.1/p5/py/hacks", "Python Hacks"]
+    set4: ["csp/big-idea/3.1/p5/js/info", "JavaScript Info"]
+    set5: ["csp/big-idea/3.1/p5/js/hacks", "JavaScript Hacks"]

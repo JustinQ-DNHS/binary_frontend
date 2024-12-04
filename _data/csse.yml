@@ -1,0 +1,74 @@
+# course illustrations
+introduction_tools: &introduction_tools |
+    +-----------------+
+    | Laptop, OS      |
+    | Tool Setup      | 
+    +-----------------+
+       |
+       | VS Code, Markdown, Jupyter Notebook, JavaScript (.md, .html)
+       v
+    +-----------------+
+    | VS Code, Develop|
+    | Code Editor     | 
+    +-----------------+
+       |
+       | Write code, make, run localhost, test, debug
+       v
+    +-----------------+
+    | VS Code, Git    |
+    | Version Control |       | 
+    +-----------------+
+       |
+       | Commit local versions, comment, show changes, reset branch
+       v
+    +-----------------+
+    | VS Code, Project|
+    | GitHub Sync     |
+    +-----------------+
+       |
+       | Push changes to GitHub cloud Repository (repo
+       v
+    +-----------------+
+    | GitHub,  Collab |
+    | Shared Code     |
+    +-----------------+
+       |
+       | Tracking GitHub pages Actions, understanding Jekyll build files
+       v
+    +-----------------+
+    | GitHub Pages    | ->  Highlight languages, coding, and course skills, with Awesome Style
+    | Showcase Project| ->  Share project with the world
+    +-----------------+
+
+# CSSE course meta data
+Sprint1:
+  title: Tools and Software Development Processes
+  description: By the end of Weeks 0-3, students will have gained practical experience in blogging, coding with Jupyter Notebooks, and GitHub Pages; learning will begin with Linux, Markdown, HTML, and JavaScript. Students will establish a foundation using essential tools and software development processes to support their coding journey.  Weeks 0-3 will provide a quick foundation,  prior to students starting their College Articulation Credit and Game Development journey.
+  illustration: *introduction_tools
+  start: 0
+  end: 3
+Sprint2:
+  title: Introduction to Development with JavaScript
+  description: A key focus of this course is to make Web Games using JavaScript. These next few weeks we start covering object-oriented programming in JavaScript with game emphasis.  Topics include  control structures, data types, input/output, operators, classes, methods and parameters, basic inheritance, and documentation practices.
+  start: 4
+  end: 7
+Sprint3:
+  title: Building a Web Application with GitHub Pages for N@tM
+  description: Part of the process of becoming technically proficient is taking on challenges while coding. These challenges will often make a student feel uncomfortable. But with some vision, questions, and AI research, it is amazing what can be done. Our goal is to participate in N@tM with the other CS classes and other classes from the Electives Department.
+  start: 8
+  end: 12
+Sprint4:
+  title: Planning, Exploration, and OOP Programming Fundamentals
+  description: Students, in trios, will work on converting the Mario game into their blogs and learning OOP. There will be a lot of code and some former Tech Talks provided to support learning and teaching activity.
+  start: 13
+  end: 15
+Sprint5:
+  title: Prgramming Structures and Game Development 
+  description: The Teacher will be providing topics.  All teams will be doing hacks and forming a more complete Mario game.
+  start: 16
+  end: 17
+Sprint6:
+  title: Create a Final Project, "Student Teaching Teams", and N@tM 
+  description: Trimester 2 concludes with students presenting their project at N@tM. Each person within "Student Teams" will have their own specialty feature within the student project. Students should be able to talk about design, coding, and present features of their portion of the system.
+  start: 18
+  end: 25

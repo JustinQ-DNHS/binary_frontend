@@ -1,0 +1,6 @@
+nbconvert
+nbformat
+pyyaml
+notebook
+requests
+python-dotenv

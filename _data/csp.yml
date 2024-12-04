@@ -1,0 +1,123 @@
+# course illustrations
+introduction_tools: &introduction_tools |
+    +-----------------+
+    | Laptop, OS      |
+    | Tool Setup      | 
+    +-----------------+
+       |
+       | VS Code, Markdown, Jupyter Notebook (.ipynb), JavaScript (.md, .html)
+       v
+    +-----------------+
+    | VS Code, Develop|
+    | Code Editor     | 
+    +-----------------+
+       |
+       | Write code, make, run localhost, test, debug
+       v
+    +-----------------+
+    | VS Code, Git    |
+    | Version Control |       | 
+    +-----------------+
+       |
+       | Commit local versions, comment, show changes, reset branch
+       v
+    +-----------------+
+    | VS Code, Project|
+    | GitHub Sync     |
+    +-----------------+
+       |
+       | Push changes to GitHub cloud Repository (repo
+       v
+    +-----------------+
+    | GitHub,  Collab |
+    | Shared Code     |
+    +-----------------+
+       |
+       | Tracking GitHub pages Actions, understanding Jekyll build files
+       v
+    +-----------------+
+    | GitHub Pages    | ->  Highlight languages, coding, and course skills, with Awesome Style
+    | Showcase Project| ->  Share project with the world
+    +-----------------+
+
+web_dev_layers: &web_dev_layers |
+    +---------------+
+    | GitHub Pages  |
+    | Design, Layout|
+    |   Frontend    |
+    +---------------+
+          |
+          | User presentation, style 
+          | Actions
+          v
+    +--------------+
+    |  JavaScript  |
+    | Logic/Events |
+    +--------------+
+          |
+          | JS Functionality, interactivity
+          | Sends API request/response
+          v
+    +----------------+
+    | AWS EC2 Server |
+    | Python / Flask |
+    |     Backend    |
+    +----------------+
+          |
+          | Python Server-Side Processing
+          | Analysis, Computation, and Models
+          | Communicate with Data Services
+          v
+    +----------------+
+    |  AWS Services  |
+    |   Store Data   |
+    +----------------+
+
+# CSP course meta data
+Sprint1:
+  title: Tools and Software Development Processes
+  description: By the end of these, students will have gained practical experience in blogging, coding with Jupyter Notebooks, and GitHub Pages; learning will begin with Linux tool Setup, Markdown, HTML, and JavaScript. Students will establish a foundation using essential tools and software development processes to support their coding journey. Weeks 0-3 will provide a quick foundation,  prior to students starting their College Board Create Task and Full Stack Web Development with Python journey. 
+  illustration: *introduction_tools
+  start: 0
+  end: 4
+Sprint2:
+  title: Web Development Layers
+  description: During these weeks, students will delve into the frontend and backend layers used in Web Development. They will learn about the key components that make up the backend, including persistent data (SQL Database). The main focus of this sprint is to empower students to explore the development and deployment of a simple website. Throughout this period, there will be several student-led lectures (student teaching) that provide foundational concepts and help students learn programming and key principles required by the College Board.
+  illustration: *web_dev_layers
+  start: 5
+  end: 8
+Sprint3:
+  title: Web Application, Data, and N@tM
+  description: Student teams need to build their own Website, and individuals need to blog their learnings. The team Website should include interests but also requires the use of Python Flask and JavaScript programming. By the end of the Sprint, students will be ready to start many of the technical coding aspects of Web Development; having established a Deployed Website, Frontend, and Backend. In November, the Trimester will end by presenting the team project at the Electives Department "Night at the Museum" (N@tM). 
+  start: 9
+  end: 12
+Sprint4:
+  title: Warm-up Data Abstraction Project, Computer Systems, Networks, Impact of Computing
+  description: Trimester 2 will begin with a Mini-project, CPT warmup. Great projects begin with frontend style. This project will focus on frontend; using SASS, JavaScript, interacting with user events, and representing Binary Algorithm(s). Student Teaching during this period will be preparing for College Board MCQ.
+  start: 13
+  end: 16
+Sprint5:
+  title: Create Performance Task (CPT) kickoff, CPT design and development
+  description: Trimester 2 continues with CPT project design and development. The big focus is on frontend/backend for data, databases, and login.
+  start: 17
+  end: 21
+Sprint6:
+  title: N@tM and Create Performance Task (CPT) video and presentations. MCQ Exam Practice.
+  description: Trimester 2 concludes with students presenting their CPT project at N@tM. Each person within "Student Teams" will have their own specialty within the student project that satisfies all their Create Performance Task requirements. Students should be able to talk about design, coding, iteration, and present features of their portion of the system.
+  start: 22
+  end: 24
+Sprint7: 
+  title: Data Structures and Data Science
+  description: This is the beginning of a college course following the outline of CS113 Data Structures from Mira Costa CC. Topics, using Python, include searching, sorting, hashing, algorithms, analysis, object-oriented design, collections, lists, stacks, queues, trees, sets, dictionaries, and graphs.
+  start: 25
+  end: 29
+Sprint8:
+  title: AP Weeks
+  description: Activities will be focused on supporting students in test preparations, including student teaching. Days that are not focused on test preparation will be focused on planning for year-end project/portfolio.
+  start: 30
+  end: 33
+Sprint9:
+  title: Passion Project and N@tM
+  description: Presenting accomplishments for the year by creating a passion project for N@tM. This project will serve as the year-end final exam.
+  start: 34
+  end: 36

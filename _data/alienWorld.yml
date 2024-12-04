@@ -1,0 +1,11 @@
+# CSP course meta data
+Unit1:
+  title: Game Project and Experiments
+  description:  Build team repository.  Discover assets for project.  Brain write. Perform a sketch of ideas.
+  start: 0
+  end: 1
+Unit2:
+  title: Start Coding
+  description: Start Agile development process. Move planning to GitHub Issues and Projects.
+  start: 2
+  end: 2

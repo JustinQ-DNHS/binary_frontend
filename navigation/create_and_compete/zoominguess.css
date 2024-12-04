@@ -1,0 +1,256 @@
+/* Full-Page Background with Strong Glowing Effect */
+body {
+    background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
+    background-size: 400% 400%;
+    animation: glowingBackground 20s ease infinite;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Glowing Animation for Background */
+@keyframes glowingBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* General container for Zoom N Guess game */
+.zoomnguess-container {
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid #007BFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.5);
+    margin: 20px auto;
+    text-align: center;
+    color: #007BFF;
+}
+
+h1, h2 {
+    color: #007BFF;
+    text-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+p, label, .info-box, .leaderboard-box li {
+    color: #333;
+}
+
+/* Image of the Day Text */
+.image-of-day-text {
+    font-size: 2em;
+    color: rgb(28, 44, 218);
+    margin-bottom: 15px;
+    text-align: center;
+    color: #007BFF;
+}
+
+/* Zoom Image Display Section */
+.zoom-image-section {
+    margin-bottom: 15px;
+}
+
+.zoom-image-box {
+    border: 2px solid #007BFF;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Additional styles omitted for brevity */
+
+
+/* Guess Input Box */
+.guess-box {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.guess-box input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    color: #007BFF; /* Text color to stand out against white */
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guess-box input:focus {
+    border-color: #0056b3;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.6); /* Blue glow on focus */
+}
+
+/* Explanation Box */
+.explanation-box {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.explanation-box textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #2c6bb3;
+    border-radius: 5px;
+    resize: vertical;
+    height: 80px;
+    color: #2874a7;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explanation-box textarea:focus {
+    border-color: #216088;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit Button */
+.submit-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5); /* Glowing shadow */
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Feedback Button */
+.feedback-button {
+   width: 100%;
+   background-color: #007BFF;
+   color: #ffffff;
+   font-size: 18px;
+   padding: 12px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+   margin-top: 10px;
+   box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+}
+
+.feedback-button:hover {
+   background-color: #0056b3;
+   transform: scale(1.03);
+   box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Comment Button */
+.Comment-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+ }
+ 
+ .Comment-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+ }
+
+/* Feedback Section */
+#feedback-section {
+    margin-top: 20px;
+}
+
+#feedback-display {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e6d6d6;
+    color: #d9534f; /* Red color for feedback text */
+    font-weight: bold;
+    box-shadow: 0px 2px 6px rgba(217, 83, 79, 0.5); /* Red shadow */
+}
+
+/* Leaderboard Styling */
+.leaderboard-box {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.leaderboard-box li {
+    padding: 5px 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+.leaderboard-box li:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 2px solid #007BFF;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #ffffff;
+}
+
+.close-button {
+    color: #ffffff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #007BFF;
+}

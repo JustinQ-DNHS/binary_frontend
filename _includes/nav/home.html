@@ -1,0 +1,29 @@
+<style>
+    .header {
+        display: none;
+    }
+</style>
+
+<div id="authenticatedContent" class="header">
+    <table>
+        <tr>       
+            <td>
+                <a href="{{ site.baseurl }}/">
+                    <img src="{{ site.baseurl }}/images/logo.png" height="60" alt="">
+                </a>
+            </td>
+            <td><a href="{{site.baseurl}}/profile">Profile</a></td>
+            <td><a href="{{site.baseurl}}/post">Posts</a></td>
+            <td><a href="{{site.baseurl}}/logout">Logout</a></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+        if (isAuthenticated) {
+            document.getElementById('authenticatedContent').classList.remove('header');
+        }
+    });
+</script>

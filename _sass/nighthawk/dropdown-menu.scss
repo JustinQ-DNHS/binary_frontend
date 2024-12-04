@@ -1,0 +1,72 @@
+// Define a mixin for common dropdown styles
+@mixin dropdown-styles($background-color, $hover-color) {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+
+  &:hover .dropdown-content {
+    display: block;
+    animation: scaleIn 0.7s ease forwards;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: fixed;
+    background-color: $background-color;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 183, 255, 0.2);
+
+    a {
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+
+      &:hover {
+        background-color: $hover-color;
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// Original dropdown menu styles
+.dropbtn {
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+// Pass the hover color to the mixin
+.dropdown {
+  @include dropdown-styles(black,darkblue); // Original color for hover 
+}
+
+// New color for the second dropdown menu 
+.dropdownp1 {
+  @include dropdown-styles(black, rgb(159, 255, 56)); // New color for hover
+}
+
+.dropdownp2 {
+  @include dropdown-styles(black,#232f2a); // New color for hover
+}
+
+.dropdownp3 {
+  @include dropdown-styles(#3a3f44, #50575e);
+}
+
+.dropdownp4 {
+  @include dropdown-styles( rgb(51, 139, 253), #44475a); // New color for hover
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

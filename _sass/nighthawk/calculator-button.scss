@@ -1,0 +1,47 @@
+// STYLING PREFERENCES for Calculator Pages 
+
+/* define class for redefined button */
+.calc-button {
+    @include button();
+}
+
+// STYLING FOR JS CALCULATOR
+
+/* class to create the calculator's container; uses CSS grid display to partition off buttons */
+.calculator-container {
+    width: 90vw; /* this width and height is specified for mobile devices by default */
+    height: 80vh;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* fr is a special unit; learn more here: https://css-tricks.com/introduction-fr-css-unit/ */
+    grid-template-rows: 0.5fr repeat(4, 1fr);
+    gap: 10px 10px;
+}
+
+@media (min-width: 600px) {
+    .calculator-container {
+        width: 40vw;
+        height: 80vh;
+    }
+}
+
+/* styling for the calculator number button */
+.calculator-number {
+    @extend .calc-button;
+}
+
+/* styling for the calculator operation button */
+.calculator-operation {
+    @extend .calc-button;
+}
+
+/* styling for the calculator clear button */
+.calculator-clear {
+    @include button(orange, black, darkorange);
+}
+
+/* styling for the calculator equals button */
+.calculator-equals {
+    @include button(red, black, darkred);
+}

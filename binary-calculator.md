@@ -39,62 +39,42 @@ hide: true
 <table>
     <thead>
         <tr>
-            
-            
             <th><img id="bulb0" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt0" onclick="javascript:toggleBit(0)">Turn on</div>
             </th>
-            
             <th><img id="bulb1" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt1" onclick="javascript:toggleBit(1)">Turn on</div>
             </th>
-            
             <th><img id="bulb2" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt2" onclick="javascript:toggleBit(2)">Turn on</div>
             </th>
-            
             <th><img id="bulb3" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt3" onclick="javascript:toggleBit(3)">Turn on</div>
             </th>
-            
             <th><img id="bulb4" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt4" onclick="javascript:toggleBit(4)">Turn on</div>
             </th>
-            
             <th><img id="bulb5" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt5" onclick="javascript:toggleBit(5)">Turn on</div>
             </th>
-            
             <th><img id="bulb6" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt6" onclick="javascript:toggleBit(6)">Turn on</div>
             </th>
-            
             <th><img id="bulb7" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
                 <div class="button" id="butt7" onclick="javascript:toggleBit(7)">Turn on</div>
             </th>
-            
         </tr>
     </thead>
     <tbody>
         <tr>
-            
-            
             <td><input type="text" id="digit0" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit1" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit2" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit3" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit4" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit5" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit6" value="0" size="1" readonly="" /></td>
-            
             <td><input type="text" id="digit7" value="0" size="1" readonly="" /></td>
-            
         </tr>
     </tbody>
 </table>

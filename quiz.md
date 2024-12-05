@@ -167,8 +167,6 @@ const quizQuestions = [
         },
         correctAnswer: "c"
     },
-
-
     
 ];
 

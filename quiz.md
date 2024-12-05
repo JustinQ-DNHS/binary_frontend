@@ -62,9 +62,15 @@ button:hover {
     margin-top: 20px;
     font-size: 18px;
 }
+#quizQuestions {
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
 </style>
-
-
 <script>
 const quizQuestions = [
     {
@@ -88,82 +94,80 @@ const quizQuestions = [
         correctAnswer: "a"
     },
     {
-        question: "3) What is the largest planet in our solar system?",
+        question: "3) What is binary addition answer to 1011 + 1101",
         answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
+            a: "2112",
+            b: "10100",
+            c: "11000",
+            d: "00111"
         },
         correctAnswer: "c"
     },
     {
-        question: "3) What is the largest planet in our solar system?",
+        question: "4) Which encoding standard will allow for the more characters?",
         answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
+            a: "ACII",
+            b: "Unicode",
+        },
+        correctAnswer: "b"
+    },
+     {
+        question: "5) In a 4-bit two's complement system, what is the representation of -5?",
+        answers: {
+            a: "1011",
+            b: "1101",
+            c: "1110",
+            d: "1100"
+        },
+        correctAnswer: "b"
+    },
+     {
+        question: "6) How many bits are used to represent an ASCII character?",
+        answers: {
+            a: "7",
+            b: "16",
+            c: "32",
+            d: "8"
+        },
+        correctAnswer: "d"
+    },
+     {
+        question: "7) What is the binary representation of the decimal number 13?",
+        answers: {
+            a: "1010",
+            b: "1100",
+            c: "1101",
+            d: "1011"
         },
         correctAnswer: "c"
     },
      {
-        question: "3) What is the largest planet in our solar system?",
+        question: "8) What happens during a left arithmetic shift",
         answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
+            a: "zero's are shifted to the right",
+            b: "zero's are shifted to the left",
+            c: "zeros are deleted",
+            d: "ones are shifted to the right"
+        },
+        correctAnswer: "a"
+    },
+     {
+        question: "9) What is the binary addition result of 1001 + 0110?",
+        answers: {
+            a: "10110",
+            b: "01101",
+            c: "1111",
+            d: "10001"
         },
         correctAnswer: "c"
     },
      {
-        question: "3) What is the largest planet in our solar system?",
+        question: "10) What is the binary subtraction result of 1011 - 0101?",
         answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
-        },
-        correctAnswer: "c"
-    },
-     {
-        question: "3) What is the largest planet in our solar system?",
-        answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
-        },
-        correctAnswer: "c"
-    },
-     {
-        question: "3) What is the largest planet in our solar system?",
-        answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
-        },
-        correctAnswer: "c"
-    },
-     {
-        question: "3) What is the largest planet in our solar system?",
-        answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
-        },
-        correctAnswer: "c"
-    },
-     {
-        question: "3) What is the largest planet in our solar system?",
-        answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter",
-            d: "Saturn"
+            a: "0110",
+            b: "1000",
+            c: "0101",
+            d: "0011"
         },
         correctAnswer: "c"
     },

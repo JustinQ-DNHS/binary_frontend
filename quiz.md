@@ -6,30 +6,89 @@ description: Take our quiz to test your knowledge!
 hide: true
 menu: nav/home.html
 ---
+
+<body>
+    <div class="quiz-container">
+        <h2>Binary Quiz</h2>
+        <div id="quiz"></div>
+        <button id="submit" onclick="showResults()">Submit Quiz</button>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #6589e60;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.quiz-container {
+    background-color: #6589e6;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 900px;
+    height: 700px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#results {
+    margin-top: 20px;
+    font-size: 18px;
+}
+</style>
+
+
 <script>
 const quizQuestions = [
     {
-        question: "What is the capital of France?",
+        question: "1) What does an arithmetic shift do?",
         answers: {
-            a: "Berlin",
-            b: "Madrid",
-            c: "Paris",
-            d: "Rome"
+            a: "All bits are deleted",
+            b: "The bits are not shifted are discarded",
+            c: "The bits that are shifted out of either end are discarded",
+            d: "Nothing changes"
         },
         correctAnswer: "c"
     },
     {
-        question: "Who wrote 'To Kill a Mockingbird'?",
+        question: "2) What is the binary equivalent of the decimal number 5?",
         answers: {
-            a: "Harper Lee",
-            b: "Jane Austen",
-            c: "Mark Twain",
-            d: "J.K. Rowling"
+            a: "101",
+            b: "001",
+            c: "100",
+            d: "1001"
         },
         correctAnswer: "a"
     },
     {
-        question: "What is the largest planet in our solar system?",
+        question: "3) What is the largest planet in our solar system?",
         answers: {
             a: "Earth",
             b: "Mars",
@@ -37,7 +96,80 @@ const quizQuestions = [
             d: "Saturn"
         },
         correctAnswer: "c"
-    }
+    },
+    {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+     {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+     {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+     {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+     {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+     {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+     {
+        question: "3) What is the largest planet in our solar system?",
+        answers: {
+            a: "Earth",
+            b: "Mars",
+            c: "Jupiter",
+            d: "Saturn"
+        },
+        correctAnswer: "c"
+    },
+
+
+    
 ];
 
 function buildQuiz() {

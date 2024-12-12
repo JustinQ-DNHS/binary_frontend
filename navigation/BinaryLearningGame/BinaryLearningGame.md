@@ -1,6 +1,5 @@
 ---
 layout: page
-title: Binary Game
 permalink: /binaryGame
 ---
 

@@ -1,9 +1,9 @@
 title: DNHS Flocker
 description: "Social Media for Del Norte High School"
-owner_name: Justin Quach
-github_username: JustinQ-DNHS
-github_repo: "binary_frontend" 
-baseurl: "/binary_frontend"
+owner_name: John Mortensen
+github_username: nighthawkcoders
+github_repo: "flocker_frontend" 
+baseurl: "/flocker_frontend"
 future: true
 remote_theme: jekyll/minima
 minima:
@@ -16,3 +16,5 @@ minima:
 plugins:
   - jekyll-remote-theme
 header_pages:
+  - navigation/about.md
+  - navigation/leaderboard.md

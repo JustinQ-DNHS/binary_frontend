@@ -7,3 +7,4 @@ hide: true
 menu: nav/home.html
 ---
 
+<a href="{{site.baseurl}}/binaryGame">game</a>

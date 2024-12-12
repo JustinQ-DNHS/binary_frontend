@@ -1,5 +1,5 @@
 ---
-layout: blogs
+layout: page
 title: About Page
 search_exclude: true
 permalink: /about/

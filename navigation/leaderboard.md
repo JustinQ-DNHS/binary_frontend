@@ -1,5 +1,5 @@
 ---
-layout: blogs
+layout: page
 title: Leaderboard
 search_exclude: true
 permalink: /about/

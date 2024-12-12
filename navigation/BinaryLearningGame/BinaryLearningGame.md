@@ -19,12 +19,6 @@ permalink: /binaryGame
 <body>
 
   <br>
-  <div class="hearts-container" id="hearts-container">
-    <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart1" alt="Heart1">
-    <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart2" alt="Heart2">
-    <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart3" alt="Heart3">
-  </div>
-
   <div id="difficulty-popup" class="popup">
     <div class="popup-content">
       <h2>Select Difficulty Level</h2>
@@ -44,6 +38,11 @@ permalink: /binaryGame
   </div>
 
   <div class="game-container">
+    <div class="hearts-container" id="hearts-container">
+      <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart1" alt="Heart1">
+      <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart2" alt="Heart2">
+      <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart3" alt="Heart3">
+  </div>
     <div class="difficulty-header" data-level="easy">
       <h1>Level: Easy</h1>
     </div>

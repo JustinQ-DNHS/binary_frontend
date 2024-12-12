@@ -1,19 +1,23 @@
 :root {
-    --easy: #a8d5ba;
-    --medium: #ffd97d;
-    --hard: #ff6b6b;
-    --extreme: #6b5b95;
-    --background: #f4f4f9;
-    --text-dark: #333;
+    --easy: #8bd39a;
+    --medium: #ffc85e;
+    --hard: #ff5a5a;
+    --extreme: #5a497c;
+    --background: #f9fafb;
+    --text-dark: #222222;
+    --text-light: #ffffff;
+    --border: #dcdcdc;
+    --shadow: rgba(0, 0, 0, 0.15);
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background-color: var(--background);
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0;
+    color: var(--text-dark);
     min-height: 100vh;
 }
 
@@ -21,18 +25,19 @@ body {
     text-align: center;
     width: 90%;
     max-width: 360px;
-    background: white;
-    color: black !important;
+    background: var(--text-light);
+    color: var(--text-dark);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow);
 }
 
 .difficulty-header {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
-    color: white;
+    color: var(--text-light);
+    font-weight: bold;
 }
 
 .difficulty-header[data-level="easy"] {
@@ -52,8 +57,9 @@ body {
 }
 
 .question {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 20px 0;
+    line-height: 1.4;
 }
 
 .input-container {
@@ -61,32 +67,51 @@ body {
 }
 
 input[type="text"] {
-    padding: 10px;
-    width: 80%;
+    padding: 12px;
+    width: 100%;
     font-size: 1rem;
     margin: 10px 0;
-    border: 1px solid var(--text-dark);
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--shadow);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: var(--medium);
+    color: var(--text-light);
+    transition: background-color 0.2s ease, transform 0.1s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--hard);
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .message {
-    font-size: 1.1rem;
-    color: black;
+    font-size: 1.2rem;
+    color: var(--hard);
     font-weight: bold;
 }
 
 .scoreboard {
     margin-top: 20px;
     font-size: 1.2rem;
-    color: black !important;
+    color: var(--text-dark);
+    font-weight: bold;
 }
 
 .popup {
@@ -95,14 +120,14 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s, opacity 0.3s;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
     color: black !important;
 }
 
@@ -112,11 +137,11 @@ button {
 }
 
 .popup-content {
-    background: var(--background);
-    padding: 20px;
-    border-radius: 8px;
+    background: var(--text-light);
+    padding: 25px;
+    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px var(--shadow);
 }
 
 .level-button {
@@ -127,29 +152,53 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    color: white;
-    width: 80%;
+    color: var(--text-light);
+    background-color: var(--extreme);
+    transition: transform 0.2s ease, background-color 0.3s;
+}
+
+.level-button:hover {
+    background-color: var(--hard);
 }
 
 .hearts-container {
     display: flex;
     margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .heart {
     width: 40px;
     height: 40px;
     margin: 0 5px;
+    height: auto;
 }
 
 @keyframes jiggle {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    50% { transform: rotate(10deg); }
-    75% { transform: rotate(-10deg); }
-    100% { transform: rotate(0deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
-  
+
 .jiggle {
     animation: jiggle 0.5s ease-in-out;
 }
@@ -161,8 +210,22 @@ header {
 
 .main-content {
     display: flex;
-    flex: 1; /* Allows the main content to expand and center itself */
+    flex: 1;
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        width: 95%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
 }

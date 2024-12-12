@@ -17,3 +17,4 @@ plugins:
   - jekyll-remote-theme
 header_pages:
   - navigation/about.md
+ - navigation/leaderboard.md

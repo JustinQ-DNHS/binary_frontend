@@ -2,7 +2,7 @@
 layout: page
 title: Leaderboard
 search_exclude: true
-permalink: /about/
+permalink: /leaderboard/
 ---
 
 <script>

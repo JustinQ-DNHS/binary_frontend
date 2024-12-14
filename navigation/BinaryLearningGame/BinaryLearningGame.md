@@ -47,7 +47,8 @@ permalink: /binaryGame
     </div>
 
     <div class="scoreboard">
-      <p style="color: black;">Score: <span id="total-score" style="color: black;">100</span></p>
+      <p style="color: black">High Score: <span id="high-score" style="color: black;">0</span></p>
+      <p style="color: black;">Score: <span id="total-score" style="color: black;">0</span></p>
     </div>
 
     <div class="question">
@@ -67,7 +68,45 @@ permalink: /binaryGame
   <audio id="chime-sound" src="sounds/chime.mp3" type="audio/mpeg"></audio>
   <audio id="alarm-sound" src="sounds/alarm.mp3" type="audio/mpeg"></audio>
 
-  <script src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js"></script>
+<script src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js" type="module">
+
+
+import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+const currentUserApi = `${pythonURI}/api/id`;
+const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
+
+async function getHighestScoreForLevel(currentLevel) {
+
+  try {
+    // Fetch current user data
+    const currentUserResponse = await fetch(currentUserApi, fetchOptions);
+    const currentUser = await currentUserResponse.json();
+
+    // Fetch scores
+    const scoresResponse = await fetch(scoresApi, fetchOptions);
+    const scores = await scoresResponse.json();
+
+    // Filter for the current user's scores
+    const userScores = scores.filter(entry => entry.userId === currentUser.id);
+
+    // Further filter for the current level
+    const levelScores = userScores.filter(entry => entry.level === currentLevel);
+
+    // Get the highest score for the level
+    const highestScore = Math.max(...levelScores.map(entry => entry.score), 0);
+
+    return highestScore;
+  } 
+  
+  catch (error) {
+
+    console.error('Error fetching scores:', error);
+    return null;
+
+  }
+}
+</script>
 
 </body>
 

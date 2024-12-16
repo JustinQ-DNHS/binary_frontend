@@ -8,7 +8,8 @@ const levels = {
 let currentLevel = "easy";
 let correctCounts = 0;
 let lives = 3;
-let highScore = 0;
+window.highScore = 0;
+let currentQuestion;
 
 const questionText = document.getElementById("question-text");
 const convertFromFormat = document.getElementById("convert-from-format");
@@ -72,7 +73,9 @@ function generateQuestion() {
     correctAnswer = parseInt(number, 10).toString(16).toUpperCase();
   }
 
+  // Assign the question details to the global variable
   currentQuestion = { questionValue, inputFormat, outputFormat, correctAnswer };
+  
   questionText.textContent = questionValue;
   convertFromFormat.textContent = inputFormat.charAt(0).toUpperCase() + inputFormat.slice(1);
   convertToFormat.textContent = outputFormat.charAt(0).toUpperCase() + outputFormat.slice(1);
@@ -144,14 +147,6 @@ window.onload = function () {
       updateHighScoreDisplay(); // Show the high score for the selected level
       generateQuestion();
     });
-  });
-
-  const sounds = [chimeSound, alarmSound];
-  sounds.forEach((sound) => {
-    sound.play().then(() => {
-      sound.pause();
-      sound.currentTime = 0;
-    }).catch(err => console.log('Preload prevented:', err));
   });
 };
 

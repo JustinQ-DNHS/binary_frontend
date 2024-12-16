@@ -21,10 +21,10 @@ permalink: /binaryGame
   <div id="difficulty-popup" class="popup">
     <div class="popup-content">
       <h2>Select Difficulty Level</h2>
-      <button class="level-button" data-level="easy" style="background-color: var(--easy);">Easy</button>
-      <button class="level-button" data-level="medium" style="background-color: var(--medium);">Medium</button>
-      <button class="level-button" data-level="hard" style="background-color: var(--hard);">Hard</button>
-      <button class="level-button" data-level="extreme" style="background-color: var(--extreme);">Extreme</button>
+      <button id="easy-btn" class="level-button" data-level="easy" style="background-color: var(--easy);">Easy</button>
+      <button id="medium-btn" class="level-button" data-level="medium" style="background-color: var(--medium);">Medium</button>
+      <button id="hard-btn" class="level-button" data-level="hard" style="background-color: var(--hard);">Hard</button>
+      <button id="extreme-btn" class="level-button" data-level="extreme" style="background-color: var(--extreme);">Extreme</button>
     </div>
   </div>
 
@@ -73,39 +73,33 @@ permalink: /binaryGame
 
 import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
-const currentUserApi = `${pythonURI}/api/id`;
-const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
+document.querySelectorAll('.level-button').forEach(button => {
+  button.addEventListener('click', async (event) => {
+    const level = event.target.dataset.level;
+    await getHighestScoreForLevel(level);
+  });
+});
 
 async function getHighestScoreForLevel(currentLevel) {
-
   try {
-    // Fetch current user data
     const currentUserResponse = await fetch(currentUserApi, fetchOptions);
     const currentUser = await currentUserResponse.json();
 
-    // Fetch scores
     const scoresResponse = await fetch(scoresApi, fetchOptions);
     const scores = await scoresResponse.json();
 
-    // Filter for the current user's scores
     const userScores = scores.filter(entry => entry.userId === currentUser.id);
-
-    // Further filter for the current level
     const levelScores = userScores.filter(entry => entry.level === currentLevel);
 
-    // Get the highest score for the level
     const highestScore = Math.max(...levelScores.map(entry => entry.score), 0);
 
-    return highestScore;
-  } 
-  
-  catch (error) {
-
+    highScore = highestScore;
+  } catch (error) {
     console.error('Error fetching scores:', error);
     return null;
-
   }
 }
+
 </script>
 
 </body>

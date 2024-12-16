@@ -11,6 +11,11 @@ let lives = 3;
 window.highScore = 0;
 let currentQuestion;
 
+import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
+
+
+
+
 const questionText = document.getElementById("question-text");
 const convertFromFormat = document.getElementById("convert-from-format");
 const convertToFormat = document.getElementById("convert-to-format");
@@ -22,25 +27,19 @@ const difficultyHeader = document.querySelector(".difficulty-header");
 const submitButton = document.getElementById("submit-answer");
 const chimeSound = document.getElementById("chime-sound");
 const alarmSound = document.getElementById("alarm-sound");
+const gameOverSound = document.getElementById("game-over-sound");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
 }
 
-
 function getRandomNumber(range) {
   return Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
 }
 
-
-
-
 function calculateScore() {
   return correctCounts;
 }
-
-
-
 
 function generateQuestion() {
   const range = levels[currentLevel].range;
@@ -73,9 +72,7 @@ function generateQuestion() {
     correctAnswer = parseInt(number, 10).toString(16).toUpperCase();
   }
 
-  // Assign the question details to the global variable
   currentQuestion = { questionValue, inputFormat, outputFormat, correctAnswer };
-  
   questionText.textContent = questionValue;
   convertFromFormat.textContent = inputFormat.charAt(0).toUpperCase() + inputFormat.slice(1);
   convertToFormat.textContent = outputFormat.charAt(0).toUpperCase() + outputFormat.slice(1);
@@ -83,11 +80,9 @@ function generateQuestion() {
   answerInput.value = "";
 }
 
-
-
 function checkAnswer() {
   const userAnswer = answerInput.value.trim().toUpperCase();
-  const gameContainer = document.querySelector('.game-container');
+  const gameContainer = document.querySelector(".game-container");
 
   if (userAnswer === currentQuestion.correctAnswer) {
     correctCounts++;
@@ -104,6 +99,7 @@ function checkAnswer() {
     updateHearts();
 
     if (lives === 0) {
+      gameOverSound.play();
       gameOver();
       return;
     }
@@ -122,8 +118,6 @@ function checkAnswer() {
   totalScoreDisplay.textContent = calculateScore();
 }
 
-
-
 submitButton.addEventListener("click", checkAnswer);
 
 generateQuestion();
@@ -133,7 +127,7 @@ window.onload = function () {
   const popup = document.getElementById("difficulty-popup");
   const levelButtons = document.querySelectorAll(".level-button");
 
-  updateHighScoreDisplay(); // Show the high score for the default level (easy)
+  updateHighScoreDisplay();
 
   popup.classList.add("visible");
 
@@ -144,21 +138,18 @@ window.onload = function () {
       difficultyHeader.setAttribute("data-level", selectedLevel);
       difficultyHeader.querySelector("h1").textContent = `Level: ${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`;
       popup.classList.remove("visible");
-      updateHighScoreDisplay(); // Show the high score for the selected level
+      updateHighScoreDisplay();
       generateQuestion();
     });
   });
 };
 
-
-
-
-
 function restartGame() {
   location.reload();
 }
 
-
+// Expose restartGame to the global scope
+window.restartGame = restartGame;
 
 
 function gameOver() {
@@ -166,51 +157,67 @@ function gameOver() {
   document.getElementById("game-over-popup").classList.add("visible");
 }
 
-
-
-
 function updateHearts() {
   for (let i = 1; i <= 3; i++) {
     const heart = document.getElementById(`heart${i}`);
     if (i <= lives) {
-      heart.src = "images/heart.png";  // Path to normal heart image
-      heart.style.visibility = 'visible';
-      heart.classList.remove('jiggle');  // Remove jiggle effect if already applied
+      heart.src = "images/heart.png";
+      heart.style.visibility = "visible";
+      heart.classList.remove("jiggle");
     } else {
-      heart.src = "images/emptyHeart.png";  // Path to empty heart image
-      heart.style.visibility = 'visible';
-      heart.classList.add('jiggle');  // Add jiggle effect
+      heart.src = "images/emptyHeart.png";
+      heart.style.visibility = "visible";
+      heart.classList.add("jiggle");
     }
   }
 }
 
-
-
-
 async function getHighScoreForCurrentUser() {
-
   try {
+    const response = await fetch(`${pythonURI}/api/binaryGameApi`, fetchOptions);
 
-    let userID = get();
-
-    const response = await fetch(`${pythonURI}/api/binaryGameApi`, { // CHANGE THE API DIRECTORY TO WHATEVER JUSTIN HAS IT SET
-      ...fetchOptions,
-    });
-
-    if (!response.ok) throw new Error('Failed to fetch scores: ' + response.statusText);
-
+    if (!response.ok) throw new Error("Failed to fetch scores: " + response.statusText);
 
     const scores = await response.json();
-
-    const userScores = scores.filter(entry => entry[2] === userId); // Gets all of the data for a certain user id
-    const highestScore = Math.max(...userScores.map(entry => entry[0]), 0); // Gets the highest score of the user's data
+    const userId = getCurrentUserId();
+    const userScores = scores.filter((entry) => entry.userId === userId);
+    const highestScore = Math.max(...userScores.map((entry) => entry.score), 0);
     return highestScore;
+  } catch (error) {
+    console.error("Error fetching scores:", error);
+    alert("Error fetching scores: " + error.message);
+    return null;
   }
+}
+
+document.querySelectorAll(".level-button").forEach((button) => {
+  button.addEventListener("click", async (event) => {
+    const level = event.target.dataset.level;
+    await getHighestScoreForLevel(level);
+  });
+});
 
 
-  catch (error) {
-    console.error('Error fetching scores:', error);
-    alert('Error fetching scores: ' + error.message);
+const currentUserApi = `${pythonURI}/api/id`;
+const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
+
+
+async function getHighestScoreForLevel(currentLevel) {
+  try {
+    const currentUserResponse = await fetch(currentUserApi, fetchOptions);
+    const currentUser = await currentUserResponse.json();
+
+    const scoresResponse = await fetch(scoresApi, fetchOptions);
+    const scores = await scoresResponse.json();
+
+    const userScores = scores.filter((entry) => entry.userId === currentUser.id);
+    const levelScores = userScores.filter((entry) => entry.level === currentLevel);
+
+    const highestScore = Math.max(...levelScores.map((entry) => entry.score), 0);
+
+    highScore = highestScore;
+  } catch (error) {
+    console.error("Error fetching scores:", error);
     return null;
   }
 }

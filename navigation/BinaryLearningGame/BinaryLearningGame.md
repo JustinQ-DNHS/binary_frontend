@@ -3,11 +3,9 @@ layout: page
 permalink: /binaryGame
 ---
 
-
 {% comment %}
 ```html
 {% endcomment %}
-
 
 <html lang="en">
 
@@ -16,7 +14,6 @@ permalink: /binaryGame
 </head>
 
 <body>
-
   <br>
   <div id="difficulty-popup" class="popup">
     <div class="popup-content">
@@ -41,7 +38,7 @@ permalink: /binaryGame
       <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart1" alt="Heart1">
       <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart2" alt="Heart2">
       <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart3" alt="Heart3">
-  </div>
+    </div>
     <div class="difficulty-header" data-level="easy">
       <h1>Level: Easy</h1>
     </div>
@@ -67,40 +64,12 @@ permalink: /binaryGame
 
   <audio id="chime-sound" src="sounds/chime.mp3" type="audio/mpeg"></audio>
   <audio id="alarm-sound" src="sounds/alarm.mp3" type="audio/mpeg"></audio>
+  <audio id="game-over-sound" src="sounds/gameOver.mp3" type="audio/mpeg"></audio>
 
-<script src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js" type="module">
+  <!-- Include the config.js file before the game script -->
+<script type="module" src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js"></script>
+<script type="module" src="{{site.baseurl}}/assets/js/api/config.js"></script>
 
-
-import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
-
-document.querySelectorAll('.level-button').forEach(button => {
-  button.addEventListener('click', async (event) => {
-    const level = event.target.dataset.level;
-    await getHighestScoreForLevel(level);
-  });
-});
-
-async function getHighestScoreForLevel(currentLevel) {
-  try {
-    const currentUserResponse = await fetch(currentUserApi, fetchOptions);
-    const currentUser = await currentUserResponse.json();
-
-    const scoresResponse = await fetch(scoresApi, fetchOptions);
-    const scores = await scoresResponse.json();
-
-    const userScores = scores.filter(entry => entry.userId === currentUser.id);
-    const levelScores = userScores.filter(entry => entry.level === currentLevel);
-
-    const highestScore = Math.max(...levelScores.map(entry => entry.score), 0);
-
-    highScore = highestScore;
-  } catch (error) {
-    console.error('Error fetching scores:', error);
-    return null;
-  }
-}
-
-</script>
 
 </body>
 

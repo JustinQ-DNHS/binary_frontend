@@ -72,7 +72,11 @@ button:hover {
 
 </style>
 <script>
-const quizQuestions = [
+    function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+const Questions = [
     {
         question: "1) What does an arithmetic shift do?",
         answers: {
@@ -174,11 +178,22 @@ const quizQuestions = [
     
 ];
 
-function buildQuiz() {
+function randomizeQuestions(sample) {
+    let randomizedQuestions = [];
+    const quizLength = sample.length;
+    for (let i = 0; i < quizLength; i++) {
+        const a = getRandomInt(sample.length);
+        randomizedQuestions.push(sample[a]);
+        sample.splice(a, 1);
+  }
+  return randomizedQuestions
+}
+
+function buildQuiz(questions) {
     const quizContainer = document.getElementById('quiz');
     const output = [];
 
-    quizQuestions.forEach((currentQuestion, questionNumber) => {
+    questions.forEach((currentQuestion, questionNumber) => {
         const answers = [];
         for (letter in currentQuestion.answers) {
             answers.push(
@@ -220,5 +235,5 @@ function showResults() {
     resultsContainer.innerHTML = `${numCorrect} out of ${quizQuestions.length}`;
 }
 
-buildQuiz();
+buildQuiz(randomizeQuestions(Questions));
 </script>

@@ -20,7 +20,7 @@ menu: nav/home.html
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #6589e60;
+    background-color: #777777;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,7 @@ body {
 }
 
 .quiz-container {
-    background-color: #6589e6;
+    background-color: #777777;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

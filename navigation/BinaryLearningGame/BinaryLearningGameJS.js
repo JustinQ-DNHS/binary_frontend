@@ -198,7 +198,7 @@ async function getHighestScoreForLevel(currentLevel) {
     const scores = await scoresResponse.json();
 
 
-    const userScores = scores.filter((entry) => String(entry.user_id) === String(currentUser.id));
+    const userScores = scores.filter((entry) => String(entry.username) === String(userName));
     const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
     const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
 

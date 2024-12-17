@@ -18,3 +18,4 @@ plugins:
 header_pages:
   - navigation/about.md
   - navigation/leaderboard.md
+  - navigation/BinaryLearningGame/BinaryLearningGame.md

@@ -121,6 +121,26 @@ hide: true
     }
 </style>
 
+<script>
+        async function sendRequest() {
+            try {
+                const response = await fetch('/calc-button', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('output').innerText = `Result: ${data.result}`;
+                } else {
+                    document.getElementById('output').innerText = `Error: ${data.error}`;
+                }
+            } catch (error) {
+                document.getElementById('output').innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+
 <table>
     <thead>
         <tr class="header" id="table">
@@ -134,7 +154,7 @@ hide: true
     </thead>
     <tbody>
         <tr>
-            <td><div class="calc-button" id="add1" onclick="add(1)">+1</div></td>
+            <td><div class="calc-button" id="add1" type="button" onclick="sendRequest()" onclick="add(1)">+1</div></td>
             <td id="binary">00000000</td>
             <td id="octal">0</td>
             <td id="hexadecimal">0</td>
@@ -147,28 +167,28 @@ hide: true
 <table>
     <thead>
         <tr>
-            <th><img id="bulb0" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb0" alt="" width="40" height="Auto" />
                 <div class="button" id="butt0" onclick="javascript:toggleBit(0)">Turn on</div>
             </th>
-            <th><img id="bulb1" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb1" alt="" width="40" height="Auto" />
                 <div class="button" id="butt1" onclick="javascript:toggleBit(1)">Turn on</div>
             </th>
-            <th><img id="bulb2" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb2" alt="" width="40" height="Auto" />
                 <div class="button" id="butt2" onclick="javascript:toggleBit(2)">Turn on</div>
             </th>
-            <th><img id="bulb3" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb3" alt="" width="40" height="Auto" />
                 <div class="button" id="butt3" onclick="javascript:toggleBit(3)">Turn on</div>
             </th>
-            <th><img id="bulb4" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb4" alt="" width="40" height="Auto" />
                 <div class="button" id="butt4" onclick="javascript:toggleBit(4)">Turn on</div>
             </th>
-            <th><img id="bulb5" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb5" alt="" width="40" height="Auto" />
                 <div class="button" id="butt5" onclick="javascript:toggleBit(5)">Turn on</div>
             </th>
-            <th><img id="bulb6" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb6" alt="" width="40" height="Auto" />
                 <div class="button" id="butt6" onclick="javascript:toggleBit(6)">Turn on</div>
             </th>
-            <th><img id="bulb7" src="/portfolio_2025/images/bulb_off.png" alt="" width="40" height="Auto" />
+            <th><img id="bulb7" alt="" width="40" height="Auto" />
                 <div class="button" id="butt7" onclick="javascript:toggleBit(7)">Turn on</div>
             </th>
         </tr>

@@ -8,82 +8,95 @@ hide: true
 
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        color: #333;
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #1e1e2f, #2b5876);
+        color: #fff;
         text-align: center;
-        padding: 20px;
+        padding: 30px;
     }
 
     table {
-        margin: 20px auto;
+        margin: 30px auto;
         border-collapse: collapse;
-        width: 80%;
+        width: 85%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     }
 
     th, td {
-        padding: 15px;
+        padding: 20px;
         text-align: center;
-        border: 1px solid #ddd;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     th {
-        background-color: #4CAF50;
-        color: white;
-        font-size: 18px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffcc00;
+        font-size: 20px;
+        text-transform: uppercase;
     }
 
     .calc-button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
+        padding: 12px 25px;
+        background: linear-gradient(135deg, #ff512f, #dd2476);
+        color: #fff;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
-        transition: background-color 0.3s ease;
+        transition: transform 0.3s ease, background 0.3s ease;
+        font-weight: bold;
     }
 
     .calc-button:hover {
-        background-color: #45a049;
+        transform: scale(1.1);
+        background: linear-gradient(135deg, #dd2476, #ff512f);
     }
 
     .button {
-        padding: 5px 10px;
-        background-color: #4CAF50;
-        color: white;
+        padding: 7px 15px;
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        color: #fff;
         border: none;
-        border-radius: 3px;
+        border-radius: 5px;
         cursor: pointer;
         font-size: 14px;
-        transition: background-color 0.3s ease;
+        transition: transform 0.3s ease, background 0.3s ease;
     }
 
     .button:hover {
-        background-color: #45a049;
+        transform: scale(1.1);
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
     }
 
     input[type="text"] {
-        width: 40px;
+        width: 50px;
         text-align: center;
         font-size: 16px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        background-color: #fff;
-        color: #333;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 5px;
     }
 
     #binary, #octal, #hexadecimal, #decimal {
         font-size: 18px;
         font-weight: bold;
+        color: #ffcc00;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     img {
         margin: 10px 0;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     #add1, #sub1 {
-        margin-top: 10px;
+        margin-top: 15px;
     }
 
     #add1 {
@@ -96,7 +109,15 @@ hide: true
 
     thead th img {
         display: block;
-        margin: 0 auto 5px;
+        margin: 0 auto 10px;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+        color: #ffcc00;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 </style>
 

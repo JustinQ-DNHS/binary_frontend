@@ -10,11 +10,9 @@ let correctCounts = 0;
 let lives = 3;
 window.highScore = 0;
 let currentQuestion;
+let userName;
 
-import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
-
-
-
+import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js'; // Use imported fetchOptions
 
 const questionText = document.getElementById("question-text");
 const convertFromFormat = document.getElementById("convert-from-format");
@@ -27,7 +25,7 @@ const difficultyHeader = document.querySelector(".difficulty-header");
 const submitButton = document.getElementById("submit-answer");
 const chimeSound = document.getElementById("chime-sound");
 const alarmSound = document.getElementById("alarm-sound");
-const gameOverSound = document.getElementById("game-over-sound");
+const gameOverSound = document.getElementById("gameOver-sound");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
@@ -99,7 +97,7 @@ function checkAnswer() {
     updateHearts();
 
     if (lives === 0) {
-      gameOverSound.play();
+      setHighestScoreForLevel();
       gameOver();
       return;
     }
@@ -151,8 +149,14 @@ function restartGame() {
 // Expose restartGame to the global scope
 window.restartGame = restartGame;
 
-
 function gameOver() {
+  gameOverSound.play()
+    .then(() => {
+      console.log("Sound played successfully");
+    })
+    .catch((error) => {
+      console.error("Error playing sound:", error);
+    });
   document.getElementById("final-score").textContent = `Your Score: ${correctCounts}`;
   document.getElementById("game-over-popup").classList.add("visible");
 }
@@ -172,24 +176,6 @@ function updateHearts() {
   }
 }
 
-async function getHighScoreForCurrentUser() {
-  try {
-    const response = await fetch(`${pythonURI}/api/binaryGameApi`, fetchOptions);
-
-    if (!response.ok) throw new Error("Failed to fetch scores: " + response.statusText);
-
-    const scores = await response.json();
-    const userId = getCurrentUserId();
-    const userScores = scores.filter((entry) => entry.userId === userId);
-    const highestScore = Math.max(...userScores.map((entry) => entry.score), 0);
-    return highestScore;
-  } catch (error) {
-    console.error("Error fetching scores:", error);
-    alert("Error fetching scores: " + error.message);
-    return null;
-  }
-}
-
 document.querySelectorAll(".level-button").forEach((button) => {
   button.addEventListener("click", async (event) => {
     const level = event.target.dataset.level;
@@ -197,27 +183,55 @@ document.querySelectorAll(".level-button").forEach((button) => {
   });
 });
 
-
 const currentUserApi = `${pythonURI}/api/id`;
 const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
-
 
 async function getHighestScoreForLevel(currentLevel) {
   try {
     const currentUserResponse = await fetch(currentUserApi, fetchOptions);
+    if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
     const currentUser = await currentUserResponse.json();
+    userName = currentUser.uid;
 
     const scoresResponse = await fetch(scoresApi, fetchOptions);
+    if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 
-    const userScores = scores.filter((entry) => entry.userId === currentUser.id);
-    const levelScores = userScores.filter((entry) => entry.level === currentLevel);
 
-    const highestScore = Math.max(...levelScores.map((entry) => entry.score), 0);
+    const userScores = scores.filter((entry) => String(entry.user_id) === String(currentUser.id));
+    const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
+    const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
 
     highScore = highestScore;
+    updateHighScoreDisplay();
   } catch (error) {
-    console.error("Error fetching scores:", error);
+    console.error('Error fetching scores:', error);
     return null;
+  }
+}
+
+async function setHighestScoreForLevel() {
+  const scoreData = {
+    username: userName,
+    score: highScore,
+    difficulty: currentLevel,
+  };
+
+  try {
+    const response = await fetch(`${pythonURI}/api/binaryLearningGameScores`, {
+      ...fetchOptions,
+      method: 'POST',
+      body: JSON.stringify(scoreData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to submit score: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    console.log('Score submitted:', result);
+  } catch (error) {
+    console.error('Error submitting score:', error);
+    alert('Error submitting score: ' + error.message);
   }
 }

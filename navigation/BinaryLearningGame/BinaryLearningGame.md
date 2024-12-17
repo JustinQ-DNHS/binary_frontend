@@ -62,9 +62,10 @@ permalink: /binaryGame
     <div class="message" id="message"></div>
   </div>
 
-  <audio id="chime-sound" src="sounds/chime.mp3" type="audio/mpeg"></audio>
-  <audio id="alarm-sound" src="sounds/alarm.mp3" type="audio/mpeg"></audio>
-  <audio id="game-over-sound" src="sounds/gameOver.mp3" type="audio/mpeg"></audio>
+  <audio id="chime-sound" src="{{site.baseurl}}/sounds/chime.mp3"></audio>
+  <audio id="alarm-sound" src="{{site.baseurl}}/sounds/alarm.mp3"></audio>
+  <audio id="gameOver-sound" src="{{site.baseurl}}/sounds/gameOver.mp3" preload="auto"></audio>
+
 
   <!-- Include the config.js file before the game script -->
 <script type="module" src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js"></script>

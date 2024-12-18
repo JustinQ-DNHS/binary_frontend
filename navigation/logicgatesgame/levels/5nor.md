@@ -29,3 +29,5 @@ permalink: /navigation/logicgatesgame/nor/
 
 
   <img src="https://www.techtarget.com/rms/onlineimages/diagram6-f.png" alt="Porsche" style="width:600px;height:400px;">
+
+  <h3>Lesson Quiz<3>

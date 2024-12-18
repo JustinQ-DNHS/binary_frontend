@@ -29,3 +29,5 @@ permalink: /navigation/logicgatesgame/nand/
 
 
   <img src="https://www.techtarget.com/rms/onlineimages/diagram5-f.png" alt="Porsche" style="width:600px;height:400px;">
+
+  <h3>Lesson Quiz<3>

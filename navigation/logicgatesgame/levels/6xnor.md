@@ -29,3 +29,5 @@ permalink: /navigation/logicgatesgame/xnor/
 
 
   <img src="https://www.techtarget.com/rms/onlineimages/diagram7-f.png" alt="Porsche" style="width:600px;height:400px;">
+
+  <h3>Lesson Quiz<3>

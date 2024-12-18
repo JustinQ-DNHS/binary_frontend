@@ -29,3 +29,55 @@ permalink: /navigation/logicgatesgame/or/
  <div>
     <img src="https://www.techtarget.com/rms/onlineimages/diagram2-f.png" alt="OR image" style="width:600px;height:400px;"> 
 
+ <h3>Lesson Quiz</h3>
+ 
+
+ <p> Each input will be run through an <b>OR Gate</b>, answer the questions based on what the output will be.
+ 
+ <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>True/False Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+ <form id="quiz-form1">
+      <div class="question">
+        <p>Input A = 1, Input B = 0</p>
+        <label>
+          <input type="radio" name="q1" value="0"> 0
+        </label>
+        <label>
+          <input type="radio" name="q1" value="1"> 1
+        </label>
+      </div>
+      <div class="question">
+        <p>Input A = 0, Input B = 0</p>
+        <label>
+          <input type="radio" name="q2" value="0"> 0
+        </label>
+        <label>
+          <input type="radio" name="q2" value="1"> 1
+        </label>
+      </div>
+      <div class="question">
+        <p>Input A = 1, Input B = 1</p>
+        <label>
+          <input type="radio" name="q3" value="0"> 0
+        </label>
+        <label>
+          <input type="radio" name="q3" value="1"> 1
+        </label>
+      </div>
+
+<button type="submit">Submit Quiz</button>
+    </form>
+
+<div id="result">
+  </div>
+
+  <script src="logicgates.js"></script>
+</body>
+</html>

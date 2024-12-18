@@ -39,8 +39,8 @@ permalink: /binaryGame
       <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart2" alt="Heart2">
       <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart3" alt="Heart3">
     </div>
-    <div class="difficulty-header" data-level="easy">
-      <h1>Level: Easy</h1>
+    <div class="difficulty-header" data-level="play">
+      <h1>Click To Play</h1>
     </div>
 
     <div class="scoreboard">
@@ -58,9 +58,37 @@ permalink: /binaryGame
       <input type="text" id="answer-input" placeholder="Your answer">
       <button id="submit-answer">Submit</button>
     </div>
-
     <div class="message" id="message"></div>
   </div>
+<br>
+<br>
+<br>
+<button id="rules-btn" class="rules-button">Rules</button>
+
+<div class="popup" id="rules-popup">
+    <div class="popup-content">
+        <h2>Game Rules</h2>
+        <p>
+            <strong>Objective:</strong> The goal of the game is to answer as many binary conversion questions as possible. 
+            You are asked to convert a number between different formats (e.g., binary to decimal, decimal to binary, hexadecimal to binary).
+        </p>
+        <p>
+            <strong>Levels:</strong> The game has four difficulty levels:
+                <p><strong>Easy:</strong> Numbers between 1 and 15</p>
+                <p><strong>Medium:</strong> Numbers between 16 and 255</p>
+                <p><strong>Hard:</strong> Numbers between 10 and 31 (includes hexadecimal)</p>
+                <p><strong>Extreme:</strong> Numbers between 32 and 255 (includes hexadecimal)</p>
+        </p>
+        <p>
+            <strong>Scoring:</strong> Each correct answer earns one point. If you get a wrong answer, you lose one life. You have three lives in total.
+        </p>
+        <p>
+            <strong>Winning:</strong> The game ends when you lose all lives. Your highest score for each level will be saved and can be viewed on the scoreboard.
+        </p>
+        <button onclick="closeRulesPopup()">Close</button>
+    </div>
+</div>
+
 
   <audio id="chime-sound" src="{{site.baseurl}}/sounds/chime.mp3"></audio>
   <audio id="alarm-sound" src="{{site.baseurl}}/sounds/alarm.mp3"></audio>

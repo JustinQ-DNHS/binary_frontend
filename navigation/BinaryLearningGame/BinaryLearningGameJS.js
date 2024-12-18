@@ -1,11 +1,13 @@
 const levels = {
+  play: { range: [0, 0], formats: ["decimal", "binary"] },
   easy: { range: [1, 15], formats: ["decimal", "binary"] },
   medium: { range: [16, 255], formats: ["decimal", "binary"] },
   hard: { range: [10, 31], formats: ["decimal", "binary", "hexadecimal"] },
   extreme: { range: [32, 255], formats: ["decimal", "binary", "hexadecimal"] },
 };
 
-let currentLevel = "easy";
+let currentLevel = "play";
+let previousLevel = "play"; // Track the previous level
 let correctCounts = 0;
 let lives = 3;
 window.highScore = 0;
@@ -26,6 +28,9 @@ const submitButton = document.getElementById("submit-answer");
 const chimeSound = document.getElementById("chime-sound");
 const alarmSound = document.getElementById("alarm-sound");
 const gameOverSound = document.getElementById("gameOver-sound");
+const rulesButton = document.getElementById("rules-btn");
+const rulesPopup = document.getElementById("rules-popup");
+const closeButton = rulesPopup.querySelector("button");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
@@ -125,21 +130,43 @@ window.onload = function () {
   const popup = document.getElementById("difficulty-popup");
   const levelButtons = document.querySelectorAll(".level-button");
 
-  updateHighScoreDisplay();
+  // Disable input and submit button initially
+  answerInput.disabled = true;
+  submitButton.disabled = true;
 
-  popup.classList.add("visible");
+  difficultyHeader.addEventListener("click", function () {
+    popup.classList.add("visible");
+  });
 
   levelButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const selectedLevel = this.getAttribute("data-level");
+
+      // Check if the selected difficulty is different from the previous one
+      if (selectedLevel !== previousLevel) {
+        correctCounts = 0; // Reset score only if the difficulty changes
+        lives = 3; // Reset lives
+        updateHearts();
+        totalScoreDisplay.textContent = calculateScore();
+      }
+
+      previousLevel = selectedLevel; // Update previous level
+
       currentLevel = selectedLevel;
-      difficultyHeader.setAttribute("data-level", selectedLevel);
-      difficultyHeader.querySelector("h1").textContent = `Level: ${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`;
       popup.classList.remove("visible");
-      updateHighScoreDisplay();
+      answerInput.disabled = false;
+      submitButton.disabled = false;
+
+      difficultyHeader.setAttribute("data-level", selectedLevel);
+      difficultyHeader.querySelector("h1").textContent =
+        selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1);
+
       generateQuestion();
     });
   });
+
+  generateQuestion();
+  totalScoreDisplay.textContent = calculateScore();
 };
 
 function restartGame() {
@@ -235,3 +262,14 @@ async function setHighestScoreForLevel() {
     alert('Error submitting score: ' + error.message);
   }
 }
+
+// Close rules popup
+rulesButton.addEventListener("click", function () {
+  rulesPopup.classList.add("visible");
+});
+
+closeButton.addEventListener("click", function () {
+  rulesPopup.classList.remove("visible");
+});
+
+

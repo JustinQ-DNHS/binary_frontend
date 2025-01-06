@@ -123,6 +123,14 @@ function checkAnswer() {
 
 submitButton.addEventListener("click", checkAnswer);
 
+// Add event listener for Enter key press on the answer input field
+answerInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    checkAnswer(); // Call the checkAnswer function when Enter is pressed
+  }
+});
+
+
 generateQuestion();
 totalScoreDisplay.textContent = calculateScore();
 

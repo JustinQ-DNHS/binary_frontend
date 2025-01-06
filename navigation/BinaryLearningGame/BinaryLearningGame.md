@@ -55,7 +55,7 @@ permalink: /binaryGame
     </div>
 
     <div class="input-container">
-      <input type="text" id="answer-input" placeholder="Your answer">
+      <input type="text" id="answer-input" placeholder="Your answer" autocomplete="off">
       <button id="submit-answer">Submit</button>
     </div>
     <div class="message" id="message"></div>

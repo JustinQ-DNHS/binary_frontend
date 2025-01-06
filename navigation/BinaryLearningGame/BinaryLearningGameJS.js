@@ -7,14 +7,15 @@ const levels = {
 };
 
 let currentLevel = "play";
-let previousLevel = "play"; // Track the previous level
+let previousLevel = "play";
 let correctCounts = 0;
 let lives = 3;
 window.highScore = 0;
 let currentQuestion;
 let userName;
+let isSubmitMode = true;
 
-import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js'; // Use imported fetchOptions
+import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
 
 const questionText = document.getElementById("question-text");
 const convertFromFormat = document.getElementById("convert-from-format");
@@ -83,6 +84,23 @@ function generateQuestion() {
   answerInput.value = "";
 }
 
+function updateButtonMode() {
+  if (isSubmitMode) {
+    submitButton.textContent = "Submit";
+  } else {
+    submitButton.textContent = "Next";
+  }
+}
+
+function goToNextQuestion() {
+  const gameContainer = document.querySelector(".game-container");
+  gameContainer.style.backgroundColor = "";
+  message.textContent = "";
+  generateQuestion();
+  isSubmitMode = true;
+  updateButtonMode();
+}
+
 function checkAnswer() {
   const userAnswer = answerInput.value.trim().toUpperCase();
   const gameContainer = document.querySelector(".game-container");
@@ -97,6 +115,8 @@ function checkAnswer() {
 
     gameContainer.style.backgroundColor = "lightgreen";
     chimeSound.play();
+    message.textContent = "Correct!";
+    message.style.color = "green";
   } else {
     lives--;
     updateHearts();
@@ -106,30 +126,37 @@ function checkAnswer() {
       gameOver();
       return;
     }
-
+    message.style.color = "red";
     message.textContent = `Wrong! The correct answer was ${currentQuestion.correctAnswer}.`;
     gameContainer.style.backgroundColor = "red";
     alarmSound.play();
   }
 
-  setTimeout(() => {
-    gameContainer.style.backgroundColor = "white";
-    message.textContent = "";
-    generateQuestion();
-  }, 2000);
-
-  totalScoreDisplay.textContent = calculateScore();
+  isSubmitMode = false;
+  updateButtonMode();
 }
 
-submitButton.addEventListener("click", checkAnswer);
-
-// Add event listener for Enter key press on the answer input field
-answerInput.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    checkAnswer(); // Call the checkAnswer function when Enter is pressed
+submitButton.addEventListener("click", () => {
+  if (currentLevel === "play" && isSubmitMode) return; // Prevent submission in "play" mode on game load
+  if (isSubmitMode) {
+    checkAnswer();
+  } else {
+    goToNextQuestion();
   }
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    if (currentLevel === "play" && isSubmitMode) return; // Prevent submission in "play" mode on game load
+    if (isSubmitMode) {
+      checkAnswer();
+    } else {
+      goToNextQuestion();
+    }
+  }
+});
+
+updateButtonMode();
 
 generateQuestion();
 totalScoreDisplay.textContent = calculateScore();
@@ -138,7 +165,6 @@ window.onload = function () {
   const popup = document.getElementById("difficulty-popup");
   const levelButtons = document.querySelectorAll(".level-button");
 
-  // Disable input and submit button initially
   answerInput.disabled = true;
   submitButton.disabled = true;
 
@@ -150,15 +176,14 @@ window.onload = function () {
     button.addEventListener("click", function () {
       const selectedLevel = this.getAttribute("data-level");
 
-      // Check if the selected difficulty is different from the previous one
       if (selectedLevel !== previousLevel) {
-        correctCounts = 0; // Reset score only if the difficulty changes
-        lives = 3; // Reset lives
+        correctCounts = 0;
+        lives = 3;
         updateHearts();
         totalScoreDisplay.textContent = calculateScore();
       }
 
-      previousLevel = selectedLevel; // Update previous level
+      previousLevel = selectedLevel;
 
       currentLevel = selectedLevel;
       popup.classList.remove("visible");
@@ -181,7 +206,6 @@ function restartGame() {
   location.reload();
 }
 
-// Expose restartGame to the global scope
 window.restartGame = restartGame;
 
 function gameOver() {
@@ -232,7 +256,6 @@ async function getHighestScoreForLevel(currentLevel) {
     if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 
-
     const userScores = scores.filter((entry) => String(entry.username) === String(userName));
     const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
     const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
@@ -279,5 +302,4 @@ rulesButton.addEventListener("click", function () {
 closeButton.addEventListener("click", function () {
   rulesPopup.classList.remove("visible");
 });
-
 

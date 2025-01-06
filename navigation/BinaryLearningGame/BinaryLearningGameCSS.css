@@ -135,7 +135,7 @@ button:active {
 
 .message {
     font-size: 1.2rem;
-    color: var(--hard);
+    color: red;
     font-weight: bold;
 }
 

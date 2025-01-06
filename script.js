@@ -99,23 +99,39 @@ const Questions = [
     }
 ];
 
+// Generates a random integer in between 0 and the max value inputted
+// This will be used to determine which question will be added to the list to randomize
+/*
+* max<Integer>
+*
+*   Example: getRandomInt(10) returns 4 or 6 or any other number in between 0 and 10
+*/
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+// Takes in the the list of questions and shuffles them using the getRandomInt function above
+// The numQuestions parameter determines how many questions are returned by the function
+/*
+*   questions<array>, numQuestions<integer>
+*
+*   Example: randomizeQuestions([list of 10 questions], 4) 
+*   returns 4 out of 10 questions
+*/
 function randomizeQuestions(questions, numQuestions) {
     const shuffledQuestions = [...questions];
     for (let i = shuffledQuestions.length - 1; i > 0; i--) {
         const j = getRandomInt(i + 1);
+        // Mixes up two parts of a list to randomize the order of the questions
         [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
     }
     return shuffledQuestions.slice(0, numQuestions);
 }
 
+// Builds the quiz
 function buildQuiz(questions) {
     const quizContainer = document.getElementById('quiz');
     const output = [];
-
     questions.forEach((currentQuestion, questionNumber) => {
         const answers = [];
         for (letter in currentQuestion.answers) {
@@ -126,26 +142,24 @@ function buildQuiz(questions) {
                 </label>`
             );
         }
-
         output.push(
             `<div class="question">${currentQuestion.question}</div>
             <div class="answers">${answers.join('')}</div>`
         );
     });
-
     quizContainer.innerHTML = output.join('');
 }
 
+// Functions to show results
 function showResults(questions) {
     const quizContainer = document.getElementById('quiz');
     const answerContainers = quizContainer.querySelectorAll('.answers');
     let numCorrect = 0;
-
+    // Goes through each question comparing it to the correct answer in order to determine if the answer is correct
     questions.forEach((currentQuestion, questionNumber) => {
         const answerContainer = answerContainers[questionNumber];
         const selector = `input[name=question${questionNumber}]:checked`;
         const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
         if (userAnswer === currentQuestion.correctAnswer) {
             numCorrect++;
             answerContainers[questionNumber].style.color = 'green';
@@ -153,7 +167,7 @@ function showResults(questions) {
             answerContainers[questionNumber].style.color = 'red';
         }
     });
-
+    // Sets the result container to display the amount of answers correct
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = `${numCorrect} out of ${questions.length}`;
 }
@@ -162,5 +176,5 @@ document.getElementById('submit').addEventListener('click', () => {
     showResults(selectedQuestions);
 });
 
-const selectedQuestions = randomizeQuestions(Questions, 5); // For example, randomize and select 5 questions
+const selectedQuestions = randomizeQuestions(Questions, 5); 
 buildQuiz(selectedQuestions);

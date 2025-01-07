@@ -127,7 +127,7 @@ function checkAnswer() {
       return;
     }
     message.style.color = "red";
-    message.textContent = `Wrong! The correct answer was ${currentQuestion.correctAnswer}.`;
+    message.textContent = `Wrong! The answer was ${currentQuestion.correctAnswer}.`;
     gameContainer.style.backgroundColor = "red";
     alarmSound.play();
   }

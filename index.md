@@ -8,3 +8,5 @@ menu: nav/home.html
 ---
 
 <a href="{{site.baseurl}}/binaryGame">game</a>
+
+<a href="{{site.baseurl}}/logicgame">Logic Gates Games</a>

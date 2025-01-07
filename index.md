@@ -7,10 +7,6 @@ hide: true
 menu: nav/home.html
 ---
 
-<<<<<<< Updated upstream
-<a href="{{site.baseurl}}/binaryGame">game</a>
-=======
 <a href="{{site.baseurl}}/binaryGame">game</a>
 
 <a href="{{site.baseurl}}/logicgame">Logic Gates Games</a>
->>>>>>> Stashed changes

@@ -1,18 +1,21 @@
 const levels = {
+  play: { range: [0, 0], formats: ["decimal", "binary"] },
   easy: { range: [1, 15], formats: ["decimal", "binary"] },
   medium: { range: [16, 255], formats: ["decimal", "binary"] },
   hard: { range: [10, 31], formats: ["decimal", "binary", "hexadecimal"] },
   extreme: { range: [32, 255], formats: ["decimal", "binary", "hexadecimal"] },
 };
 
-let currentLevel = "easy";
+let currentLevel = "play";
+let previousLevel = "play";
 let correctCounts = 0;
 let lives = 3;
 window.highScore = 0;
 let currentQuestion;
 let userName;
+let isSubmitMode = true;
 
-import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js'; // Use imported fetchOptions
+import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
 
 const questionText = document.getElementById("question-text");
 const convertFromFormat = document.getElementById("convert-from-format");
@@ -26,6 +29,9 @@ const submitButton = document.getElementById("submit-answer");
 const chimeSound = document.getElementById("chime-sound");
 const alarmSound = document.getElementById("alarm-sound");
 const gameOverSound = document.getElementById("gameOver-sound");
+const rulesButton = document.getElementById("rules-btn");
+const rulesPopup = document.getElementById("rules-popup");
+const closeButton = rulesPopup.querySelector("button");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
@@ -78,6 +84,23 @@ function generateQuestion() {
   answerInput.value = "";
 }
 
+function updateButtonMode() {
+  if (isSubmitMode) {
+    submitButton.textContent = "Submit";
+  } else {
+    submitButton.textContent = "Next";
+  }
+}
+
+function goToNextQuestion() {
+  const gameContainer = document.querySelector(".game-container");
+  gameContainer.style.backgroundColor = "";
+  message.textContent = "";
+  generateQuestion();
+  isSubmitMode = true;
+  updateButtonMode();
+}
+
 function checkAnswer() {
   const userAnswer = answerInput.value.trim().toUpperCase();
   const gameContainer = document.querySelector(".game-container");
@@ -92,6 +115,8 @@ function checkAnswer() {
 
     gameContainer.style.backgroundColor = "lightgreen";
     chimeSound.play();
+    message.textContent = "Correct!";
+    message.style.color = "green";
   } else {
     lives--;
     updateHearts();
@@ -101,22 +126,37 @@ function checkAnswer() {
       gameOver();
       return;
     }
-
-    message.textContent = `Wrong! The correct answer was ${currentQuestion.correctAnswer}.`;
+    message.style.color = "red";
+    message.textContent = `Wrong! The answer was ${currentQuestion.correctAnswer}.`;
     gameContainer.style.backgroundColor = "red";
     alarmSound.play();
   }
 
-  setTimeout(() => {
-    gameContainer.style.backgroundColor = "white";
-    message.textContent = "";
-    generateQuestion();
-  }, 2000);
-
-  totalScoreDisplay.textContent = calculateScore();
+  isSubmitMode = false;
+  updateButtonMode();
 }
 
-submitButton.addEventListener("click", checkAnswer);
+submitButton.addEventListener("click", () => {
+  if (currentLevel === "play" && isSubmitMode) return; // Prevent submission in "play" mode on game load
+  if (isSubmitMode) {
+    checkAnswer();
+  } else {
+    goToNextQuestion();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    if (currentLevel === "play" && isSubmitMode) return; // Prevent submission in "play" mode on game load
+    if (isSubmitMode) {
+      checkAnswer();
+    } else {
+      goToNextQuestion();
+    }
+  }
+});
+
+updateButtonMode();
 
 generateQuestion();
 totalScoreDisplay.textContent = calculateScore();
@@ -125,28 +165,47 @@ window.onload = function () {
   const popup = document.getElementById("difficulty-popup");
   const levelButtons = document.querySelectorAll(".level-button");
 
-  updateHighScoreDisplay();
+  answerInput.disabled = true;
+  submitButton.disabled = true;
 
-  popup.classList.add("visible");
+  difficultyHeader.addEventListener("click", function () {
+    popup.classList.add("visible");
+  });
 
   levelButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const selectedLevel = this.getAttribute("data-level");
+
+      if (selectedLevel !== previousLevel) {
+        correctCounts = 0;
+        lives = 3;
+        updateHearts();
+        totalScoreDisplay.textContent = calculateScore();
+      }
+
+      previousLevel = selectedLevel;
+
       currentLevel = selectedLevel;
-      difficultyHeader.setAttribute("data-level", selectedLevel);
-      difficultyHeader.querySelector("h1").textContent = `Level: ${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`;
       popup.classList.remove("visible");
-      updateHighScoreDisplay();
+      answerInput.disabled = false;
+      submitButton.disabled = false;
+
+      difficultyHeader.setAttribute("data-level", selectedLevel);
+      difficultyHeader.querySelector("h1").textContent =
+        selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1);
+
       generateQuestion();
     });
   });
+
+  generateQuestion();
+  totalScoreDisplay.textContent = calculateScore();
 };
 
 function restartGame() {
   location.reload();
 }
 
-// Expose restartGame to the global scope
 window.restartGame = restartGame;
 
 function gameOver() {
@@ -197,7 +256,6 @@ async function getHighestScoreForLevel(currentLevel) {
     if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 
-
     const userScores = scores.filter((entry) => String(entry.username) === String(userName));
     const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
     const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
@@ -235,3 +293,13 @@ async function setHighestScoreForLevel() {
     alert('Error submitting score: ' + error.message);
   }
 }
+
+// Close rules popup
+rulesButton.addEventListener("click", function () {
+  rulesPopup.classList.add("visible");
+});
+
+closeButton.addEventListener("click", function () {
+  rulesPopup.classList.remove("visible");
+});
+

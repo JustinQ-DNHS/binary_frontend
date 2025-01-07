@@ -23,43 +23,42 @@ The OR gate gets its name from behaving like the logical inclusive "or." The out
 <div>
   <img src="https://www.techtarget.com/rms/onlineimages/diagram2-f.png" alt="OR image" style="width:600px;height:400px;"> 
 
-### Lesson Quiz
+<h3>Lesson Quiz</h3>
 Each input will be run through an **OR Gate**, answer the questions based on what the output will be.
  
 <form id="quiz-form1">
-  <div class="question">
+  <div class="question" data-correct-answer="1">
     <p>Input A = 1, Input B = 0</p>
+    <label>
+      <input type="radio" name="q1" value="0"> 0
+    </label>
+    <label>
+      <input type="radio" name="q1" value="1"> 1
+    </label>
+  </div>
+  <div class="question" data-correct-answer="0">
+      <p>Input A = 0, Input B = 0</p>
       <label>
-        <input type="radio" name="q1" value="0"> 0
+        <input type="radio" name="q2" value="0"> 0
       </label>
       <label>
-        <input type="radio" name="q1" value="1"> 1
+        <input type="radio" name="q2" value="1"> 1
       </label>
   </div>
-      <div class="question">
-        <p>Input A = 0, Input B = 0</p>
-        <label>
-          <input type="radio" name="q2" value="0"> 0
-        </label>
-        <label>
-          <input type="radio" name="q2" value="1"> 1
-        </label>
-      </div>
-      <div class="question">
-        <p>Input A = 1, Input B = 1</p>
-        <label>
-          <input type="radio" name="q3" value="0"> 0
-        </label>
-        <label>
-          <input type="radio" name="q3" value="1"> 1
-        </label>
-      </div>
+  <div class="question" data-correct-answer="1">
+      <p>Input A = 1, Input B = 1</p>
+      <label>
+        <input type="radio" name="q3" value="0"> 0
+      </label>
+      <label>
+        <input type="radio" name="q3" value="1"> 1
+      </label>
+  </div>
 
-<button type="submit">Submit Quiz</button>
-    </form>
+  <button type="submit">Submit Quiz</button>
+</form>
 
-<div id="result">
-</div>
+<div id="results"></div>
 </div>
 
 <script>

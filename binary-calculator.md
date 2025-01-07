@@ -122,24 +122,26 @@ hide: true
 </style>
 
 <script>
-        async function sendRequest() {
+        async function incrementCounter() {
             try {
-                const response = await fetch('/calc-button', {
+                console.log('Button pressed! Sending POST request...');
+                const response = await fetch('http://127.0.0.1:5000/increment', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json' }
                 });
 
-                const data = await response.json();
-                if (data.success) {
-                    document.getElementById('output').innerText = `Result: ${data.result}`;
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Response:', data);
+                    document.getElementById('counter').innerText = `Counter: ${data.value}`;
                 } else {
-                    document.getElementById('output').innerText = `Error: ${data.error}`;
+                    console.error('Request failed with status:', response.status);
                 }
             } catch (error) {
-                document.getElementById('output').innerText = `Error: ${error.message}`;
+                console.error('Error:', error);
             }
         }
-    </script>
+</script>
 
 <table>
     <thead>
@@ -154,7 +156,7 @@ hide: true
     </thead>
     <tbody>
         <tr>
-            <td><div class="calc-button" id="add1" type="button" onclick="sendRequest()" onclick="add(1)">+1</div></td>
+            <td><div class="calc-button" onclick="incrementCounter()">+1</div></td>
             <td id="binary">00000000</td>
             <td id="octal">0</td>
             <td id="hexadecimal">0</td>

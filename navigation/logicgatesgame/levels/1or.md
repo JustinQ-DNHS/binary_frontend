@@ -61,6 +61,8 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
 <div id="results"></div>
 </div>
 
+<td><a href="{{site.baseurl}}/navigation/logicgatesgame/and/" class="button">Continue Lesson</a></td>
+
 <html lang="en">
 
 

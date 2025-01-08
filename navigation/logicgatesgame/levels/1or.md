@@ -24,14 +24,14 @@ The OR gate gets its name from behaving like the logical inclusive "or." The out
   <img src="https://www.techtarget.com/rms/onlineimages/diagram2-f.png" alt="OR image" style="width:600px;height:400px;"> 
 
 <h3>Lesson Quiz</h3>
-Each input will be run through an **OR Gate**, answer the questions based on what the output will be.
+Each input will be run through an <b>OR Gate</b>, answer the questions based on what the output will be.
  
-<form id="quiz-form1">
+<form id="quiz1">
   <div class="question" data-correct-answer="1">
     <p>Input A = 1, Input B = 0</p>
     <label>
       <input type="radio" name="q1" value="0"> 0
-    </label>
+    </label>  
     <label>
       <input type="radio" name="q1" value="1"> 1
     </label>
@@ -59,7 +59,7 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
 </form>
 
 <div id="results"></div>
-</div>
+
 
 <td><a href="{{site.baseurl}}/navigation/logicgatesgame/and/" class="button">Continue Lesson</a></td>
 
@@ -69,7 +69,6 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Multiple-Choice Quiz</title>
     <style>
         .question {
             margin-bottom: 20px;
@@ -84,7 +83,7 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
 
   <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const form = document.getElementById('quiz-form1');
+            const form = document.getElementById('quiz1');
             const resultsContainer = document.getElementById('results');
 
             form.addEventListener('submit', function(event) {

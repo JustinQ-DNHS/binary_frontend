@@ -1,29 +1,11 @@
----
-layout: page
-title: Leaderboard
-search_exclude: true
-permalink: /leaderboard/
----
-<table id="leaderboard">
-</table>
-
-
-<script>
-
-// Sample data: array of player objects with names and scores
-const players = [
-    { name: 'Alice', score: 120 },
-    { name: 'Bob', score: 85 },
-    { name: 'Charlie', score: 150 },
-    { name: 'Diana', score: 95 }
-];
-
 // Function to sort players by score in descending order
-function sortLeaderboard(players) {
-    return players.sort((a, b) => b.score - a.score);
+function sortLeaderboard(data) {
+    const array = data.map(item => ({id: item.username, score: item.user_score}));
+    console.log(array);
+    return array.sort((a, b) => b.score - a.score);
 }
 
-// Function to display the leaderboard on the webpage
+//Function to display the leaderboard on the webpage
 function displayLeaderboard(players) {
     // Get the leaderboard container from the DOM
     const leaderboardContainer = document.getElementById('leaderboard');
@@ -73,5 +55,31 @@ function createLeaderboard() {
     }
 }
 createLeaderboard()
-</script> 
 
+
+import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
+
+const scoresApi = `${pythonURI}/api/general/binaryScores`;
+
+async function getHighestScoreForLevel(currentLevel) {
+  try {
+    const scoresResponse = await fetch(scoresApi, fetchOptions);
+    if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
+    const scores = await scoresResponse.json();
+
+    const difficultyScores = scores.filter((entry) => entry.user_difficulty === currentLevel);
+    console.log(difficultyScores);
+    return difficultyScores;
+
+  } catch (error) {
+    console.error('Error fetching scores:', error);
+  }
+}
+
+async function getSortedScoresForLevel(currentLevel) {
+    const data = await getHighestScoreForLevel(currentLevel);
+    const sortedData = sortLeaderboard(data);
+    console.log(sortedData);
+}
+  
+getSortedScoresForLevel("easy");

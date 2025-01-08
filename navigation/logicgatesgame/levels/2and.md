@@ -29,7 +29,7 @@ permalink: /navigation/logicgatesgame/and/
 Each input will be run through an <b>AND Gate</b>, answer the questions based on what the output will be.
 
 <form id="quiz2">
-  <div class="question" data-correct-answer="1">
+  <div class="question" c-answer="1">
     <p>Input A = 1, Input B = 0</p>
     <label>
       <input type="radio" name="q1" value="0"> 0
@@ -38,7 +38,7 @@ Each input will be run through an <b>AND Gate</b>, answer the questions based on
       <input type="radio" name="q1" value="1"> 1
     </label>
   </div>
-  <div class="question" data-correct-answer="0">
+  <div class="question" c-answer="0">
       <p>Input A = 0, Input B = 0</p>
       <label>
         <input type="radio" name="q2" value="0"> 0
@@ -47,7 +47,7 @@ Each input will be run through an <b>AND Gate</b>, answer the questions based on
         <input type="radio" name="q2" value="1"> 1
       </label>
   </div>
-  <div class="question" data-correct-answer="1">
+  <div class="question" c-answer="1">
       <p>Input A = 1, Input B = 1</p>
       <label>
         <input type="radio" name="q3" value="0"> 0
@@ -96,7 +96,7 @@ Each input will be run through an <b>AND Gate</b>, answer the questions based on
 
                 // Check the answers
                 questions.forEach((question, index) => {
-                    const correctAnswer = question.getAttribute('data-correct-answer');
+                    const correctAnswer = question.getAttribute('c-answer');
                     const selectedAnswer = question.querySelector(`input[name="q${index + 1}"]:checked`); 
                     if (selectedAnswer) {
                         const userAnswer = selectedAnswer.value;

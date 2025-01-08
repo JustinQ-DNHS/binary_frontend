@@ -4,22 +4,18 @@ title: AND gate
 description: Level 2 AND gate
 permalink: /navigation/logicgatesgame/and/
 ---
-
-<body>
-
-  <br>
-  <div>
-    <table style="width: 100%; text-align: center; border-collapse: separate; border-spacing: 10px;">
-            <tr>
-                <td><a href="{{site.baseurl}}/navigation/logicgatesgame/or/" class="button">OR</a></td>
-                <td><a href="{{site.baseurl}}/navigation/logicgatesgame/and/" class="button">AND</a></td>
-                <td><a href="{{site.baseurl}}/navigation/logicgatesgame/xor/" class="button">XOR</a></td>
-                <td><a href="{{site.baseurl}}/navigation/logicgatesgame/nand/" class="button">NAND</a></td>
-                <td><a href="{{site.baseurl}}/navigation/logicgatesgame/nor/" class="button">NOR</a></td>
-                <td><a href="{{site.baseurl}}/navigation/logicgatesgame/xnor/" class="button">XNOR</a></td>
-            </tr>
-        </table>
-  </div>
+<div>
+  <table style="width: 100%; text-align: center; border-collapse: separate; border-spacing: 10px;">
+       <tr>
+         <td><a href="{{site.baseurl}}/navigation/logicgatesgame/or/" class="button">OR</a></td>
+         <td><a href="{{site.baseurl}}/navigation/logicgatesgame/and/" class="button">AND</a></td>
+         <td><a href="{{site.baseurl}}/navigation/logicgatesgame/xor/" class="button">XOR</a></td>
+         <td><a href="{{site.baseurl}}/navigation/logicgatesgame/nand/" class="button">NAND</a></td>
+         <td><a href="{{site.baseurl}}/navigation/logicgatesgame/nor/" class="button">NOR</a></td>
+         <td><a href="{{site.baseurl}}/navigation/logicgatesgame/xnor/" class="button">XNOR</a></td>
+        </tr>
+   </table>
+</div>
 
 <h2> AND Gate Lesson </h2>
 
@@ -29,4 +25,4 @@ permalink: /navigation/logicgatesgame/and/
 
 <img src="https://www.techtarget.com/rms/onlineimages/diagram1-f.png" alt="AND image" style="width:675px;height:400px;center;">
 
-<h3>Lesson Quiz<3>
+<h3>Lesson Quiz</h3>

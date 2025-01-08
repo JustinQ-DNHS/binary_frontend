@@ -61,5 +61,70 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
 <div id="results"></div>
 </div>
 
-<script>
-</script>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Multiple-Choice Quiz</title>
+    <style>
+        .question {
+            margin-bottom: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        #results {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+  <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById('quiz-form1');
+            const resultsContainer = document.getElementById('results');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                let score = 0;  // Variable to store user's score
+                const questions = form.querySelectorAll('.question');  // All question divs
+                let resultsHTML = "";  // Variable to store the results as HTML
+
+                // Loop through each question to check the answers
+                questions.forEach((question, index) => {
+                    const correctAnswer = question.getAttribute('data-correct-answer'); // Get correct answer from data attribute
+                    const selectedAnswer = question.querySelector(`input[name="q${index + 1}"]:checked`); // Get the selected answer
+
+                    if (selectedAnswer) {
+                        const userAnswer = selectedAnswer.value;
+
+                        // If the user's answer matches the correct answer
+                        if (userAnswer === correctAnswer) {
+                            score++;  // Increment the score
+                            resultsHTML += `<p class="correct">Question ${index + 1}: Correct!</p>`;
+                        } else {
+                            resultsHTML += `<p class="incorrect">Question ${index + 1}: Incorrect!</p>`;
+                        }
+                    } else {
+                        // If no answer was selected for the question
+                        resultsHTML += `<p class="incorrect">Question ${index + 1}: No answer selected!</p>`;
+                    }
+                });
+
+                // Display the total score and results
+                resultsHTML += `<h2>Your score: ${score} out of ${questions.length}</h2>`;
+                resultsContainer.innerHTML = resultsHTML; // Display the results in the #results div
+            });
+        });
+    </script>
+
+</body>
+</html>

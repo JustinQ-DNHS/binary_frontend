@@ -73,20 +73,14 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
     <style>
         .question {
             margin-bottom: 20px;
-        }
-        .correct {
-            color: green;
-        }
-        .incorrect {
-            color: red;
-        }
+       }
         #results {
             margin-top: 20px;
             font-weight: bold;
         }
     </style>
 </head>
-<body>
+<body> 
 
   <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -94,36 +88,33 @@ Each input will be run through an **OR Gate**, answer the questions based on wha
             const resultsContainer = document.getElementById('results');
 
             form.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
+                event.preventDefault(); 
+                let score = 0;
+                const questions = form.querySelectorAll('.question'); 
+                let resultsHTML = ""; 
 
-                let score = 0;  // Variable to store user's score
-                const questions = form.querySelectorAll('.question');  // All question divs
-                let resultsHTML = "";  // Variable to store the results as HTML
-
-                // Loop through each question to check the answers
+                // Check the answers
                 questions.forEach((question, index) => {
-                    const correctAnswer = question.getAttribute('data-correct-answer'); // Get correct answer from data attribute
-                    const selectedAnswer = question.querySelector(`input[name="q${index + 1}"]:checked`); // Get the selected answer
-
+                    const correctAnswer = question.getAttribute('data-correct-answer');
+                    const selectedAnswer = question.querySelector(`input[name="q${index + 1}"]:checked`); 
                     if (selectedAnswer) {
                         const userAnswer = selectedAnswer.value;
 
-                        // If the user's answer matches the correct answer
+                        // Question Results
                         if (userAnswer === correctAnswer) {
-                            score++;  // Increment the score
-                            resultsHTML += `<p class="correct">Question ${index + 1}: Correct!</p>`;
+                            score++; 
+                            resultsHTML += `<p class="correct">Question ${index + 1}: Correct</p>`;
                         } else {
-                            resultsHTML += `<p class="incorrect">Question ${index + 1}: Incorrect!</p>`;
+                            resultsHTML += `<p class="incorrect">Question ${index + 1}: Incorrect</p>`;
                         }
                     } else {
-                        // If no answer was selected for the question
-                        resultsHTML += `<p class="incorrect">Question ${index + 1}: No answer selected!</p>`;
+                        resultsHTML += `<p class="incorrect">Question ${index + 1}: Please select an answer</p>`;
                     }
                 });
 
-                // Display the total score and results
+                // Show Results
                 resultsHTML += `<h2>Your score: ${score} out of ${questions.length}</h2>`;
-                resultsContainer.innerHTML = resultsHTML; // Display the results in the #results div
+                resultsContainer.innerHTML = resultsHTML; 
             });
         });
     </script>

@@ -10,10 +10,11 @@ let currentLevel = "play";
 let previousLevel = "play";
 let correctCounts = 0;
 let lives = 3;
-window.highScore = 0;
 let currentQuestion;
 let userName;
 let isSubmitMode = true;
+
+window.highScore = 0;
 
 import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
 
@@ -46,6 +47,7 @@ function calculateScore() {
 }
 
 function generateQuestion() {
+
   const range = levels[currentLevel].range;
   const formats = levels[currentLevel].formats;
   const number = getRandomNumber(range);
@@ -55,26 +57,37 @@ function generateQuestion() {
   if (currentLevel === "easy" || currentLevel === "medium") {
     [inputFormat, outputFormat] = ["decimal", "binary"];
     if (Math.random() > 0.5) [inputFormat, outputFormat] = [outputFormat, inputFormat];
-  } else {
+  } 
+  
+  else {
     inputFormat = "hexadecimal";
     outputFormat = Math.random() > 0.5 ? "binary" : "decimal";
   }
 
   if (inputFormat === "decimal") {
     questionValue = number.toString(10);
-  } else if (inputFormat === "binary") {
+  } 
+  
+  else if (inputFormat === "binary") {
     questionValue = number.toString(2);
-  } else {
+  } 
+  
+  else {
     questionValue = number.toString(16).toUpperCase();
   }
 
   if (outputFormat === "decimal") {
     correctAnswer = parseInt(number, 10).toString(10);
-  } else if (outputFormat === "binary") {
+  } 
+  
+  else if (outputFormat === "binary") {
     correctAnswer = parseInt(number, 10).toString(2);
-  } else {
+  } 
+  
+  else {
     correctAnswer = parseInt(number, 10).toString(16).toUpperCase();
   }
+
 
   currentQuestion = { questionValue, inputFormat, outputFormat, correctAnswer };
   questionText.textContent = questionValue;
@@ -82,12 +95,15 @@ function generateQuestion() {
   convertToFormat.textContent = outputFormat.charAt(0).toUpperCase() + outputFormat.slice(1);
   message.textContent = "";
   answerInput.value = "";
+
 }
 
 function updateButtonMode() {
   if (isSubmitMode) {
     submitButton.textContent = "Submit";
-  } else {
+  } 
+  
+  else {
     submitButton.textContent = "Next";
   }
 }
@@ -137,6 +153,8 @@ function checkAnswer() {
   updateButtonMode();
 }
 
+
+
 submitButton.addEventListener("click", () => {
   if (currentLevel === "play" && isSubmitMode) return; // Prevent submission in "play" mode on game load
   if (isSubmitMode) {
@@ -145,6 +163,7 @@ submitButton.addEventListener("click", () => {
     goToNextQuestion();
   }
 });
+
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -257,11 +276,22 @@ async function getHighestScoreForLevel(currentLevel) {
     if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 
+    console.log("total data", scores);
+
     const userScores = scores.filter((entry) => String(entry.username) === String(userName));
+
+    console.log("data filtered for user", userScores);
+
     const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
+
+    console.log("data filtered for user and level: ", levelScores);
+
     const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
 
+    console.log("data filtered for user, level, and the highest score: ", highestScore);
+
     highScore = highestScore;
+
     updateHighScoreDisplay();
   } catch (error) {
     console.error('Error fetching scores:', error);

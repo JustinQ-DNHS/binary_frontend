@@ -156,12 +156,11 @@ function showResults(questions) {
     const answerContainers = quizContainer.querySelectorAll('.answers');
     let numCorrect = 0;
 
-    // Compare answers
+    // Grade the quiz
     questions.forEach((currentQuestion, questionNumber) => {
         const answerContainer = answerContainers[questionNumber];
         const selector = `input[name=question${questionNumber}]:checked`;
         const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
         if (userAnswer === currentQuestion.correctAnswer) {
             numCorrect++;
             answerContainers[questionNumber].style.color = 'green';
@@ -170,49 +169,29 @@ function showResults(questions) {
         }
     });
 
-    // Display result
+    // Display the result
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = `${numCorrect} out of ${questions.length}`;
 
-    // Save result to the backend
-    saveQuizResult(numCorrect, questions.length);
-}
+    // Send results to the backend
+    const quizResult = {
+        score: numCorrect,
+        attempt_number: 1, // Update this dynamically if needed
+    };
 
-function saveQuizResult(score, totalQuestions) {
-    const attemptNumber = localStorage.getItem('attemptNumber') || 1; // Get attempt number, default to 1
-    const userId = "user123"; // Replace with dynamic user ID (e.g., retrieved from session or login)
-
-    fetch('/api/save-quiz-result', {
+    fetch('http://127.0.0.1:5000/api/quizgrading', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Replace with your token handling logic
         },
-        body: JSON.stringify({
-            userId,
-            attemptNumber,
-            score,
-            totalQuestions,
-        }),
+        body: JSON.stringify(quizResult),
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Failed to save quiz result');
-            }
-            return response.json();
-        })
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
             console.log('Quiz result saved:', data);
-            // Increment attempt number
-            localStorage.setItem('attemptNumber', Number(attemptNumber) + 1);
         })
-        .catch((error) => {
+        .catch(error => {
             console.error('Error saving quiz result:', error);
         });
 }
-
-document.getElementById('submit').addEventListener('click', () => {
-    showResults(selectedQuestions);
-});
-
-const selectedQuestions = randomizeQuestions(Questions, 5);
-buildQuiz(selectedQuestions);

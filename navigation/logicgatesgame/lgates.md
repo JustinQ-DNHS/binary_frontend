@@ -36,6 +36,7 @@ permalink: /logicgame
             color: blue;
             font-family: Arial, sans-serif; 
             text-align: center;
+        }
     </style>
 </head>
 <body>

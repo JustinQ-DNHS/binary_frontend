@@ -1,16 +1,27 @@
+import { pythonURI, fetchOptions } from '../../assets/js/api/config.js';
+
+const scoresApi = `${pythonURI}/api/general/binaryScores`;
+console.log(scoresApi);
+
 // Function to sort players by score in descending order
 function sortLeaderboard(data) {
-    const array = data.map(item => ({id: item.username, score: item.user_score}));
-    console.log(array);
+    const array = data.map(item => ({ name: item.username, score: item.user_score }));
     return array.sort((a, b) => b.score - a.score);
 }
 
-//Function to display the leaderboard on the webpage
+// Function to display the leaderboard on the webpage
 function displayLeaderboard(players) {
     // Get the leaderboard container from the DOM
     const leaderboardContainer = document.getElementById('leaderboard');
+    if (!leaderboardContainer) {
+        console.error('Leaderboard container not found in the DOM.');
+        return;
+    }
 
- // Create a title for the leaderboard
+    // Clear any existing content in the leaderboard container
+    leaderboardContainer.innerHTML = '';
+
+    // Create a title for the leaderboard
     const title = document.createElement('h2');
     title.textContent = 'Leaderboard:';
     leaderboardContainer.appendChild(title);
@@ -29,57 +40,52 @@ function displayLeaderboard(players) {
     leaderboardContainer.appendChild(ol);
 }
 
-// Function to display the leaderboard
-function displayLeaderboard(players) {
-    console.log('Leaderboard:');
-    players.forEach((player, index) => {
-        console.log(`${index + 1}. ${player.name} - ${player.score} points`);
-    });
-}
+// Function to create a leaderboard table
+function createLeaderboard(sortedPlayers) {
+    const table = document.getElementById('leaderboard-table');
+    if (!table) {
+        console.error('Leaderboard table not found in the DOM.');
+        return;
+    }
 
-// Sort and display the leaderboard
-const sortedPlayers = sortLeaderboard(players);
-displayLeaderboard(sortedPlayers);
+    // Clear existing rows in the table
+    table.innerHTML = '';
 
-function createLeaderboard() {
-    const table = document.getElementById("leaderboard")
-    for (let i = 0; i < 10; i++) {
-        const tr = document.createElement("tr")
-        const tdName = document.createElement("td")
-        const tdScore = document.createElement("td")
-        tdName.innerHTML = sortedPlayers[i].name
-        tdScore.innerHTML = sortedPlayers[i].score
-        tr.append(tdName)
-        tr.append(tdScore)
-        table.append(tr)
+    // Add rows for the top 10 players
+    for (let i = 0; i < Math.min(sortedPlayers.length, 10); i++) {
+        const tr = document.createElement('tr');
+        const tdName = document.createElement('td');
+        const tdScore = document.createElement('td');
+        tdName.textContent = sortedPlayers[i].name;
+        tdScore.textContent = sortedPlayers[i].score;
+        tr.appendChild(tdName);
+        tr.appendChild(tdScore);
+        table.appendChild(tr);
     }
 }
-createLeaderboard()
 
-
-import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
-
-const scoresApi = `${pythonURI}/api/general/binaryScores`;
-
+// Fetch scores and display leaderboard for a specific level
 async function getHighestScoreForLevel(currentLevel) {
-  try {
-    const scoresResponse = await fetch(scoresApi, fetchOptions);
-    if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
-    const scores = await scoresResponse.json();
+    const scoresApi = `${pythonURI}/api/general/binaryScores`;
+    try {
+        const scoresResponse = await fetch(scoresApi, fetchOptions);
+        if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
+        const scores = await scoresResponse.json();
 
-    const difficultyScores = scores.filter((entry) => entry.user_difficulty === currentLevel);
-    console.log(difficultyScores);
-    return difficultyScores;
-
-  } catch (error) {
-    console.error('Error fetching scores:', error);
-  }
+        const difficultyScores = scores.filter((entry) => entry.user_difficulty === currentLevel);
+        return difficultyScores;
+    } catch (error) {
+        console.error('Error fetching scores:', error);
+        return [];
+    }
 }
 
 async function getSortedScoresForLevel(currentLevel) {
     const data = await getHighestScoreForLevel(currentLevel);
     const sortedData = sortLeaderboard(data);
-    console.log(sortedData);
+    displayLeaderboard(sortedData);
+    createLeaderboard(sortedData);
 }
-  
-getSortedScoresForLevel("easy");
+
+// Initialize leaderboard for "easy" level
+getSortedScoresForLevel('easy');

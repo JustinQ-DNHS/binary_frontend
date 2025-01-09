@@ -6,6 +6,12 @@ layout: post
 type: hacks
 comments: true
 ---
+<style>
+    .commentContainer {
+        background-color: green;
+        margin-top: 20px;
+    }
+</style>
 
 ### Comments that exist in the table should show up below in a div
 
@@ -41,6 +47,7 @@ This is a temporary feature until other features are more readily created and th
 
         comments.forEach(comment => {
             const commentContainer = document.createElement('div');
+            commentContainer.classList.add("commentContainer")
             console.log('Successfully created div')
             const commentTitle = document.createElement('p');
             console.log('Successfully created title element')

@@ -30,40 +30,40 @@ This is a temporary feature until other features are more readily created and th
         const commentsResponse = await fetch(commentsAPI, fetchOptions)
         if (!commentsResponse.ok) throw new Error('Failed to fetch comments');
         const comments = await commentsResponse.json();
-        console.log(comments)
+        // console.log(comments)
         return comments
     }
 
     async function buildComments() {
         try {
-        const comments = await fetchComments(); // Ensure comments are fetched properly
-        console.log('Successfully fetched comments:', comments);
+            const comments = await fetchComments(); // Ensure comments are fetched properly
+            // console.log('Successfully fetched comments:', comments);
 
-        // Check if comments are empty or undefined
-        if (!comments || comments.length === 0) {
-            console.log('No comments available to display.');
-            return;
-        }
+            // Check if comments are empty or undefined
+            if (!comments || comments.length === 0) {
+                console.log('No comments available to display.');
+                return;
+            }
 
-        comments.forEach(comment => {
-            const commentContainer = document.createElement('div');
-            commentContainer.classList.add("commentContainer")
-            console.log('Successfully created div')
-            const commentTitle = document.createElement('p');
-            console.log('Successfully created title element')
-            commentTitle.innerHTML = comment.title
-            console.log('Successfully added title content')
-            const commentContent = document.createElement('p');
-            console.log('Successfully created content element')
-            commentContent.innerHTML = comment.content
-            console.log('Successfully added content content')
-            commentContainer.appendChild(commentTitle)
-            console.log('Successfully appended title')
-            commentContainer.appendChild(commentContent)
-            console.log('Successfully appended content')
-            document.getElementById('commentsFeed').appendChild(commentContainer);
-        })}
-        catch {
+            comments.forEach(comment => {
+                const commentContainer = document.createElement('div');
+                commentContainer.classList.add("commentContainer")
+                //console.log('Successfully created div')
+                const commentTitle = document.createElement('p');
+                // console.log('Successfully created title element')
+                commentTitle.innerHTML = comment.title
+                // console.log('Successfully added title content')
+                const commentContent = document.createElement('p');
+                // console.log('Successfully created content element')
+                commentContent.innerHTML = comment.content
+                // console.log('Successfully added content content')
+                commentContainer.appendChild(commentTitle)
+                // console.log('Successfully appended title')
+                commentContainer.appendChild(commentContent)
+                // console.log('Successfully appended content')
+                document.getElementById('commentsFeed').appendChild(commentContainer);
+            });
+        } catch {
             console.error('Error building comments:', error);
         }
     }

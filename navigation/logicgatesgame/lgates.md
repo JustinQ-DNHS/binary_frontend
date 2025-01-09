@@ -25,4 +25,18 @@ permalink: /logicgame
         </table>
   </div>
 
- 
+ <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Gates Lesson</title>
+    <style>
+        h1 {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Logic Gates Lesson!</h1>
+</body>
+</html>

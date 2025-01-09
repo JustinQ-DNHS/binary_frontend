@@ -107,6 +107,7 @@ function checkAnswer() {
 
   if (userAnswer === currentQuestion.correctAnswer) {
     correctCounts++;
+    totalScoreDisplay.textContent = calculateScore(); // Update score display
 
     if (correctCounts > highScore) {
       highScore = correctCounts;

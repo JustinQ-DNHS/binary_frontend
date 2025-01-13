@@ -26,11 +26,11 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        // Show Results
+        // show the user the results
         resultsHTML += `<h2>Your score: ${score} out of ${questions.length}</h2>`;
         resultsContainer.innerHTML = resultsHTML;
 
-        // ✅ Send score to the backend
+        // send to backend
         try {
             const response = await fetch('http://localhost:8887/api/lgate', {
                 method: 'POST',

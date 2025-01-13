@@ -1,3 +1,11 @@
+---
+layout: page
+title: Binary Converter 
+search_exclude: true
+permalink: /converter/
+---
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">

@@ -29,7 +29,7 @@ permalink: /navigation/logicgatesgame/nand/
 <h3>Lesson Quiz</h3>
 Each input will be run through an <b>NAND Gate</b>, answer the questions based on what the output will be.
 
-<form id="quiz4">
+<form id="quiz">
   <div class="question" c-answer="1">
     <p>Input A = 1, Input B = 0</p>
     <label>
@@ -83,42 +83,8 @@ Each input will be run through an <b>NAND Gate</b>, answer the questions based o
 </head>
 <body> 
 
-  <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const form = document.getElementById('quiz4');
-            const resultsContainer = document.getElementById('results');
-
-            form.addEventListener('submit', function(event) {
-                event.preventDefault(); 
-                let score = 0;
-                const questions = form.querySelectorAll('.question'); 
-                let resultsHTML = ""; 
-
-                // Check the answers
-                questions.forEach((question, index) => {
-                    const correctAnswer = question.getAttribute('c-answer');
-                    const selectedAnswer = question.querySelector(`input[name="q${index + 1}"]:checked`); 
-                    if (selectedAnswer) {
-                        const userAnswer = selectedAnswer.value;
-
-                        // Question Results
-                        if (userAnswer === correctAnswer) {
-                            score++; 
-                            resultsHTML += `<p class="correct">Question ${index + 1}: Correct</p>`;
-                        } else {
-                            resultsHTML += `<p class="incorrect">Question ${index + 1}: Incorrect</p>`;
-                        }
-                    } else {
-                        resultsHTML += `<p class="incorrect">Question ${index + 1}: Please select an answer</p>`;
-                    }
-                });
-
-                // Show Results
-                resultsHTML += `<h2>Your score: ${score} out of ${questions.length}</h2>`;
-                resultsContainer.innerHTML = resultsHTML; 
-            });
-        });
-    </script>
+ <script type="module" src="{{site.baseurl}}/navigation/logicgatesgame/lgatesjs.js"></script>
+<script type="module" src="{{site.baseurl}}/assets/js/api/config.js"></script>
 
 </body>
 </html>

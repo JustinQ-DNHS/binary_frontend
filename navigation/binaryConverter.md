@@ -77,25 +77,11 @@ permalink: /converter/
     </table>
 </div>
 <script>
-    document.getElementById('convert-button').addEventListener('click', () => {
-        const decimalInput = document.getElementById('decimal-input');
-        const decimalValue = parseInt(decimalInput.value, 10);
-        if (isNaN(decimalValue)) {
-            alert('Please enter a valid decimal number.');
-            return;
+    import { pythonURI, fetchOptions } from '../assets/js/api/config.js'
+    async function fetchdatatoconvert() {
+        try {
+            fetch(pythonURI + "/api/binaryConverter",
+            )
         }
-        const binaryValue = decimalValue.toString(2);
-        addRowToTable(decimalValue, binaryValue);
-        // Clear input field
-        decimalInput.value = '';
-        });
-    function addRowToTable(decimal, binary) {
-        const tableBody = document.querySelector('#binary-table tbody');
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${decimal}</td>
-            <td>${binary}</td>
-        `;
-        tableBody.appendChild(row);
-    }
+    } 
 </script>

@@ -74,8 +74,7 @@ permalink: /converter/
         <tbody>
             <!-- Rows will be dynamically inserted here -->
         </tbody>
-    </table>
-</div>
+    </table>b
 <script>
     import { pythonURI, fetchOptions } from '../assets/js/api/config.js'
     async function fetchdatatoconvert() {

@@ -56,3 +56,48 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+async function create_User() {
+    // Collect form data
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const phone = document.getElementById('phone_num').value;
+
+    // Basic validation
+    if (!name || !email || !password || !phone) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    // Prepare data to send (matching backend requirements: name, score, quiz_id)
+    const data = {
+        name: name,
+        score: "0",          // Default score (modify as needed)
+        quiz_id: "1"         // Default quiz ID (modify as needed)
+    };
+
+    try {
+        // Send POST request to the backend
+        const response = await fetch('http://localhost:8887/api/lgate/lgate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_JWT_TOKEN'  // Replace with a valid token
+            },
+            body: JSON.stringify(data)
+        });
+
+        // Handle response
+        if (response.ok) {
+            const result = await response.json();
+            alert('Quiz created successfully: ' + JSON.stringify(result));
+        } else {
+            const error = await response.json();
+            alert('Error: ' + error.message);
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        alert('Error connecting to the server.');
+    }
+}

@@ -100,7 +100,7 @@ permalink: /navigation/logicgatesgame/nor/
 <p>The NOR (NOT OR) gate is a combination OR gate followed by an inverter. Its output is true if both inputs are false. Otherwise, the output is false.<p>
 
 
-<img src="https://www.techtarget.com/rms/onlineimages/diagram6-f.png" alt="Porsche" style="width:600px;height:400px;">
+<img src="https://www.techtarget.com/rms/onlineimages/diagram6-f.png" alt="Porsche">
 
 <h3>Lesson Quiz</h3>
 Each input will be run through an <b>NOR Gate</b>, answer the questions based on what the output will be.

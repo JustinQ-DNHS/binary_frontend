@@ -100,7 +100,7 @@ permalink: /navigation/logicgatesgame/xnor/
 <p>The XNOR (exclusive-NOR) gate is a combination of an XOR gate followed by an inverter. Its output is true if the inputs are the same and false if the inputs are different.<p>
 
 
-<img src="https://www.techtarget.com/rms/onlineimages/diagram7-f.png" alt="Porsche" style="width:600px;height:400px;">
+<img src="https://www.techtarget.com/rms/onlineimages/diagram7-f.png" alt="Porsche">
 
 <h3>Lesson Quiz</h3>
 Each input will be run through an <b>XNOR Gate</b>, answer the questions based on what the output will be.

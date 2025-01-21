@@ -100,7 +100,7 @@ permalink: /navigation/logicgatesgame/and/
 
 <div>
 
-<img src="https://www.techtarget.com/rms/onlineimages/diagram1-f.png" alt="AND image" style="width:675px;height:400px;center;">
+<img src="https://www.techtarget.com/rms/onlineimages/diagram1-f.png" alt="AND image">
 
 <h3>Lesson Quiz</h3>
 Each input will be run through an <b>AND Gate</b>, answer the questions based on what the output will be.

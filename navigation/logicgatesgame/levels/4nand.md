@@ -100,7 +100,7 @@ permalink: /navigation/logicgatesgame/nand/
 <p>The NAND (Negated AND) gate operates as an AND gate followed by a NOT gate. It acts in the manner of the logical operation "and" followed by negation. The output is false if both inputs are true. Otherwise, the output is true. Another way to visualize it is that a NAND gate inverts the output of an AND gate. The NAND gate symbol is an AND gate with the circle of a NOT gate at the output.</p>
 
 
-<img src="https://www.techtarget.com/rms/onlineimages/diagram5-f.png" alt="Porsche" style="width:600px;height:400px;">
+<img src="https://www.techtarget.com/rms/onlineimages/diagram5-f.png" alt="Porsche">
 
 <h3>Lesson Quiz</h3>
 Each input will be run through an <b>NAND Gate</b>, answer the questions based on what the output will be.

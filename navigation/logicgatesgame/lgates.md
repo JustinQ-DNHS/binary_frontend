@@ -25,6 +25,31 @@ permalink: /logicgame
         </table>
   </div>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(150deg, #acdfec, #50b2cb, #1d7d96, #124c6c); /* 180deg for top-to-bottom gradient */
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+        h2, h3 {
+            color: rgb(255, 80, 80);
+            border-bottom: 4px solid #000000;
+            font-weight: bold; /* Bold text */
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8),  /* White shadow */
+                         2px 2px 0 rgba(255, 255, 255, 0.6); /* Lighter shadow */
+            border-radius: 10px; /* Rounded effect */
+            padding: 10px; /* Space around the text */
+        }
 
 <html lang="en">
 <head>
@@ -37,10 +62,16 @@ permalink: /logicgame
             font-family: Arial, sans-serif; 
             text-align: center;
         }
+        h4 {
+            color: white;
+            font-family: Arials, sans-serif;
+            text-align: center
+        }
     </style>
 </head>
 <body>
     <h1>Welcome to the Logic Gates Lesson!</h1>
+    <h4>Input your name to save your scores!</h4>
 </body>
 </html>
 
@@ -48,17 +79,9 @@ permalink: /logicgame
 <table>
     <tr>
         <th><label for="name">Name</label></th>
-        <th><label for="email">Email</label></th>
-        <th><label for="password">Password</label></th>
-        <th><label for="phone">Phone</label></th>
     </tr>
     <tr>
         <td><input type="text" name="name" id="name" required></td>
-        <td><input type="email" name="email" id="email" placeholder="abc@xyz.org" required></td>
-        <td><input type="password" name="password" id="password" required></td>
-        <td><input type="tel" name="phone_num" id="phone_num"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            placeholder="999-999-9999"></td>
         <td ><button onclick="create_User()">Create</button></td>
     </tr>
 </table>

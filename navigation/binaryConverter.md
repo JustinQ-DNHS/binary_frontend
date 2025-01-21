@@ -5,7 +5,7 @@ search_exclude: true
 permalink: /converter/
 ---
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -77,8 +77,7 @@ permalink: /converter/
 </head>
 <body>
 
- <h1>Binary Converter</h1>
-    <div class="container">
+<div class="container">
         <p>Enter a decimal number to convert it to binary:</p>
         <input type="number" id="decimal-input" placeholder="Enter a decimal number" />
         <button id="convert-button">Convert to Binary</button>

@@ -323,6 +323,61 @@ async function createScores(inputName, inputScore, inputDifficulty) {
   }
 }
 
+
+async function deleteScores(inputId) {
+
+  const scoreData = {
+    id: inputId
+  }
+
+  try {
+    const response = await fetch(`${pythonURI}/api/binaryLearningGameScores`, {
+      ...fetchOptions,
+      method: 'DELETE',
+      body: JSON.stringify(scoreData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete score: ${response.statusText}`);
+    }
+  } 
+  
+  catch (error) {
+    console.error('Error deleting score:', error);
+    alert('Error deleting score: ' + error.message);
+  }
+}
+
+async function updateScores(inputId, inputScore, inputDifficulty) {
+  const scoreData = {
+    id: inputId,
+    user_score: inputScore,
+    user_difficulty: inputDifficulty
+  }
+
+  try {
+    const response = await fetch(`${pythonURI}/api/binaryLearningGameScores`, {
+      ...fetchOptions,
+      method: 'PUT',
+      body: JSON.stringify(scoreData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update score: ${response.statusText}`);
+    }
+  } 
+  
+  catch (error) {
+    if (error = "Forbidden") {
+      alert("You do not have access to perform that function");
+    }
+    else {
+      console.error('Error updating score:', error);
+      alert('Error updating score: ' + error.message);
+    }
+  }
+}
+
 // Close rules popup
 rulesButton.addEventListener("click", function () {
   rulesPopup.classList.add("visible");

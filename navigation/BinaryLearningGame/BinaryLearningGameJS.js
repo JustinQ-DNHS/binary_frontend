@@ -139,7 +139,7 @@ function checkAnswer() {
     updateHearts();
 
     if (lives === 0) {
-      setHighestScoreForLevel();
+      createScores(userName, highScore, currentLevel);
       gameOver();
       return;
     }
@@ -258,14 +258,25 @@ function updateHearts() {
 document.querySelectorAll(".level-button").forEach((button) => {
   button.addEventListener("click", async (event) => {
     const level = event.target.dataset.level;
-    await getHighestScoreForLevel(level);
+    const scores = await getScores(level);
+
+    const userScores = scores.filter((entry) => String(entry.username) === String(userName));
+
+    const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
+
+    highScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
+
+    updateHighScoreDisplay();
+
   });
 });
 
 const currentUserApi = `${pythonURI}/api/id`;
 const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
 
-async function getHighestScoreForLevel(currentLevel) {
+
+
+async function getScores(currentLevel) {
   try {
     const currentUserResponse = await fetch(currentUserApi, fetchOptions);
     if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
@@ -276,34 +287,21 @@ async function getHighestScoreForLevel(currentLevel) {
     if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 
-    console.log("total data", scores);
+    return(scores);
 
-    const userScores = scores.filter((entry) => String(entry.username) === String(userName));
-
-    console.log("data filtered for user", userScores);
-
-    const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
-
-    console.log("data filtered for user and level: ", levelScores);
-
-    const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
-
-    console.log("data filtered for user, level, and the highest score: ", highestScore);
-
-    highScore = highestScore;
-
-    updateHighScoreDisplay();
   } catch (error) {
     console.error('Error fetching scores:', error);
     return null;
   }
 }
 
-async function setHighestScoreForLevel() {
+
+async function createScores(inputName, inputScore, inputDifficulty) {
+  
   const scoreData = {
-    username: userName,
-    score: highScore,
-    difficulty: currentLevel,
+    username: inputName,
+    score: inputScore,
+    difficulty: inputDifficulty,
   };
 
   try {

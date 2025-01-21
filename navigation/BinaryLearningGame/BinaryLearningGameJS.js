@@ -258,7 +258,7 @@ function updateHearts() {
 document.querySelectorAll(".level-button").forEach((button) => {
   button.addEventListener("click", async (event) => {
     const level = event.target.dataset.level;
-    const scores = await getScores(level);
+    const scores = await readScores(level);
 
     const userScores = scores.filter((entry) => String(entry.username) === String(userName));
 
@@ -276,7 +276,7 @@ const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
 
 
 
-async function getScores(currentLevel) {
+async function readScores(currentLevel) {
   try {
     const currentUserResponse = await fetch(currentUserApi, fetchOptions);
     if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
@@ -297,7 +297,7 @@ async function getScores(currentLevel) {
 
 
 async function createScores(inputName, inputScore, inputDifficulty) {
-  
+
   const scoreData = {
     username: inputName,
     score: inputScore,

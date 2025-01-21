@@ -6,7 +6,6 @@ permalink: /converter/
 ---
 
 
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,8 +13,8 @@ permalink: /converter/
     <title>Binary Converter</title>
     <style>
         body {
-            background-color: #8B0000; /* Darker red background */
-            color: #ffffff;
+            background-color:rgb(162, 16, 16) !important; /* Red background */
+            color:rgb(162, 17, 17);
             font-family: Arial, sans-serif;
             min-height: 100vh;
             margin: 0;
@@ -79,61 +78,57 @@ permalink: /converter/
 <body>
 
 <div class="container">
-    <h1>Binary Converter</h1>
-    <p>Enter a decimal number to convert it to binary:</p>
-    <input type="number" id="decimal-input" placeholder="Enter a decimal number" />
-    <button id="convert-button">Convert to Binary</button>
-
-    <table id="binary-table">
-        <thead>
-            <tr>
-                <th>Decimal</th>
-                <th>Binary</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be dynamically inserted here -->
-        </tbody>
-    </table>
-</div>
+        <p>Enter a decimal number to convert it to binary:</p>
+        <input type="number" id="decimal-input" placeholder="Enter a decimal number" />
+        <button id="convert-button">Convert to Binary</button>
+        
+<table id="binary-table">
+            <thead>
+                <tr>
+                    <th>Decimal</th>
+                    <th>Binary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
 
 <script>
-    // Function to handle the conversion from decimal to binary
-    function convertToBinary() {
-        const decimalInput = document.getElementById('decimal-input').value;
-        if (decimalInput === "") {
-            alert("Please enter a decimal number!");
-            return;
+        // Function to handle the conversion from decimal to binary
+        function convertToBinary() {
+            const decimalInput = document.getElementById('decimal-input').value;
+            if (decimalInput === "") {
+                alert("Please enter a decimal number!");
+                return;
+            }
+
+            const decimalNumber = parseInt(decimalInput);
+            if (isNaN(decimalNumber) || decimalNumber < 0) {
+                alert("Please enter a valid positive decimal number.");
+                return;
+            }
+
+            // Convert decimal to binary
+            const binaryNumber = decimalNumber.toString(2);
+
+            // Create a new row in the table to display the result
+            const tableBody = document.querySelector('#binary-table tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${decimalNumber}</td>
+                <td>${binaryNumber}</td>
+            `;
+            tableBody.appendChild(newRow);
+
+            // Optionally, clear the input field after conversion
+            document.getElementById('decimal-input').value = '';
         }
 
-        const decimalNumber = parseInt(decimalInput);
-        if (isNaN(decimalNumber) || decimalNumber < 0) {
-            alert("Please enter a valid positive decimal number.");
-            return;
-        }
-
-        // Convert decimal to binary
-        const binaryNumber = decimalNumber.toString(2);
-
-        // Clear the previous table rows before adding new one (optional)
-        const tableBody = document.querySelector('#binary-table tbody');
-        tableBody.innerHTML = '';
-
-        // Create a new row in the table to display the result
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${decimalNumber}</td>
-            <td>${binaryNumber}</td>
-        `;
-        tableBody.appendChild(newRow);
-
-        // Optionally, clear the input field after conversion
-        document.getElementById('decimal-input').value = '';
-    }
-
-    // Attach the event listener to the convert button
-    document.getElementById('convert-button').addEventListener('click', convertToBinary);
-</script>
+        // Attach the event listener to the convert button
+        document.getElementById('convert-button').addEventListener('click', convertToBinary);
+    </script>
 
 </body>
 </html>

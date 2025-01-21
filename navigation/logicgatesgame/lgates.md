@@ -89,7 +89,7 @@ permalink: /logicgame
 
 <body>
     <h1>Welcome to the Logic Gates Lesson!</h1>
-    <h4>Input your name to save your scores!</h4>
+    <h4>Input your name and score to save them!</h4>
 </body>
 </html>
 
@@ -97,9 +97,11 @@ permalink: /logicgame
 <table>
     <tr>
         <th><label for="name">Name</label></th>
+        <th><label for="score">Score</label></th>
     </tr>
     <tr>
         <td><input type="text" name="name" id="name" required></td>
+        <td><input type="text" score="score" id="score" required></td>
         <td ><button onclick="create_User()">Create</button></td>
     </tr>
 </table>

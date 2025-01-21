@@ -42,12 +42,6 @@ permalink: /navigation/logicgatesgame/or/
             border-radius: 10px; /* Rounded effect */
             padding: 10px; /* Space around the text */
         }
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
         h1 {
             color: blue;
             font-family: Arial, sans-serif; 
@@ -90,11 +84,18 @@ permalink: /navigation/logicgatesgame/or/
             max-height: 1000px; /* Adjust maximum height as desired */
             object-fit: contain;
        }
+        p {
+            color: white;
+            font-family: Arials, sans-serif;
+            margin-top: 4px;
+            margin-bottom: 4px;
+       }
+       
     </style>
 </head>
 
 <h3>OR Gate lesson</h3>
-The OR gate gets its name from behaving like the logical inclusive "or." The output is true if one or both of the inputs are true. If both inputs are false, then the output is false. In other words, for the output to be 1, at least one input must be 1.
+<p>The OR gate gets its name from behaving like the logical inclusive "or." The output is true if one or both of the inputs are true. If both inputs are false, then the output is false. In other words, for the output to be 1, at least one input must be 1.</P>
 
 <div>
   <img src="https://www.techtarget.com/rms/onlineimages/diagram2-f.png" alt="OR image"> 

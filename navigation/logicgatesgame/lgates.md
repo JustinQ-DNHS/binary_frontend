@@ -67,6 +67,23 @@ permalink: /logicgame
             font-family: Arials, sans-serif;
             text-align: center
         }
+        td {
+            background-color: transparent !important; /* Remove background color */
+            padding: 0 !important; /* Remove padding */
+            border: none !important; /* Remove borders from table cells */
+        }
+        .button {
+            background-color: black; /* Light red */
+            color: white !important; /* White text */
+            text-decoration: none;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            display: inline-block;
+            padding: 15px 20px;
+            border-radius: 20px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            text-align: center;
+        }
     </style>
 </head>
 <body>

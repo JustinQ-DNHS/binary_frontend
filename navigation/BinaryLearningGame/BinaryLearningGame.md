@@ -84,6 +84,25 @@ permalink: /binaryGame
     </div>
 </div>
 
+<div class="popup" id="admin-scores-popup">
+    <div class="popup-content">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Scores</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-table">
+          <!-- javascript generated data -->
+        </tbody>
+      </table>
+      <button>Close</button>
+    </div>
+</div>
+
 <div class="popup" id="rules-popup">
     <div class="popup-content">
         <h2>Game Rules</h2>

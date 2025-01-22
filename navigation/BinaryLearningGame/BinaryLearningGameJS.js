@@ -148,7 +148,7 @@ function checkAnswer() {
     updateHearts();
 
     if (lives === 0) {
-      createScores(userName, highScore, currentLevel);
+      createScores(userName, correctCounts, currentLevel);
       gameOver();
       return;
     }

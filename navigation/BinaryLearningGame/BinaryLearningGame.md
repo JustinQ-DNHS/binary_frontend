@@ -67,7 +67,8 @@ permalink: /binaryGame
 <button id="scores-btn" class="rules-button">Scores</button>
 
 <div class="popup" id="scores-popup">
-    <div class="popup-content">
+  <div class="popup-content">
+    <div class="table-container">
       <table>
         <thead>
           <tr>
@@ -77,15 +78,17 @@ permalink: /binaryGame
           </tr>
         </thead>
         <tbody id="table">
-          <!-- javascript generated data -->
+          <!-- JavaScript generated data -->
         </tbody>
       </table>
-      <button>Close</button>
     </div>
+    <button id="close-scores-btn">Close</button>
+  </div>
 </div>
 
 <div class="popup" id="admin-scores-popup">
-    <div class="popup-content">
+  <div class="popup-content">
+    <div class="table-container">
       <table>
         <thead>
           <tr>
@@ -96,11 +99,12 @@ permalink: /binaryGame
           </tr>
         </thead>
         <tbody id="admin-table">
-          <!-- javascript generated data -->
+          <!-- JavaScript generated data -->
         </tbody>
       </table>
-      <button>Close</button>
     </div>
+    <button id="close-admin-scores-btn">Close</button>
+  </div>
 </div>
 
 <div class="popup" id="rules-popup">

@@ -30,9 +30,14 @@ const submitButton = document.getElementById("submit-answer");
 const chimeSound = document.getElementById("chime-sound");
 const alarmSound = document.getElementById("alarm-sound");
 const gameOverSound = document.getElementById("gameOver-sound");
+
 const rulesButton = document.getElementById("rules-btn");
 const rulesPopup = document.getElementById("rules-popup");
 const closeButton = rulesPopup.querySelector("button");
+
+const scoresButton = document.getElementById("scores-btn");
+const scoresPopup = document.getElementById("scores-popup");
+const closeScoresButton = scoresPopup.querySelector("button");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
@@ -257,8 +262,7 @@ function updateHearts() {
 
 document.querySelectorAll(".level-button").forEach((button) => {
   button.addEventListener("click", async (event) => {
-    const level = event.target.dataset.level;
-    const scores = await readScores(level);
+    const scores = await readScores();
 
     const userScores = scores.filter((entry) => String(entry.username) === String(userName));
 
@@ -387,3 +391,74 @@ closeButton.addEventListener("click", function () {
   rulesPopup.classList.remove("visible");
 });
 
+
+scoresButton.addEventListener("click", function () {
+  getScoreTableData();
+  scoresPopup.classList.add("visible");
+});
+
+closeScoresButton.addEventListener("click", function () {
+  scoresPopup.classList.remove("visible");
+});
+
+async function getScoreTableData() {
+
+  const scores = await readScores();
+
+  const userScores = scores.filter((entry) => String(entry.username) === String(userName));
+
+  const table = document.getElementById("table");
+
+    // Clear the table before adding new rows
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+
+userScores.forEach(score => {
+    // build a row for each user
+    const tr = document.createElement("tr");
+
+    // td's to build out each column of data
+    const scores = document.createElement("td");
+    const difficulty = document.createElement("td");
+    const action = document.createElement("td");
+           
+    // add content from user data          
+    scores.innerHTML = score.user_score; 
+    difficulty.innerHTML = score.user_difficulty; 
+
+    // add action for update button
+    var updateBtn = document.createElement('input');
+    updateBtn.type = "button";
+    updateBtn.className = "button";
+    updateBtn.value = "Update";
+    updateBtn.style = "margin-right:16px";
+    updateBtn.onclick = function () {
+      const updatedScore = prompt("Updated score");
+      const updatedDifficulty = prompt("Updated difficulty");
+      updateScores(score.id, updatedScore, updatedDifficulty);
+      getScoreTableData();
+    };
+    action.appendChild(updateBtn);
+
+    // add action for delete button
+    var deleteBtn = document.createElement('input');
+    deleteBtn.type = "button";
+    deleteBtn.className = "button";
+    deleteBtn.value = "Delete";
+    deleteBtn.style = "margin-right:16px"
+    deleteBtn.onclick = function () {
+      deleteScores(score.id);
+      getScoreTableData();
+    };
+    action.appendChild(deleteBtn);  
+
+    // add data to row
+    tr.appendChild(scores);
+    tr.appendChild(difficulty);
+    tr.appendChild(action);
+
+    // add row to table
+    table.appendChild(tr);
+  });
+}

@@ -115,8 +115,8 @@ function getRandomInt(max) {
 /*
 *   questions<array>, numQuestions<integer>
 *
-*   Example: randomizeQuestions([list of 10 questions], 4) 
-*   returns 4 out of 10 questions
+*   Example: randomizeQuestions([list of 10 questions], 5) 
+*   returns 5 out of 10 questions
 */
 function randomizeQuestions(questions, numQuestions) {
     const shuffledQuestions = [...questions];
@@ -130,23 +130,29 @@ function randomizeQuestions(questions, numQuestions) {
 
 // Builds the quiz
 function buildQuiz(questions) {
+    // Finds quiz container
     const quizContainer = document.getElementById('quiz');
     const output = [];
+    // Loops through each question, with currentQuestion being the text and questionNumber being the index
     questions.forEach((currentQuestion, questionNumber) => {
+        console.log(currentQuestion.answers)
         const answers = [];
-        for (letter in currentQuestion.answers) {
+        // Loops through the questiuon's answers and adds a piece of text to an array
+        for (const [letter, answer] of Object.entries(currentQuestion.answers)) {
             answers.push(
                 `<label>
                     <input type="radio" name="question${questionNumber}" value="${letter}">
-                    ${letter} : ${currentQuestion.answers[letter]}
+                    ${letter}: ${answer}
                 </label>`
             );
         }
+        // Adds the question to the code, appewnding the answers to the end
         output.push(
             `<div class="question">${currentQuestion.question}</div>
             <div class="answers">${answers.join('')}</div>`
         );
     });
+    // Sets the innerHTML to the output array and joins it to wghat currently exists
     quizContainer.innerHTML = output.join('');
 }
 
@@ -176,5 +182,7 @@ document.getElementById('submit').addEventListener('click', () => {
     showResults(selectedQuestions);
 });
 
+window.onload = () => {
 const selectedQuestions = randomizeQuestions(Questions, 5); 
 buildQuiz(selectedQuestions);
+}

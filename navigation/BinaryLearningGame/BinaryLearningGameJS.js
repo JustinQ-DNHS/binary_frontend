@@ -13,6 +13,7 @@ let lives = 3;
 let currentQuestion;
 let userName;
 let isSubmitMode = true;
+let isUserAdmin = false;
 
 window.highScore = 0;
 
@@ -38,6 +39,9 @@ const closeButton = rulesPopup.querySelector("button");
 const scoresButton = document.getElementById("scores-btn");
 const scoresPopup = document.getElementById("scores-popup");
 const closeScoresButton = scoresPopup.querySelector("button");
+
+const adminScoresPopup = document.getElementById("admin-scores-popup");
+const closeAdminScoresButton = adminScoresPopup.querySelector("button");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
@@ -225,6 +229,8 @@ window.onload = function () {
 
   generateQuestion();
   totalScoreDisplay.textContent = calculateScore();
+
+  isAdmin();
 };
 
 function restartGame() {
@@ -278,7 +284,27 @@ document.querySelectorAll(".level-button").forEach((button) => {
 const currentUserApi = `${pythonURI}/api/id`;
 const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
 
+async function isAdmin() {
 
+  try {
+    const currentUserResponse = await fetch(`${pythonURI}/api/user`, fetchOptions);
+    if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
+    const currentUser = await currentUserResponse.json();
+
+    if (currentUser.role == "Admin") {
+      isUserAdmin = true;
+      return
+    }
+
+    else {
+      return
+    }
+  } catch (error) {
+    console.error('Error retrieving user:', error);
+    alert('Error retrieving user: ' + error.message);
+    return
+  }
+}
 
 async function readScores(currentLevel) {
   try {
@@ -393,8 +419,18 @@ closeButton.addEventListener("click", function () {
 
 
 scoresButton.addEventListener("click", function () {
-  getScoreTableData();
-  scoresPopup.classList.add("visible");
+  if (isUserAdmin) {
+    getScoreTableData();
+    adminScoresPopup.classList.add("visible");
+  }
+  else {
+    getScoreTableData();
+    scoresPopup.classList.add("visible");
+  }
+});
+
+closeAdminScoresButton.addEventListener("click", function () {
+  adminScoresPopup.classList.remove("visible");
 });
 
 closeScoresButton.addEventListener("click", function () {
@@ -405,9 +441,23 @@ async function getScoreTableData() {
 
   const scores = await readScores();
 
-  const userScores = scores.filter((entry) => String(entry.username) === String(userName));
+  let userScores = scores;
 
-  const table = document.getElementById("table");
+  if (!isUserAdmin) {
+    userScores = scores.filter((entry) => String(entry.username) === String(userName));
+  }
+  else {
+    userScores = scores;
+  }
+
+  let table;
+
+  if (isUserAdmin) {
+    table = document.getElementById("admin-table");
+  }
+  else {
+    table = document.getElementById("table");
+  }
 
     // Clear the table before adding new rows
   while (table.firstChild) {
@@ -419,27 +469,55 @@ userScores.forEach(score => {
     const tr = document.createElement("tr");
 
     // td's to build out each column of data
+    let usernamesTable;
+    if (isUserAdmin) {
+      usernamesTable = document.createElement("td");
+    }
     const scores = document.createElement("td");
     const difficulty = document.createElement("td");
     const action = document.createElement("td");
            
-    // add content from user data          
+    // add content from user data
+    if (isUserAdmin){
+      usernamesTable.innerHTML = score.username;
+    }          
     scores.innerHTML = score.user_score; 
     difficulty.innerHTML = score.user_difficulty; 
 
-    // add action for update button
-    var updateBtn = document.createElement('input');
-    updateBtn.type = "button";
-    updateBtn.className = "button";
-    updateBtn.value = "Update";
-    updateBtn.style = "margin-right:16px";
-    updateBtn.onclick = function () {
-      const updatedScore = prompt("Updated score");
-      const updatedDifficulty = prompt("Updated difficulty");
-      updateScores(score.id, updatedScore, updatedDifficulty);
-      getScoreTableData();
-    };
-    action.appendChild(updateBtn);
+    // add action for update button if it is an admin
+    if (isUserAdmin) {
+      var updateBtn = document.createElement('input');
+      updateBtn.type = "button";
+      updateBtn.className = "button";
+      updateBtn.value = "Update";
+      updateBtn.style = "margin-right:16px";
+      updateBtn.onclick = function () {
+        let updatedScore = prompt("Updated score");
+        while (true) {
+          if (isNaN(updatedScore)) {
+            updatedScore = prompt("Please enter a number");
+          }
+          else if (updatedScore < 0) {
+            updatedScore = prompt("Please enter a number above 0");
+          }
+          else {
+            break
+          }
+        }
+        let updatedDifficulty = prompt("Updated difficulty");
+        while (true) {
+          if (updatedDifficulty == "easy" || updatedDifficulty == "medium" || updatedDifficulty == "hard" || updatedDifficulty == "extreme" || updatedDifficulty == "") {
+            break
+          }
+          else {
+            updatedDifficulty = prompt("please enter a valid difficulty");
+          }
+        }
+        updateScores(score.id, updatedScore, updatedDifficulty);
+        getScoreTableData();
+      };
+      action.appendChild(updateBtn);
+    }
 
     // add action for delete button
     var deleteBtn = document.createElement('input');
@@ -454,6 +532,9 @@ userScores.forEach(score => {
     action.appendChild(deleteBtn);  
 
     // add data to row
+    if (isUserAdmin) {
+      tr.appendChild(usernamesTable);
+    }
     tr.appendChild(scores);
     tr.appendChild(difficulty);
     tr.appendChild(action);

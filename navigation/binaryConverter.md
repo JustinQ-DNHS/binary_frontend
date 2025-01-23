@@ -25,7 +25,7 @@ permalink: /converter/
         }
         h1 {
             text-align: center;
-            color: #FFFFFF;
+            color:rgb(227, 219, 219);
         }
         .container {
             max-width: 600px;

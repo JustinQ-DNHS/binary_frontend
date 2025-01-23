@@ -170,7 +170,8 @@ permalink: /binary_history/
                 body: JSON.stringify(eventData) // Send event data in the body of the request
             })
             .then(response => { // Handle the response
-                if (response.ok) { // Check if the response is there
+                if (response.ok) {
+                    alert("Saved successfully!") // Check if the response is there
                     return response.json(); // Parse the JSON if response is there
                 }
                 throw new Error("Network response failed"); // Handle error if response is not there

@@ -85,7 +85,9 @@ permalink: /binary_history/
 <body>
     <div id="binary-history"></div>
 
-<h2>Add a Binary History Event</h2>
+<h2>Add a Binary History Event!</h2>
+<p>Make sure it is appropriate and relavent to the topic, otherwise it will get deleted...</p>
+<p>NOTE: It does not have to be directly related to binary, it can be related to one of the default events.</p>
 <textarea placeholder="Enter the year" id="eventYear" style="height: 30px; width: 200px;"></textarea>
 <p></p>
 <textarea placeholder="Enter the event description here..." id="eventDescription"></textarea>

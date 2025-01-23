@@ -1,3 +1,10 @@
+  /* Disable scrolling on the entire page */
+  html, body {
+    overflow: hidden;
+    height: 100%;
+  }
+
+
 :root {
     --easy: #8bd39a;
     --medium: #ffc85e;
@@ -340,4 +347,71 @@ header {
 
 #rules-popup #close-rules-btn {
     margin-top: 20px;
+}
+
+.popup .table-container {
+    max-height: 500px; /* Adjust the height as needed */
+    overflow-y: auto;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+
+/* Styles for the tables in the scores popups */
+.popup table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup table th,
+.popup table td {
+    padding: 12px 15px;
+    border: none;
+    color: black;
+}
+
+.popup table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.popup table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.popup table tr:hover {
+    background-color: #ddd;
+}
+
+.popup table td {
+    background-color: white;
+    color: black;
+}
+
+.popup table td .button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    background-color: #006400 !important; /* Dark green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.popup table td .button:hover {
+    background-color: #004d00 !important; /* Slightly darker green */
+    transform: scale(1.05); /* Expand slightly */
+}
+
+.popup table td .button:active {
+    background-color: #003300 !important; /* Even darker green */
+    transform: scale(0.95); /* Shrink slightly */
 }

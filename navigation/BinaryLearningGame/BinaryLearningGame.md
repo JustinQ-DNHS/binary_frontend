@@ -64,6 +64,48 @@ permalink: /binaryGame
 <br>
 <br>
 <button id="rules-btn" class="rules-button">Rules</button>
+<button id="scores-btn" class="rules-button">Scores</button>
+
+<div class="popup" id="scores-popup">
+  <div class="popup-content">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Scores</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table">
+          <!-- JavaScript generated data -->
+        </tbody>
+      </table>
+    </div>
+    <button id="close-scores-btn">Close</button>
+  </div>
+</div>
+
+<div class="popup" id="admin-scores-popup">
+  <div class="popup-content">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Scores</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-table">
+          <!-- JavaScript generated data -->
+        </tbody>
+      </table>
+    </div>
+    <button id="close-admin-scores-btn">Close</button>
+  </div>
+</div>
 
 <div class="popup" id="rules-popup">
     <div class="popup-content">
@@ -85,7 +127,7 @@ permalink: /binaryGame
         <p>
             <strong>Winning:</strong> The game ends when you lose all lives. Your highest score for each level will be saved and can be viewed on the scoreboard.
         </p>
-        <button onclick="closeRulesPopup()">Close</button>
+        <button>Close</button>
     </div>
 </div>
 

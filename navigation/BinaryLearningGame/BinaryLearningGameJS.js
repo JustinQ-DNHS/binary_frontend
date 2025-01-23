@@ -10,10 +10,12 @@ let currentLevel = "play";
 let previousLevel = "play";
 let correctCounts = 0;
 let lives = 3;
-window.highScore = 0;
 let currentQuestion;
 let userName;
 let isSubmitMode = true;
+let isUserAdmin = false;
+
+window.highScore = 0;
 
 import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
 
@@ -29,9 +31,17 @@ const submitButton = document.getElementById("submit-answer");
 const chimeSound = document.getElementById("chime-sound");
 const alarmSound = document.getElementById("alarm-sound");
 const gameOverSound = document.getElementById("gameOver-sound");
+
 const rulesButton = document.getElementById("rules-btn");
 const rulesPopup = document.getElementById("rules-popup");
 const closeButton = rulesPopup.querySelector("button");
+
+const scoresButton = document.getElementById("scores-btn");
+const scoresPopup = document.getElementById("scores-popup");
+const closeScoresButton = scoresPopup.querySelector("button");
+
+const adminScoresPopup = document.getElementById("admin-scores-popup");
+const closeAdminScoresButton = adminScoresPopup.querySelector("button");
 
 function updateHighScoreDisplay() {
   totalHighScoreDisplay.textContent = highScore;
@@ -46,6 +56,7 @@ function calculateScore() {
 }
 
 function generateQuestion() {
+
   const range = levels[currentLevel].range;
   const formats = levels[currentLevel].formats;
   const number = getRandomNumber(range);
@@ -55,26 +66,37 @@ function generateQuestion() {
   if (currentLevel === "easy" || currentLevel === "medium") {
     [inputFormat, outputFormat] = ["decimal", "binary"];
     if (Math.random() > 0.5) [inputFormat, outputFormat] = [outputFormat, inputFormat];
-  } else {
+  } 
+  
+  else {
     inputFormat = "hexadecimal";
     outputFormat = Math.random() > 0.5 ? "binary" : "decimal";
   }
 
   if (inputFormat === "decimal") {
     questionValue = number.toString(10);
-  } else if (inputFormat === "binary") {
+  } 
+  
+  else if (inputFormat === "binary") {
     questionValue = number.toString(2);
-  } else {
+  } 
+  
+  else {
     questionValue = number.toString(16).toUpperCase();
   }
 
   if (outputFormat === "decimal") {
     correctAnswer = parseInt(number, 10).toString(10);
-  } else if (outputFormat === "binary") {
+  } 
+  
+  else if (outputFormat === "binary") {
     correctAnswer = parseInt(number, 10).toString(2);
-  } else {
+  } 
+  
+  else {
     correctAnswer = parseInt(number, 10).toString(16).toUpperCase();
   }
+
 
   currentQuestion = { questionValue, inputFormat, outputFormat, correctAnswer };
   questionText.textContent = questionValue;
@@ -82,12 +104,15 @@ function generateQuestion() {
   convertToFormat.textContent = outputFormat.charAt(0).toUpperCase() + outputFormat.slice(1);
   message.textContent = "";
   answerInput.value = "";
+
 }
 
 function updateButtonMode() {
   if (isSubmitMode) {
     submitButton.textContent = "Submit";
-  } else {
+  } 
+  
+  else {
     submitButton.textContent = "Next";
   }
 }
@@ -107,6 +132,7 @@ function checkAnswer() {
 
   if (userAnswer === currentQuestion.correctAnswer) {
     correctCounts++;
+    totalScoreDisplay.textContent = calculateScore(); // Update score display
 
     if (correctCounts > highScore) {
       highScore = correctCounts;
@@ -122,7 +148,7 @@ function checkAnswer() {
     updateHearts();
 
     if (lives === 0) {
-      setHighestScoreForLevel();
+      createScores(userName, correctCounts, currentLevel);
       gameOver();
       return;
     }
@@ -136,6 +162,8 @@ function checkAnswer() {
   updateButtonMode();
 }
 
+
+
 submitButton.addEventListener("click", () => {
   if (currentLevel === "play" && isSubmitMode) return; // Prevent submission in "play" mode on game load
   if (isSubmitMode) {
@@ -144,6 +172,7 @@ submitButton.addEventListener("click", () => {
     goToNextQuestion();
   }
 });
+
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -200,6 +229,8 @@ window.onload = function () {
 
   generateQuestion();
   totalScoreDisplay.textContent = calculateScore();
+
+  isAdmin();
 };
 
 function restartGame() {
@@ -237,15 +268,45 @@ function updateHearts() {
 
 document.querySelectorAll(".level-button").forEach((button) => {
   button.addEventListener("click", async (event) => {
-    const level = event.target.dataset.level;
-    await getHighestScoreForLevel(level);
+    const scores = await readScores();
+
+    const userScores = scores.filter((entry) => String(entry.username) === String(userName));
+
+    const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
+
+    highScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
+
+    updateHighScoreDisplay();
+
   });
 });
 
 const currentUserApi = `${pythonURI}/api/id`;
 const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
 
-async function getHighestScoreForLevel(currentLevel) {
+async function isAdmin() {
+
+  try {
+    const currentUserResponse = await fetch(`${pythonURI}/api/user`, fetchOptions);
+    if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
+    const currentUser = await currentUserResponse.json();
+
+    if (currentUser.role == "Admin") {
+      isUserAdmin = true;
+      return
+    }
+
+    else {
+      return
+    }
+  } catch (error) {
+    console.error('Error retrieving user:', error);
+    alert('Error retrieving user: ' + error.message);
+    return
+  }
+}
+
+async function readScores(currentLevel) {
   try {
     const currentUserResponse = await fetch(currentUserApi, fetchOptions);
     if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
@@ -256,23 +317,21 @@ async function getHighestScoreForLevel(currentLevel) {
     if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 
-    const userScores = scores.filter((entry) => String(entry.username) === String(userName));
-    const levelScores = userScores.filter((entry) => entry.user_difficulty === currentLevel);
-    const highestScore = levelScores.length > 0 ? Math.max(...levelScores.map((entry) => entry.user_score)) : 0;
+    return(scores);
 
-    highScore = highestScore;
-    updateHighScoreDisplay();
   } catch (error) {
     console.error('Error fetching scores:', error);
     return null;
   }
 }
 
-async function setHighestScoreForLevel() {
+
+async function createScores(inputName, inputScore, inputDifficulty) {
+
   const scoreData = {
-    username: userName,
-    score: highScore,
-    difficulty: currentLevel,
+    username: inputName,
+    score: inputScore,
+    difficulty: inputDifficulty,
   };
 
   try {
@@ -294,6 +353,61 @@ async function setHighestScoreForLevel() {
   }
 }
 
+
+async function deleteScores(inputId) {
+
+  const scoreData = {
+    id: inputId
+  }
+
+  try {
+    const response = await fetch(`${pythonURI}/api/binaryLearningGameScores`, {
+      ...fetchOptions,
+      method: 'DELETE',
+      body: JSON.stringify(scoreData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete score: ${response.statusText}`);
+    }
+  } 
+  
+  catch (error) {
+    console.error('Error deleting score:', error);
+    alert('Error deleting score: ' + error.message);
+  }
+}
+
+async function updateScores(inputId, inputScore, inputDifficulty) {
+  const scoreData = {
+    id: inputId,
+    user_score: inputScore,
+    user_difficulty: inputDifficulty
+  }
+
+  try {
+    const response = await fetch(`${pythonURI}/api/binaryLearningGameScores`, {
+      ...fetchOptions,
+      method: 'PUT',
+      body: JSON.stringify(scoreData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update score: ${response.statusText}`);
+    }
+  } 
+  
+  catch (error) {
+    if (error = "Forbidden") {
+      alert("You do not have access to perform that function");
+    }
+    else {
+      console.error('Error updating score:', error);
+      alert('Error updating score: ' + error.message);
+    }
+  }
+}
+
 // Close rules popup
 rulesButton.addEventListener("click", function () {
   rulesPopup.classList.add("visible");
@@ -303,3 +417,129 @@ closeButton.addEventListener("click", function () {
   rulesPopup.classList.remove("visible");
 });
 
+
+scoresButton.addEventListener("click", function () {
+  if (isUserAdmin) {
+    getScoreTableData();
+    adminScoresPopup.classList.add("visible");
+  }
+  else {
+    getScoreTableData();
+    scoresPopup.classList.add("visible");
+  }
+});
+
+closeAdminScoresButton.addEventListener("click", function () {
+  adminScoresPopup.classList.remove("visible");
+});
+
+closeScoresButton.addEventListener("click", function () {
+  scoresPopup.classList.remove("visible");
+});
+
+async function getScoreTableData() {
+
+  const scores = await readScores();
+
+  let userScores = scores;
+
+  if (!isUserAdmin) {
+    userScores = scores.filter((entry) => String(entry.username) === String(userName));
+  }
+  else {
+    userScores = scores;
+  }
+
+  let table;
+
+  if (isUserAdmin) {
+    table = document.getElementById("admin-table");
+  }
+  else {
+    table = document.getElementById("table");
+  }
+
+    // Clear the table before adding new rows
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+
+userScores.forEach(score => {
+    // build a row for each user
+    const tr = document.createElement("tr");
+
+    // td's to build out each column of data
+    let usernamesTable;
+    if (isUserAdmin) {
+      usernamesTable = document.createElement("td");
+    }
+    const scores = document.createElement("td");
+    const difficulty = document.createElement("td");
+    const action = document.createElement("td");
+           
+    // add content from user data
+    if (isUserAdmin){
+      usernamesTable.innerHTML = score.username;
+    }          
+    scores.innerHTML = score.user_score; 
+    difficulty.innerHTML = score.user_difficulty; 
+
+    // add action for update button if it is an admin
+    if (isUserAdmin) {
+      var updateBtn = document.createElement('input');
+      updateBtn.type = "button";
+      updateBtn.className = "button";
+      updateBtn.value = "Update";
+      updateBtn.style = "margin-right:16px";
+      updateBtn.onclick = function () {
+        let updatedScore = prompt("Updated score");
+        while (true) {
+          if (isNaN(updatedScore)) {
+            updatedScore = prompt("Please enter a number");
+          }
+          else if (updatedScore < 0) {
+            updatedScore = prompt("Please enter a number above 0");
+          }
+          else {
+            break
+          }
+        }
+        let updatedDifficulty = prompt("Updated difficulty");
+        while (true) {
+          if (updatedDifficulty == "easy" || updatedDifficulty == "medium" || updatedDifficulty == "hard" || updatedDifficulty == "extreme" || updatedDifficulty == "") {
+            break
+          }
+          else {
+            updatedDifficulty = prompt("please enter a valid difficulty");
+          }
+        }
+        updateScores(score.id, updatedScore, updatedDifficulty);
+        getScoreTableData();
+      };
+      action.appendChild(updateBtn);
+    }
+
+    // add action for delete button
+    var deleteBtn = document.createElement('input');
+    deleteBtn.type = "button";
+    deleteBtn.className = "button";
+    deleteBtn.value = "Delete";
+    deleteBtn.style = "margin-right:16px"
+    deleteBtn.onclick = function () {
+      deleteScores(score.id);
+      getScoreTableData();
+    };
+    action.appendChild(deleteBtn);  
+
+    // add data to row
+    if (isUserAdmin) {
+      tr.appendChild(usernamesTable);
+    }
+    tr.appendChild(scores);
+    tr.appendChild(difficulty);
+    tr.appendChild(action);
+
+    // add row to table
+    table.appendChild(tr);
+  });
+}

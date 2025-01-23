@@ -105,3 +105,39 @@ permalink: /logicgame
         <td ><button onclick="create_User()">Create</button></td>
     </tr>
 </table>
+
+<script>
+async function create_User() {
+    const name = document.getElementById("name").value;
+    const score = document.getElementById("score").value;
+
+    if (!name || !score) {
+        alert("Please fill in both fields!");
+        return;
+    }
+
+    const data = { name, score };
+
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Data saved successfully!");
+            console.log(result); // Optional: Log the response
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to connect to the server.");
+    }
+}
+</script>

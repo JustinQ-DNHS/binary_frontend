@@ -106,6 +106,7 @@ permalink: /logicgame
     </tr>
 </table>
 
+
 <script>
 async function create_User() {
     const name = document.getElementById("name").value;

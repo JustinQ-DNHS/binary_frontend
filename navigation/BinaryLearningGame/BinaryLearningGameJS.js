@@ -281,9 +281,6 @@ document.querySelectorAll(".level-button").forEach((button) => {
   });
 });
 
-const currentUserApi = `${pythonURI}/api/id`;
-const scoresApi = `${pythonURI}/api/binaryLearningGameScores`;
-
 async function isAdmin() {
 
   try {
@@ -308,12 +305,12 @@ async function isAdmin() {
 
 async function readScores(currentLevel) {
   try {
-    const currentUserResponse = await fetch(currentUserApi, fetchOptions);
+    const currentUserResponse = await fetch(`${pythonURI}/api/id`, fetchOptions);
     if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');
     const currentUser = await currentUserResponse.json();
     userName = currentUser.uid;
 
-    const scoresResponse = await fetch(scoresApi, fetchOptions);
+    const scoresResponse = await fetch(`${pythonURI}/api/binaryLearningGameScores`, fetchOptions);
     if (!scoresResponse.ok) throw new Error('Failed to fetch scores');
     const scores = await scoresResponse.json();
 

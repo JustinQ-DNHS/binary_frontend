@@ -14,7 +14,7 @@ permalink: /leaderboard/
         <table id="leaderboard">
         </table>
 
-        <script type="module" src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js"></script>
+        <script type="module" src="{{site.baseurl}}/navigation/leaderboard/leaderboard.js"></script>
         <script type="module" src="{{site.baseurl}}/assets/js/api/config.js"></script>
     </body>
 </html>

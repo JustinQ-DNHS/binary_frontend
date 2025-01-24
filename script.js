@@ -172,26 +172,4 @@ function showResults(questions) {
     // Display the result
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = `${numCorrect} out of ${questions.length}`;
-
-    // Send results to the backend
-    const quizResult = {
-        score: numCorrect,
-        attempt_number: 1, // Update this dynamically if needed
-    };
-
-    fetch('http://127.0.0.1:5000/api/quizgrading', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Replace with your token handling logic
-        },
-        body: JSON.stringify(quizResult),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Quiz result saved:', data);
-        })
-        .catch(error => {
-            console.error('Error saving quiz result:', error);
-        });
 }

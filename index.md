@@ -10,3 +10,7 @@ menu:
 <a href="{{site.baseurl}}/binaryGame">game</a>
 
 <a href="{{site.baseurl}}/logicgame">Logic Gates Games</a>
+
+<a href="{{site.baseurl}}/binary_history">The History of Binary...</a>
+
+<a href="{{site.baseurl}}/Converter/">Binary Converter</a>

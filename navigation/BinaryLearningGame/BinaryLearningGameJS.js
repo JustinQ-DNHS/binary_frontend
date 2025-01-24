@@ -303,7 +303,7 @@ async function isAdmin() {
   }
 }
 
-async function readScores(currentLevel) {
+async function readScores() {
   try {
     const currentUserResponse = await fetch(`${pythonURI}/api/id`, fetchOptions);
     if (!currentUserResponse.ok) throw new Error('Failed to fetch current user');

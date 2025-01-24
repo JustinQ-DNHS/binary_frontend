@@ -1,4 +1,4 @@
-import { pythonURI, fetchOptions } from '../../assets/js/api/config.js';
+import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
 
 async function readScores() {
   try {

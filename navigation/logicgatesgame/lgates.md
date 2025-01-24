@@ -107,7 +107,7 @@ permalink: /logicgame
 </table>
 
 <!-- Button to fetch and display data -->
-<button onclick="fetch_Data()">View Data</button>
+<button onclick="fetch_Data()">View other scores</button>
 
 <!-- Table to display fetched data -->
 <table id="dataTable" border="1">

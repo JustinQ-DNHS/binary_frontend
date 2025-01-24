@@ -1,6 +1,6 @@
 import { pythonURI, fetchOptions } from '../../assets/js/api/config.js';
 
-const scoresApi = `${pythonURI}/api/general/binaryScores`;
+const scoresApi = `${pythonURI}/api/firstPlaceLeaderboard`;
 console.log(scoresApi);
 
 // Function to sort players by score in descending order
@@ -66,7 +66,7 @@ function createLeaderboard(sortedPlayers) {
 
 // Fetch scores and display leaderboard for a specific level
 async function getHighestScoreForLevel(currentLevel) {
-    const scoresApi = `${pythonURI}/api/general/binaryScores`;
+    const scoresApi = `${pythonURI}/api/firstPlaceLeaderboard`;
     try {
         const scoresResponse = await fetch(scoresApi, fetchOptions);
         if (!scoresResponse.ok) throw new Error('Failed to fetch scores');

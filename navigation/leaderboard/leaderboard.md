@@ -1,12 +1,20 @@
 ---
 layout: page
 title: Leaderboard
-search_exclude: true
 permalink: /leaderboard/
 ---
-<table id="leaderboard">
-</table>
 
-<script type="module" src="{{site.baseurl}}/navigation/leaderboard/leaderboard.js">
-    import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
-</script>
+
+{% comment %}
+```html
+{% endcomment %}
+
+<html lang="en">
+    <body>
+        <table id="leaderboard">
+        </table>
+
+        <script type="module" src="{{site.baseurl}}/navigation/BinaryLearningGame/BinaryLearningGameJS.js"></script>
+        <script type="module" src="{{site.baseurl}}/assets/js/api/config.js"></script>
+    </body>
+</html>

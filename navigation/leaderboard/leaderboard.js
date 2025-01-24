@@ -1,12 +1,12 @@
-
-
-console.log(readScores());
+import { pythonURI, fetchOptions } from '../../assets/js/api/config.js';
 
 async function readScores() {
   try {
     const data = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, fetchOptions);
     if (!data.ok) throw new Error('Failed to fetch scores');
     const scores = await data.json();
+
+    console.log(scores);
 
     return(scores);
 
@@ -17,7 +17,9 @@ async function readScores() {
 }
 
 
-
+window.onload = function () {
+    readScores();
+};
 
 
 async function createData(inputName, inputScore, inputDifficulty) {

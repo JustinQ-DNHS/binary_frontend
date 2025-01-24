@@ -122,25 +122,67 @@ hide: true
 </style>
 
 <script>
-        async function incrementCounter() {
-            try {
-                console.log('Button pressed! Sending POST request...');
-                const response = await fetch('http://127.0.0.1:5000/increment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
+    const API_BASE_URL = "http://127.0.0.1:5000"; // Base URL for your Flask backend
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Response:', data);
-                    document.getElementById('counter').innerText = `Counter: ${data.value}`;
-                } else {
-                    console.error('Request failed with status:', response.status);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+    async function fetchCounterData() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/get-counter`);
+            if (response.ok) {
+                const data = await response.json();
+                updateCounterDisplay(data);
+            } else {
+                console.error("Failed to fetch counter data:", response.status);
+            }
+        } catch (error) {
+            console.error("Error fetching counter data:", error);
+        }
+    }
+
+    async function incrementCounter() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/increment`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                updateCounterDisplay(data);
+            } else {
+                console.error("Failed to increment counter:", response.status);
+            }
+        } catch (error) {
+            console.error("Error incrementing counter:", error);
+        }
+    }
+
+    // Update the table and UI with the new counter data
+    function updateCounterDisplay(data) {
+        document.getElementById("binary").innerHTML = data.binary;
+        document.getElementById("octal").innerHTML = data.octal;
+        document.getElementById("hexadecimal").innerHTML = data.hexadecimal;
+        document.getElementById("decimal").innerHTML = data.decimal;
+
+        // Update bits visually
+        const binary = data.binary.padStart(8, "0");
+        for (let i = 0; i < binary.length; i++) {
+            const bit = binary.charAt(i);
+            document.getElementById("digit" + i).value = bit;
+            const image = document.getElementById("bulb" + i);
+            const button = document.getElementById("butt" + i);
+            if (bit === "1") {
+                image.src = "/portfolio_2025/images/bulb_on.gif";
+                button.innerHTML = "Turn off";
+            } else {
+                image.src = "/portfolio_2025/images/bulb_off.png";
+                button.innerHTML = "Turn on";
             }
         }
+    }
+
+    // Fetch the initial counter data on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchCounterData();
+    });
 </script>
 
 <table>
@@ -156,7 +198,7 @@ hide: true
     </thead>
     <tbody>
         <tr>
-            <td><div class="calc-button" onclick="incrementCounter()">+1</div></td>
+            <td><div class="calc-button" onclick="incrementCounter() add(+1)">+1</div></td>
             <td id="binary">00000000</td>
             <td id="octal">0</td>
             <td id="hexadecimal">0</td>

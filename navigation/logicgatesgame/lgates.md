@@ -102,8 +102,24 @@ permalink: /logicgame
     <tr>
         <td><input type="text" name="name" id="name" required></td>
         <td><input type="text" score="score" id="score" required></td>
-        <td ><button onclick="create_User()">Create</button></td>
+        <td><button onclick="create_User()">Create</button></td>
     </tr>
+</table>
+
+<!-- Button to fetch and display data -->
+<button onclick="fetch_Data()">View other scores</button>
+
+<!-- Table to display fetched data -->
+<table id="dataTable" border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Fetched data will be displayed here -->
+    </tbody>
 </table>
 
 <script>
@@ -138,6 +154,47 @@ async function create_User() {
     } catch (error) {
         console.error("Error:", error);
         alert("Failed to connect to the server.");
+    }
+}
+
+async function fetch_Data() {
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "GET", // Assuming the backend supports GET for retrieving all records
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const tableBody = document.querySelector("#dataTable tbody");
+
+            // Clear existing table data
+            tableBody.innerHTML = "";
+
+            // Populate table with fetched data
+            data.forEach((item) => {
+                const row = document.createElement("tr");
+                const nameCell = document.createElement("td");
+                const scoreCell = document.createElement("td");
+
+                nameCell.textContent = item.name;
+                scoreCell.textContent = item.score;
+
+                row.appendChild(nameCell);
+                row.appendChild(scoreCell);
+                tableBody.appendChild(row);
+            });
+
+            alert("Data retrieved successfully!");
+        } else {
+            const result = await response.json();
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to fetch data from the server.");
     }
 }
 </script>

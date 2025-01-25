@@ -55,7 +55,7 @@ search_exclude: true
         }
         .button:active {
             transform: scale(0.95); /* Shrinks a bit on click */
-            background-color: #062E03; /* Even darker green on click */
+            background-color: #BA8E23; /* Even darker green on click */
             color: white !important;
         }
         /* Images will adjust in size up to a maximum width and height */
@@ -85,5 +85,14 @@ Welcome to the Binary Site! By Justin, Lars, Manahil, Rutvik, Shaurya, Shriya, V
             <td><a href="{{site.baseurl}}/logicgame" class="button">Logic Gates Games</a></td>
             <td><a href="{{site.baseurl}}/converter/" class="button">Binary Converter</a></td>
             <td><a href="{{site.baseurl}}/binary_history" class="button">The History of Binary...</a></td>
+    </table>
+</body>
+
+<body>
+    <table>
+        <td><a href="{{site.baseurl}}/comments" class="button">Comments and Feedback</a></td>
+        <td><a href="{{site.baseurl}}/leaderboard/" class="button">Leaderboard</a></td>
+        <td><a class="button">Insert Shriya's Feature</a></td>
+        <td><a class="button">Insert Vincent's Feature</a></td>
     </table>
 </body>

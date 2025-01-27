@@ -122,7 +122,7 @@ hide: true
 </style>
 
 <script>
-    const API_BASE_URL = "http://127.0.0.1:5000"; // Base URL for your Flask backend
+    const API_BASE_URL = "http://127.0.0.1:8887"; // Base URL for your Flask backend
 
     async function fetchCounterData() {
         try {
@@ -146,12 +146,128 @@ hide: true
             });
             if (response.ok) {
                 const data = await response.json();
+                console.log("Increment response:", data); // Debugging
                 updateCounterDisplay(data);
             } else {
                 console.error("Failed to increment counter:", response.status);
             }
         } catch (error) {
             console.error("Error incrementing counter:", error);
+        }
+    }
+
+    async function decrementCounter() {
+        try {
+            console.log('Decrement button pressed! Sending POST request...');
+            const response = await fetch(`${API_BASE_URL}/decrement`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Response:', data);
+
+                // Update the values displayed on the frontend
+                document.getElementById('binary').innerText = data.binary;
+                document.getElementById('octal').innerText = data.octal;
+                document.getElementById('hexadecimal').innerText = data.hexadecimal;
+                document.getElementById('decimal').innerText = data.decimal;
+            } else {
+                console.error('Request failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+        async function deleteAllData() {
+        if (!confirm("Are you sure you want to delete all data? This action cannot be undone.")) {
+            return;
+        }
+
+        try {
+            console.log("Delete All button pressed! Sending DELETE request...");
+            const response = await fetch(`${API_BASE_URL}/reset`, {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+                console.log('All data deleted successfully!');
+                alert("All data has been deleted.");
+
+                // Reset the UI values
+                document.getElementById('binary').innerText = "00000000";
+                document.getElementById('octal').innerText = "0";
+                document.getElementById('hexadecimal').innerText = "0";
+                document.getElementById('decimal').innerText = "0";
+
+                // Reset bulb states
+                for (let i = 0; i < 8; i++) {
+                    document.getElementById('digit' + i).value = "0";
+                    document.getElementById('bulb' + i).src = "/portfolio_2025/images/bulb_off.png";
+                    document.getElementById('butt' + i).innerHTML = "Turn on";
+                }
+            } else {
+                console.error('Request failed with status:', response.status);
+                alert("Failed to delete data. Please try again.");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred while deleting data. Please try again.");
+        }
+    }
+
+    async function updateCounter() {
+        const newValue = parseInt(document.getElementById('updateValue').value, 10);
+
+        if (isNaN(newValue) || newValue < 0) {
+            alert("Please enter a valid non-negative number.");
+            return;
+        }
+
+        try {
+            console.log("Updating counter to:", newValue);
+            const response = await fetch('http://127.0.0.1:8887/update-counter', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ value: newValue })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Counter updated successfully:", data);
+
+                // Update the UI with the new values
+                document.getElementById('binary').innerText = data.binary;
+                document.getElementById('octal').innerText = data.octal;
+                document.getElementById('hexadecimal').innerText = data.hexadecimal;
+                document.getElementById('decimal').innerText = data.value;
+
+                // Update the bulbs
+                const binary = data.binary;
+                for (let i = 0; i < binary.length; i++) {
+                    const digit = binary[i];
+                    const bulb = document.getElementById('bulb' + i);
+                    const button = document.getElementById('butt' + i);
+                    const input = document.getElementById('digit' + i);
+
+                    input.value = digit;
+                    if (digit === "1") {
+                        bulb.src = "/portfolio_2025/images/bulb_on.gif";
+                        button.innerHTML = "Turn off";
+                    } else {
+                        bulb.src = "/portfolio_2025/images/bulb_off.png";
+                        button.innerHTML = "Turn on";
+                    }
+                }
+            } else {
+                console.error("Failed to update counter. Status:", response.status);
+                alert("Failed to update counter. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error updating counter:", error);
+            alert("An error occurred. Please try again.");
         }
     }
 
@@ -194,19 +310,35 @@ hide: true
             <th>Hexadecimal</th>
             <th>Decimal</th>
             <th>Minus</th>
+            <th>Delete</th>
+            <th>Enter Value</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><div class="calc-button" onclick="incrementCounter() add(+1)">+1</div></td>
+            <td><div class="calc-button" onclick="incrementCounter()">+1</div></td>
             <td id="binary">00000000</td>
             <td id="octal">0</td>
             <td id="hexadecimal">0</td>
             <td id="decimal">0</td>
-            <td><div class="calc-button" id="sub1" onclick="add(-1)">-1</div></td>
+            <td><div class="calc-button" id="sub1" onclick="decrementCounter()">-1</div></td>
+            <td><button class="calc-button" onclick="deleteAllData()">Delete</button></td>
+            <td>
+            <div style="margin: 20px 0;">
+                <input
+                type="number"
+                id="updateValue"
+                placeholder="Enter new value"
+                style="width: 150px; padding: 10px; border-radius: 5px; text-align: center;"
+                />
+            <button class="calc-button" onclick="updateCounter()">Update Counter</button>
+            </div>
+            </td>
         </tr>
     </tbody>
 </table>
+
+
 
 <table>
     <thead>

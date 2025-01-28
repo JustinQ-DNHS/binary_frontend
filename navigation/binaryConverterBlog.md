@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Binary Converter Blog
-permalink: /binaryConverter/blog
+permalink: /Converter/blog
 ---
 
 ## Binary Converter Blog

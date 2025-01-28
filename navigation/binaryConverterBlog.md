@@ -9,20 +9,17 @@ permalink: /Converter/blog
 ### Purpose of our group code and site 
 
 - Help students learn how to convert and use binary numbers
-
-- Create an interactive site where people expand and solidify there understanding
-
+- Create an interactive site where people expand and solidify their understanding
 - Create an area for collaboration for students 
 
 ### Purpose of my code
 
 - Provide a reliable and easy way to convert decimal numbers to binary
-
-- Create a feature that allows people to check if there conversions are true
-
+- Create a feature that allows people to check if their conversions are true
 
 ### Input
 
+```javascript
 // Frontend input function for converting decimal to binary
 async function convertToBinary() {
     const decimalInput = document.getElementById('decimal-input').value.trim();
@@ -50,7 +47,9 @@ async function convertToBinary() {
     await saveConversion(decimalNumber, binaryNumber);
     fetchAndDisplayBinaryConversion();  // Fetch updated conversions after saving
 }
+```
 
+```javascript
 // Function to save conversion to the backend
 async function saveConversion(decimal, binary) {
     try {
@@ -72,19 +71,17 @@ async function saveConversion(decimal, binary) {
         console.error("Error saving conversion:", error);
     }
 }
+```
 
 - First, The user enters a decimal number in the input field and clicks the Convert to Binary button.
-
 - The frontend checks if the input is a valid positive integer
-
 - The decimal number is converted to binary using JavaScript's built-in toString method.
-
 - Both decimal and binary values are sent to the backend via a POST request to the /api/binary-converter endpoint.
-
 - The conversion is displayed in the table, and the input field is cleared.
 
 ### Output
 
+```javascript
 // Fetch and display previous conversions from the backend
 async function fetchAndDisplayBinaryConversion() {
     try {
@@ -110,48 +107,45 @@ async function fetchAndDisplayBinaryConversion() {
         console.error('Error fetching conversions:', error);
     }
 }
+```
 
 - A GET request is sent to fetch all binary conversion entries stored in the database.
-
 - The results are displayed on the webpage under the Previous Conversions section. The response is formatted as an array of objects containing both decimal and binary values.
 
 ### List Request 
 
-
+```javascript
 const argumentsData = await response.json();
 argumentsData.reverse(); // Reverse the list to show latest first
 argumentsData.forEach((convert) => {
     const conversionElement = document.createElement('p');
     conversionElement.textContent = `${convert.decimal}: ${convert.binary}`;
     conversionContainer.appendChild(conversionElement);
+});
+```
 
-
-    [
+```json
+[
   { "decimal": 10, "binary": "1010" },
   { "decimal": 20, "binary": "10100" },
   { "decimal": 5, "binary": "101" }
 ]
-
-});
+```
 
 - A dictionary to send data to the backend (POST request):
 - In the saveConversion function, it is preparing the data to be sent as a POST request to the backend when a new decimal-to-binary conversion occurs.
-- It is a dictionary with two keys: decimal is the key and the binary is the 
-value. Binary is the key and the result of the conversion binaryNumber is the value
+- It is a dictionary with two keys: decimal is the key and the binary is the value. Binary is the key and the result of the conversion binaryNumber is the value.
 - When the frontend makes a GET request to the backend to fetch all previous binary conversions, the backend responds with a list of dictionaries. Each dictionary contains a single conversion with decimal and binary keys. (lists)
-
 
 ## Algorithmic Function 
 
 ### Demonstration of sequencing, selection, and iteration 
 
-
 ## Sequencing
 
 - When the user clicks the "Convert to Binary" button, the following happens step-by-step:
 
-
-
+```javascript
 async function convertToBinary() {
     const decimalInput = document.getElementById('decimal-input').value.trim();  // Get input
     if (decimalInput === '') {  // Validate input
@@ -169,15 +163,16 @@ async function convertToBinary() {
     await saveConversion(decimalNumber, binaryNumber);  // Save to backend
     fetchAndDisplayBinaryConversion();  // Fetch previous conversions
 }
+```
 
 - Gets the user input from the input field.
 - Validates that the input is a valid decimal number.
 - Converts the decimal number to binary.
 - Updates the table with the conversion result.
 - Saves the conversion to the backend.
-- Fetchs and display previous conversions from the backend
+- Fetches and displays previous conversions from the backend.
 
-
+```javascript
 if (decimalInput === '') {  // Check if input is empty
     alert('Please enter a decimal number!');
     return;
@@ -187,39 +182,41 @@ if (isNaN(decimalNumber) || decimalNumber < 0) {  // Check if input is a valid n
     alert('Please enter a positive decimal number.');
     return;
 }
+```
 
 ## Selection
 
 - In the convertToBinary function, there are two places where selection is used:
+  - If the input is empty, the function alerts the user and exits.
+  - If the input is not a valid decimal number, the function alerts the user and exits.
 
-- If the input is empty, the function alerts the user and exits.
-- If the input is not a valid decimal number, the function alerts the user and exits.
+- The event listener attached to the button also involves selection. The function convertToBinary is executed only when the Convert to Binary button is clicked, which is a form of conditional execution.
 
-- The event listener attached to the button also involves selection, The function convertToBinary is executed only when the Convert to Binary button is clicked, which is a form of conditional execution.
-
+```javascript
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('convert-button').addEventListener('click', convertToBinary);  // Selection
     fetchAndDisplayBinaryConversion();  // Selection: Fetch previous conversions
 });
+```
 
 ## Iteration
 
+```javascript
 argumentsData.forEach((convert) => {  // Iterating over the list of previous conversions
     const conversionElement = document.createElement('p');
     conversionElement.textContent = `${convert.decimal}: ${convert.binary}`;
     conversionContainer.appendChild(conversionElement);
 });
-
-
+```
 
 - The argumentsData.forEach() method is used to loop through each previous conversion fetch data from the backend and display it on the page.
 
 # Parameters and return jsonify 
 
--In the backend, the POST request sends data to the server in the form of a JSON body containing decimal and binary values, which is parsed using request.get_json(). 
--This data is then used to create and save a new BinaryConverter object, and the saved data is returned as a JSON response using jsonify(). 
--The GET request, on the other hand, does not have a request body, and it fetches all previously saved binary conversions from the database. These conversions are returned as a JSON array of dictionaries, also using jsonify(). 
--Both methods ensure that the data exchanged between the frontend and backend is in a structured JSON format, making it easy for the frontend to handle.
+- In the backend, the POST request sends data to the server in the form of a JSON body containing decimal and binary values, which is parsed using request.get_json(). 
+- This data is then used to create and save a new BinaryConverter object, and the saved data is returned as a JSON response using jsonify(). 
+- The GET request, on the other hand, does not have a request body, and it fetches all previously saved binary conversions from the database. These conversions are returned as a JSON array of dictionaries, also using jsonify(). 
+- Both methods ensure that the data exchanged between the frontend and backend is in a structured JSON format, making it easy for the frontend to handle.
 
 # Algorithm request
 
@@ -230,6 +227,8 @@ argumentsData.forEach((convert) => {  // Iterating over the list of previous con
 - The POST request sends the conversion data as JSON, while the GET request returns a list of saved conversions in JSON format. If there's an error (e.g., invalid input or server failure), the frontend alerts the user, and the backend handles errors with appropriate responses. The system ensures smooth interaction between the frontend and backend through asynchronous API calls, data validation, and dynamic UI updates.
 
 ## Frontend Code
+
+```javascript
 async function convertToBinary() {
     const decimalInput = document.getElementById('decimal-input').value.trim();
     if (decimalInput === '' || isNaN(parseInt(decimalInput)) || parseInt(decimalInput) < 0) {
@@ -246,9 +245,11 @@ async function convertToBinary() {
     await saveConversion(decimalNumber, binaryNumber);
     fetchAndDisplayBinaryConversion();
 }
+```
 
 ## Sends data to the backend
 
+```javascript
 async function saveConversion(decimal, binary) {
     const conversionData = { decimal, binary };
     const response = await fetch(`${pythonURI}/api/binary-converter`, {
@@ -261,11 +262,13 @@ async function saveConversion(decimal, binary) {
         console.error(`Error saving conversion: ${errorText}`);
     }
 }
+```
 
 ## Fetches previous conversions 
 
 - This function fetches previously saved conversions from the backend via a GET request and updates the UI with the results.
 
+```javascript
 async function fetchAndDisplayBinaryConversion() {
     try {
         const response = await fetch(`${pythonURI}/api/binary-converter`, {

@@ -21,8 +21,9 @@ permalink: /binary_history/blog
 #### Input:
 - One example of an input feature in my code is me clickling on the "Submit Event" button and the site sending my event year and description to my database.
 
-'''
+```
 button class="regularButton" onclick="addEvent()"> Submit Event /button> //Runs the addEvent function when clicked
+
 async function addEvent() { // Define an async function to add an event
         const year = document.getElementById('eventYear').value.trim(); // Get year value from input
         const description = document.getElementById('eventDescription').value.trim(); 
@@ -66,11 +67,12 @@ async function addEvent() { // Define an async function to add an event
             console.error('Error fetching binary history:', error);
         }
     }
+```
 
 - Comments about functionality are included within the code
 
 #### Output
-<br>
+
 - One example of my output is my get request to retrieve data stored in the database:
     ```
     async function fetchAndDisplayBinaryHistory() { 
@@ -126,6 +128,8 @@ async function addEvent() { // Define an async function to add an event
     }
 
     fetchAndDisplayBinaryHistory(); //Calls the function and runs it without any preset parameters
+```
+```
 
 - When I post a new event into postman, the event shows up inside of the database, categorized by year and description
 - When I run db_init it initializes the database, when I run db_restore it restores the data previously in the databse, and when I run db_backup it backs up the data to the backup databse
@@ -133,7 +137,8 @@ async function addEvent() { // Define an async function to add an event
 ## List Requests
 
 - I use lists in my table that iterates through and shows all of the events from the database:
-    ```
+    
+```
     data.sort((a, b) => a.year - b.year); // Sort events by year in ascending order
 
 data.forEach((event) => { // Iterate through the list of events
@@ -150,6 +155,7 @@ data.forEach((event) => { // Iterate through the list of events
     eventDiv.appendChild(description);
     historyContainer.appendChild(eventDiv); 
 });
+```
 
 #### Dictionaries and database iteration
 

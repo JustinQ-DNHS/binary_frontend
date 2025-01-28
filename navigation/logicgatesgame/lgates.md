@@ -88,7 +88,7 @@ permalink: /logicgame
 </head>
 
 <body>
-    <h1>Welcome to the Logic Gates 123 Lesson!</h1>
+    <h1>Welcome to the Logic Gates Lesson!</h1>
     <h4>Input your name and score to save them!</h4>
 </body>
 </html>

@@ -8,7 +8,6 @@ menu: nav/home.html
 permalink: /quiz
 ---
 
-
  <!-- <link rel="stylesheet" href="{{site.baseurl}}/navigation/quiz/style.css">  -->
  <html lang="en">
     <head>
@@ -29,3 +28,51 @@ permalink: /quiz
 <script src="{{site.baseurl}}/navigation/quiz/script.js" type="module">
     
 </script>
+ <style>
+        .quiz-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .quiz-container h2 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .answers {
+            margin-bottom: 20px;
+        }
+        .answers label {
+            display: block;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+
+<div class="quiz-container">
+        <h3>Quiz Attempt History</h3>
+        <table id="attemptsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Quizgrade</th>
+                    <th>Attempt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated here -->
+            </tbody>
+        </table>
+    </div>

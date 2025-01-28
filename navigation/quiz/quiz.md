@@ -25,9 +25,26 @@ permalink: /quiz
     </div>
     </body>
 
-<script src="{{site.baseurl}}/navigation/quiz/script.js" type="module">
-    
-</script>
+
+
+<div class="quiz-container">
+    <h3>Quiz Attempt History</h3> 
+    <table id="attemptsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Quizgrade</th>
+                <th>Attempt</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be populated here -->
+        </tbody>
+    </table>
+</div>
+
+<script src="{{site.baseurl}}/navigation/quiz/script.js" type="module"></script>
  <style>
         .quiz-container {
             width: 80%;
@@ -60,20 +77,3 @@ permalink: /quiz
             text-align: center;
         }
     </style>
-
-<div class="quiz-container">
-        <h3>Quiz Attempt History</h3> 
-    <table id="attemptsTable">
-        <table id="attemptsTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Quizgrade</th>
-                    <th>Attempt</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Table rows will be populated here -->
-            </tbody>
-        </table>

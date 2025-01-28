@@ -1,3 +1,6 @@
+import {pythonURI, fetchOptions} from '../../assets/js/api/config.js';
+const quizGradingsApi = `${pythonURI}/api/quizgrading`;
+
 const Questions = [
     {
         question: "What does an arithmetic shift do?",
@@ -175,65 +178,65 @@ function showResults(questions) {
     });
 }
 
-function loadAttempts() {
-    fetch('http://localhost:8887/api/quizgrading')
-        .then(response => response.json())
-        .then(attempts => {
-            const tableBody = document.getElementById('attemptsTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-            attempts.forEach(attempt => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${attempt.id}</td>
-                    <td>${attempt.quizgrade}</td>
-                    <td>${attempt.attempt}</td>
-                    <td>
-                        <button onclick="deleteAttempt(${attempt.id})">Delete</button>
-                        <button onclick="editAttempt(${attempt.id})">Edit</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        })
-        .catch(error => console.error("Error loading attempts:", error));
-}
-
 function deleteAttempt(id) {
-    fetch(`http://localhost:8887/api/quizgrading/${id}`, {
+    fetch(`${quizGradingsApi}/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
-        },
-        body: JSON.stringify({id})
+        }
     })
     .then(response => response.json())
     .then(data => {
         console.log("attempt deleted", data.message);
-        loadAttempts(); // Reload attempts after submission
+        loadAttempts(); // Reload attempts after deletion
     })
     .catch(error => {
         console.error("Error deleting score:", error);
     });
 }
 
+async function loadAttempts() {
+    const quizGrading = await fetch(quizGradingsApi, fetchOptions)
+    if (!quizGrading.ok) {console.error("Error loading attempts:", quizGrading);}
+    
+    const quizResults = await quizGrading.json();
+    // console.log(quizResults)
+
+    // Finds table body and clears existing rows, then replaces it with data
+    const tableBody = document.getElementById('attemptsTable');
+    tableBody.innerHTML = ''; // Clear existing rows
+    quizResults.forEach(attempt => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${attempt.id}</td>
+            <td>${attempt.quizgrade}</td>
+            <td>${attempt.attempt}</td>
+            <td>
+                <button onclick="deleteAttempt(${attempt.id})">Delete</button>
+                <button onclick="editAttempt(${attempt.id})">Edit</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
 function editAttempt(id) {
-    fetch(`http://localhost:8887/api/quizgrading/${id}`, { method: 'PUT' })
-        const quizgrade = prompt("Enter new quiz grade:");
-        const attempt = prompt("Enter new attempt number:");
-        if (quizgrade && attempt) {
-            fetch(API_URL, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, quizgrade, attempt }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log("Attempt updated:", data);
-                    loadAttempts(); // Reload table
-                })
-                .catch((error) => console.error("Error updating attempt:", error));
-        }
+    const quizgrade = prompt("Enter new quiz grade:");
+    const attempt = prompt("Enter new attempt number:");
+    if (quizgrade && attempt) {
+        fetch(`${quizGradingsApi}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, quizgrade, attempt }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Attempt updated:", data);
+            loadAttempts(); // Reload table
+        })
+        .catch((error) => console.error("Error updating attempt:", error));
     }
+}
 
 window.onload = () => {
     const selectedQuestions = randomizeQuestions(Questions, 5);

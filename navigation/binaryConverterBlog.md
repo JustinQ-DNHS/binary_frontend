@@ -291,4 +291,4 @@ async function fetchAndDisplayBinaryConversion() {
         console.error('Error fetching conversions:', error);
     }
 }
-
+```

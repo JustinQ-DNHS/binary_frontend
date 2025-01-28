@@ -255,11 +255,11 @@ function updateHearts() {
   for (let i = 1; i <= 3; i++) {
     const heart = document.getElementById(`heart${i}`);
     if (i <= lives) {
-      heart.src = "images/heart.png";
+      heart.src = "../images/heart.png";
       heart.style.visibility = "visible";
       heart.classList.remove("jiggle");
     } else {
-      heart.src = "images/emptyHeart.png";
+      heart.src = "../images/emptyHeart.png";
       heart.style.visibility = "visible";
       heart.classList.add("jiggle");
     }

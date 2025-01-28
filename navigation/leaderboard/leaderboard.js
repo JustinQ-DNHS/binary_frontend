@@ -1,33 +1,53 @@
-import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
+import { pythonURI, fetchOptions } from '../../assets/js/api/config.js';
 
+/** 
+ * READ: Fetch and display scores 
+ */
 async function readScores() {
   try {
-    const data = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, fetchOptions);
-    if (!data.ok) throw new Error('Failed to fetch scores');
-    const scores = await data.json();
+    const response = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, fetchOptions);
 
-    console.log(scores);
+    if (!response.ok) {
+      throw new Error('Failed to fetch scores');
+    }
 
-    return(scores);
+    const scores = await response.json();
+    console.log('Fetched scores:', scores);
+
+    const tableBody = document.getElementById('scoresTableBody');
+    tableBody.innerHTML = ''; // Clear previous rows
+
+    scores.forEach(score => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${score.username}</td>
+        <td>${score.user_id}</td>
+        <td>${score.user_games_played}</td>
+        <td>${score.user_average_score}</td>
+        <td>${score.user_wins}</td>
+        <td>${score.user_losses}</td>
+        <td>${score.user_highest_score}</td>
+      `;
+      tableBody.appendChild(row);
+    });
 
   } catch (error) {
-    console.error('Error fetching data:', error);
-    return null;
+    console.error('Error fetching scores:', error);
   }
 }
 
-
-window.onload = function () {
-    readScores();
-};
-
-
-async function createData(inputName, inputScore, inputDifficulty) {
-
+/**
+ * CREATE: Submit new score data
+ */
+async function createData(username, userId, gamesPlayed, averageScore, wins, losses, highestScore) {
   const scoreData = {
-    username: inputName,
-    score: inputScore,
-    difficulty: inputDifficulty,
+    username,
+    user_id: userId,
+    user_games_played: gamesPlayed,
+    user_average_score: averageScore,
+    user_wins: wins,
+    user_losses: losses,
+    user_highest_score: highestScore,
   };
 
   try {
@@ -42,50 +62,27 @@ async function createData(inputName, inputScore, inputDifficulty) {
     }
 
     const result = await response.json();
-    console.log('Data submitted:', result);
+    console.log('Data submitted successfully:', result);
+
   } catch (error) {
-    console.error('Error submitting dat:', error);
+    console.error('Error submitting data:', error);
     alert('Error submitting data: ' + error.message);
   }
 }
 
-
-
-
-
-async function deleteScores(inputId) {
-
+/**
+ * UPDATE: Modify existing score data
+ */
+async function updateScores(username, userId, gamesPlayed, averageScore, wins, losses, highestScore) {
   const scoreData = {
-    id: inputId
-  }
-
-  try {
-    const response = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, {
-      ...fetchOptions,
-      method: 'DELETE',
-      body: JSON.stringify(scoreData),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to delete data: ${response.statusText}`);
-    }
-  } 
-  
-  catch (error) {
-    console.error('Error deleting data:', error);
-    alert('Error deleting data: ' + error.message);
-  }
-}
-
-
-
-
-async function updateScores(inputId, inputScore, inputDifficulty) {
-  const scoreData = {
-    id: inputId,
-    user_score: inputScore,
-    user_difficulty: inputDifficulty
-  }
+    username,
+    user_id: userId,
+    user_games_played: gamesPlayed,
+    user_average_score: averageScore,
+    user_wins: wins,
+    user_losses: losses,
+    user_highest_score: highestScore,
+  };
 
   try {
     const response = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, {
@@ -97,15 +94,40 @@ async function updateScores(inputId, inputScore, inputDifficulty) {
     if (!response.ok) {
       throw new Error(`Failed to update data: ${response.statusText}`);
     }
-  } 
-  
-  catch (error) {
-    if (error = "Forbidden") {
-      alert("You do not have access to perform that function");
-    }
-    else {
+
+    console.log('Data updated successfully');
+
+  } catch (error) {
+    if (error.message.includes('Forbidden')) {
+      alert('You do not have access to perform that function');
+    } else {
       console.error('Error updating data:', error);
       alert('Error updating data: ' + error.message);
     }
+  }
+}
+
+/**
+ * DELETE: Remove score data by ID
+ */
+async function deleteScores(scoreId) {
+  const scoreData = { id: scoreId };
+
+  try {
+    const response = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, {
+      ...fetchOptions,
+      method: 'DELETE',
+      body: JSON.stringify(scoreData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete data: ${response.statusText}`);
+    }
+
+    console.log('Data deleted successfully');
+
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    alert('Error deleting data: ' + error.message);
   }
 }

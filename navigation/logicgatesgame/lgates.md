@@ -114,7 +114,7 @@ permalink: /logicgame
     <thead>
         <tr>
             <th>Name</th>
-            <th>Score1</th>
+            <th>Score</th>
             <th>Action</th> <!-- This column is for the Delete button -->
         </tr>
     </thead>

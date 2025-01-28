@@ -236,4 +236,38 @@ async function delete_User(userId) {
     }
 }
 
+
+async function update_User(userId) {
+    const newName = prompt("Enter the new name:");
+    const newScore = prompt("Enter the new score:");
+
+    if (!newName || !newScore) {
+        alert("Both fields are required!");
+        return;
+    }
+
+    const data = { id: userId, name: newName, score: newScore };
+
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            alert("User updated successfully!");
+            fetch_Data(); // Refresh the table to show updated data
+         } else {
+            const result = await response.json();
+            alert(`Error updating user: ${result.error}`);
+         }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to update the user.");
+    }
+}
+
 </script>

@@ -160,9 +160,11 @@ window.onload = () => {
         showResults(selectedQuestions);
 
         const attemptData = {
-            // Collect the necessary data for the attempt
+            quizgrade: results.numCorrect,  // Store the score
+            attempt: new Date().toISOString(), // Store timestamp of the attempt
+            answers: results.userAnswers  // Optionally store user answers
         };
-
+        
         fetch("http://localhost:8887/api/quizgrading", {
             method: "POST",
             headers: {

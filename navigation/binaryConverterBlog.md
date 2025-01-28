@@ -4,7 +4,6 @@ title: Binary Converter Blog
 permalink: /Converter/blog
 ---
 
-## Binary Converter Blog
 
 ### Purpose of our group code and site 
 

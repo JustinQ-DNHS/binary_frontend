@@ -22,7 +22,7 @@ permalink: /binaryGame/blog
 #### Input:
 <br>
 - One example of an input feature in my code is my post request that is sent to the backend:
-    ```
+    ```javascript
     async function createScores(inputName, inputScore, inputDifficulty) {
 
         const scoreData = {
@@ -58,7 +58,7 @@ permalink: /binaryGame/blog
 #### Output
 <br>
 - One example of my output is my get request to retrieve data stored in the database:
-    ```
+    ```javascript
     async function readScores() {
     try {
         const scoresResponse = await fetch(`${pythonURI}/api/binaryLearningGameScores`, fetchOptions);
@@ -83,7 +83,7 @@ permalink: /binaryGame/blog
 ## List Requests
 
 - I use dictionaries and lists in my table that shows all of the scores from the database:
-    ```
+    ```javascript
         async function getScoreTableData() {
 
             const scores = await readScores();
@@ -201,7 +201,7 @@ permalink: /binaryGame/blog
 #### Demonstration of sequencing, selection, and iteration
 
 - A good example of code that both sequencing and selection is my put request function:
-    ```
+    ```javascript
     async function updateScores(inputId, inputScore, inputDifficulty) {
         const scoreData = {
             id: inputId,
@@ -240,7 +240,7 @@ permalink: /binaryGame/blog
 - I also used Selection by defining where the code goes
 - This is shown through my error catching if-statements that define how the code runs if there is an error
 - I also demonstrate sequencing when I call this function in the getScoresToTable function:
-    ```
+    ```javascript
     let updatedScore = prompt("Updated score");
     while (true) {
         if (isNaN(updatedScore)) {
@@ -278,7 +278,7 @@ permalink: /binaryGame/blog
 
 ## Call to Algorithm Request
 - A good example of this is my delete scores function:
-    ```
+    ```javascript
     async function deleteScores(inputId) {
 
         const scoreData = {
@@ -304,7 +304,7 @@ permalink: /binaryGame/blog
     }
     ```
 - This function is then called when the user presses the delete button on the scores table
-    ```
+    ```javascript
     deleteBtn.onclick = function () {
       deleteScores(score.id);
       getScoreTableData();

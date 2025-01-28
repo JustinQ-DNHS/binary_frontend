@@ -93,6 +93,6 @@ Welcome to the Binary Site! By Justin, Lars, Manahil, Rutvik, Shaurya, Shriya, V
         <td><a href="{{site.baseurl}}/comments" class="button">Comments and Feedback</a></td>
         <td><a href="{{site.baseurl}}/leaderboard/" class="button">Leaderboard</a></td>
         <td><a href="{{site.baseurl}}/quiz" class="button">Binary Quiz</a></td>
-        <td><a class="button">Insert Vincent's Feature</a></td>
+        <td><a href="{{site.baseurl}}/navigation/binary-calculator" class="button">Binary Calculator</a></td>
     </table>
 </body>

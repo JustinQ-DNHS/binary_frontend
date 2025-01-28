@@ -86,7 +86,7 @@ permalink: /binary_history/
     <div id="binary-history"></div>
 
 <h2>Add a Binary History Event!</h2>
-<p>Make sure it is appropriate and relavent to the topic, otherwise it will get deleted...</p>
+<p>Make sure it is appropriate and relevant to the topic, otherwise it will get deleted...</p>
 <p>NOTE: It does not have to be directly related to binary, it can be related to one of the default events.</p>
 <textarea placeholder="Enter the year" id="eventYear" style="height: 30px; width: 200px;"></textarea>
 <p></p>
@@ -94,8 +94,8 @@ permalink: /binary_history/
 <p></p>
 <button class="regularButton" onclick="addEvent()">Submit Event</button>
 
-<script type = "module" defer>
-    import { pythonURI, fetchOptions } from '../assets/js/api/config.js' 
+<script type="module" defer>
+    import { pythonURI, fetchOptions } from '../assets/js/api/config.js';
 
     async function fetchAndDisplayBinaryHistory() { 
         try {
@@ -108,11 +108,14 @@ permalink: /binary_history/
             })
             .then(response => { // Handle the response
                 if (response.ok) {
-                    return response.json() // Parse the JSON if the response is there
+                    return response.json(); // Parse the JSON if the response is there
                 }
-                throw new Error("Network response failed") // Handle error if response is not there
+                throw new Error("Network response failed"); // Handle error if response is not there
             })
             .then(data => { // Process the received data
+
+                // Sort events from oldest year to newest year
+                data.sort((a, b) => a.year - b.year);
 
                 // Get the container where history will be displayed
                 const historyContainer = document.getElementById('binary-history');
@@ -146,7 +149,7 @@ permalink: /binary_history/
         }
     }
 
-    fetchAndDisplayBinaryHistory()
+    fetchAndDisplayBinaryHistory();
         
     async function addEvent() { // Define an async function to add an event
         const year = document.getElementById('eventYear').value.trim(); // Get year value from input
@@ -173,7 +176,7 @@ permalink: /binary_history/
             })
             .then(response => { // Handle the response
                 if (response.ok) {
-                    alert("Saved successfully!") // Check if the response is there
+                    alert("Saved successfully!"); // Check if the response is there
                     return response.json(); // Parse the JSON if response is there
                 }
                 throw new Error("Network response failed"); // Handle error if response is not there

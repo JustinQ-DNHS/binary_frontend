@@ -13,8 +13,8 @@ permalink: /converter/
     <title>Binary Converter</title>
     <style>
         body {
-            background-color:rgb(162, 16, 16) !important; /* Red background */
-            color:rgb(162, 17, 17);
+            background: linear-gradient(135deg, red, darkred); /* 180deg for top-to-bottom gradient */
+            color: white;
             font-family: Arial, sans-serif;
             min-height: 100vh;
             margin: 0;

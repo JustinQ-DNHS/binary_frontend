@@ -86,7 +86,7 @@ permalink: /binary_history/
     <div id="binary-history"></div>
 
 <h2>Add a Binary History Event!</h2>
-<p>Make sure it is appropriate and relavent to the topic, otherwise it will get deleted...</p>
+<p>Make sure it is appropriate and relevant to the topic, otherwise it will get deleted...</p>
 <p>NOTE: It does not have to be directly related to binary, it can be related to one of the default events.</p>
 <textarea placeholder="Enter the year" id="eventYear" style="height: 30px; width: 200px;"></textarea>
 <p></p>
@@ -94,105 +94,92 @@ permalink: /binary_history/
 <p></p>
 <button class="regularButton" onclick="addEvent()">Submit Event</button>
 
-<script type = "module" defer>
-    import { pythonURI, fetchOptions } from '../assets/js/api/config.js' 
+<script type="module" defer>
+    import { pythonURI, fetchOptions } from '../assets/js/api/config.js';
 
-    async function fetchAndDisplayBinaryHistory() { 
+    async function fetchAndDisplayBinaryHistory() {
         try {
-            fetch(pythonURI + "/api/binary-history", // Fetch binary history from the given URI
-            {
-                method: "GET", // Use GET method
+            const response = await fetch(`${pythonURI}/api/binary-history`, {
+                method: "GET",
                 headers: {
-                    "Content-Type": "application/json", // Set request headers
-                }
-            })
-            .then(response => { // Handle the response
-                if (response.ok) {
-                    return response.json() // Parse the JSON if the response is there
-                }
-                throw new Error("Network response failed") // Handle error if response is not there
-            })
-            .then(data => { // Process the received data
-
-                // Get the container where history will be displayed
-                const historyContainer = document.getElementById('binary-history');
-
-                // Clear any previous content
-                historyContainer.innerHTML = '';
-
-                // Display each event
-                data.forEach((event) => { // Iterate through each event in the data
-                    const eventDiv = document.createElement('div'); // Create a div for each event
-                    eventDiv.classList.add('event'); // Add a class for styling
-
-                    const title = document.createElement('h3'); // Create element for the year
-                    title.textContent = event["year"]; // Set the year as text content
-
-                    const description = document.createElement('p'); // Create element for description
-                    description.textContent = event.description; // Set description as text content
-
-                    eventDiv.appendChild(title); // Append title to the event div
-                    eventDiv.appendChild(description); // Append description to the event div
-
-                    historyContainer.appendChild(eventDiv); // Append the event div to the container
-                });
-            })
-            .catch(error => { // Handle any errors during fetch
-                console.error("There was a problem with the fetch", error);
+                    "Content-Type": "application/json",
+                },
             });
-            
-        } catch (error) { // Handle any errors during the function execution
-            console.error('Error fetching binary history:', error);
+
+            if (!response.ok) {
+                throw new Error("Network response failed");
+            }
+
+            const data = await response.json();
+
+            // Sort the data by year in ascending order
+            const sortedData = data.sort((a, b) => a.year - b.year);
+
+            const historyContainer = document.getElementById("binary-history");
+            historyContainer.innerHTML = ""; // Clear previous content
+
+            sortedData.forEach((event) => {
+                const eventDiv = document.createElement("div");
+                eventDiv.classList.add("event");
+
+                const title = document.createElement("h3");
+                title.textContent = event.year;
+
+                const description = document.createElement("p");
+                description.textContent = event.description;
+
+                eventDiv.appendChild(title);
+                eventDiv.appendChild(description);
+
+                historyContainer.appendChild(eventDiv);
+            });
+        } catch (error) {
+            console.error("Error fetching binary history:", error);
         }
     }
 
-    fetchAndDisplayBinaryHistory()
-        
-    async function addEvent() { // Define an async function to add an event
-        const year = document.getElementById('eventYear').value.trim(); // Get year value from input
-        const description = document.getElementById('eventDescription').value.trim(); 
-        // Get description value from input
+    async function addEvent() {
+        const year = document.getElementById("eventYear").value.trim();
+        const description = document.getElementById("eventDescription").value.trim();
 
         if (!year || !description) {
-            alert('Please fill in both the year and event description.'); // Alert if inputs are invalid
+            alert("Please fill in both the year and event description.");
             return;
         }
 
-        const eventData = { // Create an object with the event data
-            year: parseInt(year, 10), // Parse year as an integer
-            description: description, // Add description
+        const eventData = {
+            year: parseInt(year, 10),
+            description: description,
         };
 
         try {
-            fetch(pythonURI + "/api/binary-history", { // Send a POST request to add the event
-                method: "POST", // Use POST method
+            const response = await fetch(`${pythonURI}/api/binary-history`, {
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json", // Set request headers
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(eventData) // Send event data in the body of the request
-            })
-            .then(response => { // Handle the response
-                if (response.ok) {
-                    alert("Saved successfully!") // Check if the response is there
-                    return response.json(); // Parse the JSON if response is there
-                }
-                throw new Error("Network response failed"); // Handle error if response is not there
-            })
-            .then(data => { // Process the response data
-                document.getElementById('eventYear').value = ''; // Clear the input fields
-                document.getElementById('eventDescription').value = '';
-                fetchAndDisplayBinaryHistory(); // Refresh the displayed history
-            })
-            .catch(error => { // Handle any errors during fetch
-                console.error("There was a problem with the fetch", error);
+                body: JSON.stringify(eventData),
             });
 
-        } catch (error) { // Handle any errors during the function execution
-            console.error('Error fetching binary history:', error);
+            if (!response.ok) {
+                throw new Error("Network response failed");
+            }
+
+            await response.json();
+            alert("Saved successfully!");
+
+            document.getElementById("eventYear").value = "";
+            document.getElementById("eventDescription").value = "";
+
+            // Refresh and display the sorted history
+            fetchAndDisplayBinaryHistory();
+        } catch (error) {
+            console.error("Error saving event:", error);
         }
     }
 
-    window.addEvent = addEvent; // Assign the addEvent function to the global scope
+    fetchAndDisplayBinaryHistory();
+    window.addEvent = addEvent;
 </script>
 </body>
 </html>

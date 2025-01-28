@@ -25,6 +25,31 @@ permalink: /logicgame
         </table>
   </div>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(150deg, #acdfec, #50b2cb, #1d7d96, #124c6c); /* 180deg for top-to-bottom gradient */
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+        h2, h3 {
+            color: rgb(255, 80, 80);
+            border-bottom: 4px solid #000000;
+            font-weight: bold; /* Bold text */
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8),  /* White shadow */
+                         2px 2px 0 rgba(255, 255, 255, 0.6); /* Lighter shadow */
+            border-radius: 10px; /* Rounded effect */
+            padding: 10px; /* Space around the text */
+        }
 
 <html lang="en">
 <head>
@@ -37,9 +62,139 @@ permalink: /logicgame
             font-family: Arial, sans-serif; 
             text-align: center;
         }
+        h4 {
+            color: white;
+            font-family: Arials, sans-serif;
+            text-align: center
+        }
+        td {
+            background-color: transparent !important; /* Remove background color */
+            padding: 0 !important; /* Remove padding */
+            border: none !important; /* Remove borders from table cells */
+        }
+        .button {
+            background-color: black; /* Light red */
+            color: white !important; /* White text */
+            text-decoration: none;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            display: inline-block;
+            padding: 15px 20px;
+            border-radius: 20px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            text-align: center;
+        }
     </style>
 </head>
+
 <body>
     <h1>Welcome to the Logic Gates Lesson!</h1>
+    <h4>Input your name and score to save them!</h4>
 </body>
 </html>
+
+
+<table>
+    <tr>
+        <th><label for="name">Name</label></th>
+        <th><label for="score">Score</label></th>
+    </tr>
+    <tr>
+        <td><input type="text" name="name" id="name" required></td>
+        <td><input type="text" score="score" id="score" required></td>
+        <td><button onclick="create_User()">Create</button></td>
+    </tr>
+</table>
+
+<!-- Button to fetch and display data -->
+<button onclick="fetch_Data()">View other scores</button>
+
+<!-- Table to display fetched data -->
+<table id="dataTable" border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Fetched data will be displayed here -->
+    </tbody>
+</table>
+
+<script>
+async function create_User() {
+    const name = document.getElementById("name").value;
+    const score = document.getElementById("score").value;
+
+    if (!name || !score) {
+        alert("Please fill in both fields!");
+        return;
+    }
+
+    const data = { name, score };
+
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Data saved successfully!");
+            console.log(result); // Optional: Log the response
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to connect to the server.");
+    }
+}
+
+async function fetch_Data() {
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "GET", // Assuming the backend supports GET for retrieving all records
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const tableBody = document.querySelector("#dataTable tbody");
+
+            // Clear existing table data
+            tableBody.innerHTML = "";
+
+            // Populate table with fetched data
+            data.forEach((item) => {
+                const row = document.createElement("tr");
+                const nameCell = document.createElement("td");
+                const scoreCell = document.createElement("td");
+
+                nameCell.textContent = item.name;
+                scoreCell.textContent = item.score;
+
+                row.appendChild(nameCell);
+                row.appendChild(scoreCell);
+                tableBody.appendChild(row);
+            });
+
+            alert("Data retrieved successfully!");
+        } else {
+            const result = await response.json();
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to fetch data from the server.");
+    }
+}
+</script>

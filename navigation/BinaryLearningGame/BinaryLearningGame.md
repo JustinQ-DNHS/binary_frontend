@@ -35,9 +35,9 @@ permalink: /binaryGame
 
   <div class="game-container">
     <div class="hearts-container" id="hearts-container">
-      <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart1" alt="Heart1">
-      <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart2" alt="Heart2">
-      <img src="{{site.baseurl}}/images/heart.png" class="heart" id="heart3" alt="Heart3">
+      <img src="../images/heart.png" class="heart" id="heart1" alt="Heart1">
+      <img src="../images/heart.png" class="heart" id="heart2" alt="Heart2">
+      <img src="../images/heart.png" class="heart" id="heart3" alt="Heart3">
     </div>
     <div class="difficulty-header" data-level="play">
       <h1>Click To Play</h1>

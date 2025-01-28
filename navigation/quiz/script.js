@@ -158,7 +158,7 @@ function showResults(questions) {
         attempt: new Date().toISOString()
     };
 
-    fetch("http://localhost:5000/api/quizgrading", {
+    fetch("http://localhost:8887/api/quizgrading", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -176,7 +176,7 @@ function showResults(questions) {
 }
 
 function loadAttempts() {
-    fetch('http://localhost:5000/api/quizgrading')
+    fetch('http://localhost:8887/api/quizgrading')
         .then(response => response.json())
         .then(attempts => {
             const tableBody = document.getElementById('attemptsTableBody');
@@ -185,7 +185,8 @@ function loadAttempts() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${attempt.id}</td>
-                    <td>${attempt.score}</td>
+                    <td>${attempt.quizgrade}</td>
+                    <td>${attempt.attempt}</td>
                     <td>
                         <button onclick="deleteAttempt(${attempt.id})">Delete</button>
                         <button onclick="editAttempt(${attempt.id})">Edit</button>
@@ -198,18 +199,41 @@ function loadAttempts() {
 }
 
 function deleteAttempt(id) {
-    fetch(`http://localhost:5000/api/quizgrading/${id}`, { method: 'DELETE' })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-            loadAttempts(); // Reload attempts after deletion
-        })
-        .catch(error => console.error("Error deleting attempt:", error));
+    fetch(`http://localhost:8887/api/quizgrading/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({id})
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("attempt deleted", data.message);
+        loadAttempts(); // Reload attempts after submission
+    })
+    .catch(error => {
+        console.error("Error deleting score:", error);
+    });
 }
 
 function editAttempt(id) {
-    // Similar to delete, but for updating. You can create a form to modify data.
-}
+    fetch(`http://localhost:8887/api/quizgrading/${id}`, { method: 'PUT' })
+        const quizgrade = prompt("Enter new quiz grade:");
+        const attempt = prompt("Enter new attempt number:");
+        if (quizgrade && attempt) {
+            fetch(API_URL, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, quizgrade, attempt }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Attempt updated:", data);
+                    loadAttempts(); // Reload table
+                })
+                .catch((error) => console.error("Error updating attempt:", error));
+        }
+    }
 
 window.onload = () => {
     const selectedQuestions = randomizeQuestions(Questions, 5);

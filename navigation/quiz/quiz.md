@@ -62,17 +62,18 @@ permalink: /quiz
     </style>
 
 <div class="quiz-container">
-        <h3>Quiz Attempt History</h3>
+        <h3>Quiz Attempt History</h3> 
+    <table id="attemptsTable">
         <table id="attemptsTable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Quizgrade</th>
                     <th>Attempt</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Table rows will be populated here -->
             </tbody>
         </table>
-    </div>

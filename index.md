@@ -13,4 +13,4 @@ menu:
 
 <a href="{{site.baseurl}}/binary_history">The History of Binary...</a>
 
-<a href="{{site.baseurl}}/Converter/">Binary Converter</a>
+<a href="{{site.baseurl}}/converter/">Binary Converter</a>

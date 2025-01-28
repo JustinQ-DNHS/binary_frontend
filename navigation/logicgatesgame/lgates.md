@@ -88,7 +88,7 @@ permalink: /logicgame
 </head>
 
 <body>
-    <h1>Welcome to the Logic Gates Lesson!</h1>
+    <h1>Welcome to the Logic Gates 123 Lesson!</h1>
     <h4>Input your name and score to save them!</h4>
 </body>
 </html>
@@ -115,10 +115,11 @@ permalink: /logicgame
         <tr>
             <th>Name</th>
             <th>Score</th>
+            <th>Action</th> <!-- This column is for the Delete button -->
         </tr>
     </thead>
     <tbody>
-        <!-- Fetched data will be displayed here -->
+        <!-- Data rows dynamically added here -->
     </tbody>
 </table>
 
@@ -159,8 +160,13 @@ async function create_User() {
 
 async function fetch_Data() {
     try {
+        // Reference the table body
+        const tableBody = document.querySelector("#dataTable tbody");
+        tableBody.innerHTML = ""; // Clear any existing rows
+
+        // Fetch data from the backend
         const response = await fetch("http://127.0.0.1:8887/api/lgate", {
-            method: "GET", // Assuming the backend supports GET for retrieving all records
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -168,33 +174,100 @@ async function fetch_Data() {
 
         if (response.ok) {
             const data = await response.json();
-            const tableBody = document.querySelector("#dataTable tbody");
 
-            // Clear existing table data
-            tableBody.innerHTML = "";
-
-            // Populate table with fetched data
+            // Loop through the data to populate rows
             data.forEach((item) => {
                 const row = document.createElement("tr");
+
+                // Add Name cell
                 const nameCell = document.createElement("td");
-                const scoreCell = document.createElement("td");
-
                 nameCell.textContent = item.name;
-                scoreCell.textContent = item.score;
-
                 row.appendChild(nameCell);
+
+                // Add Score cell
+                const scoreCell = document.createElement("td");
+                scoreCell.textContent = item.score;
                 row.appendChild(scoreCell);
+
+                // Add Action cell with delete button
+                const actionCell = document.createElement("td");
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.onclick = () => delete_User(item.id); // Pass the ID to the delete function
+                actionCell.appendChild(deleteButton);
+                row.appendChild(actionCell);
+
+                // Append the row to the table body
                 tableBody.appendChild(row);
             });
-
-            alert("Data retrieved successfully!");
         } else {
-            const result = await response.json();
+            console.error("Failed to fetch data:", await response.text());
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+async function delete_User(userId) {
+    if (!confirm("Are you sure you want to delete this user?")) {
+        return; // Cancel the deletion if the user doesn't confirm
+    }
+
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: userId }), // Send the ID to delete
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("User deleted successfully!");
+            fetch_Data(); // Refresh the table after deletion
+        } else {
             alert(`Error: ${result.error}`);
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Failed to fetch data from the server.");
+        alert("Failed to delete the user.");
     }
 }
+
+
+async function update_User(userId) {
+    const newName = prompt("Enter the new name:");
+    const newScore = prompt("Enter the new score:");
+
+    if (!newName || !newScore) {
+        alert("Both fields are required!");
+        return;
+    }
+
+    const data = { id: userId, name: newName, score: newScore };
+
+    try {
+        const response = await fetch("http://127.0.0.1:8887/api/lgate", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            alert("User updated successfully!");
+            fetch_Data(); // Refresh the table to show updated data
+         } else {
+            const result = await response.json();
+            alert(`Error updating user: ${result.error}`);
+         }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to update the user.");
+    }
+}
+
 </script>

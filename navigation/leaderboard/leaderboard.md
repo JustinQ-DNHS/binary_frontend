@@ -29,24 +29,29 @@ permalink: /leaderboard/
     </label>
   </p>
   <p>
-    <label>Password:
-      <input type="password" name="password" id="password" required>
-    </label>
-    <label>Verify Password:
-      <input type="password" name="passwordV" id="passwordV" required>
+    <label>Games Played:
+      <input type="text" name="games played" id="games played" required>
     </label>
   </p>
   <p>
-    <label>Phone:
-      <input type="tel" name="phone_num" id="phone_num" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="999-999-9999">
+    <label>Average Score:
+      <input type="text" name="average score" id="average score" required>
     </label>
   </p>
   <p>
-    <label>Birthday:
-      <input type="date" name="dob" id="dob">
+     <label>Wins:
+      <input type="text" name="wins" id="wins" required>
     </label>
   </p>
   <p>
+     <label>Losses:
+      <input type="text" name="losses" id="losses" required>
+    </label>
+  </p>
+  <p>
+     <label>Highest Score:
+      <input type="text" name="highest score" id="highest score" required>
+    </label>
     <button type="submit">Create</button>
   </p>
 </form>
@@ -60,23 +65,21 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
   // Get form field values
   const name = document.getElementById('name').value;
   const uid = document.getElementById('uid').value;
-  const password = document.getElementById('password').value;
-  const passwordV = document.getElementById('passwordV').value;
-  const phone = document.getElementById('phone_num').value;
-  const dob = document.getElementById('dob').value;
+  const GamesPlayed = document.getElementById('games played').value;
+  const AverageScore = document.getElementById('average score').value;
+  const Wins = document.getElementById('wins').value;
+  const Losses = document.getElementById('losses').value;
+  const HighestScore = document.getElementById('highest score').value;
 
-  // Ensure password verification
-  if (password !== passwordV) {
-    alert("Passwords do not match.");
-    return;
-  }
 
   const userData = {
     name,
     uid,
-    password,
-    phone,
-    dob,
+    GamesPlayed,
+    AverageScore,
+    Wins,
+    Losses,
+    HighestScore,
   };
 
   try {
@@ -102,54 +105,7 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
 });
 </script>
 
-<script type="module">
-import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/config.js';
-   
-  document.getElementById('userForm').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Prevent form from submitting normally
-
-    const name = document.getElementById('name').value;
-    const uid = document.getElementById('uid').value;
-    const password = document.getElementById('password').value;
-    const passwordV = document.getElementById('passwordV').value;
-    const phone = document.getElementById('phone_num').value;
-    const dob = document.getElementById('dob').value;
-
-    // Ensure password verification
-    if (password !== passwordV) {
-      alert('Passwords do not match!');
-      return;
-    }
-
-    const userData = {
-      name,
-      uid,
-      password,
-      phone,
-      dob,
-    };
-
-    try {
-      const response = await fetch(`${pythonURI}/api/firstPlaceLeaderboard`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) throw new Error('Error creating user');
-
-      const result = await response.json();
-      alert('User created successfully!');
-      console.log('Server response:', result);
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to create user: ' + error.message);
-    }
-  });
-</script>
-
+<button id="getAllLeaderboardButton">See Table</button>
 <table>
   <thead>
   <tr>
@@ -164,13 +120,168 @@ import { pythonURI, javaURI, fetchOptions, login } from '../../assets/js/api/con
 
   </tr>
   </thead>
-  <tbody id="table">
+  <tbody id="leaderboardTable">
     <!-- javascript generated data -->
   </tbody>
 </table>
 
 
 <script>
+document.getElementById('getAllLeaderboardButton').addEventListener('click', async () => {
+    const tableBody = document.getElementById('leaderboardTable');
+    try {
+        const response = await fetch('http://127.0.0.1:8887/api/firstPlaceLeaderboard');
+        const data = await response.json();
+        tableBody.innerHTML = ''; // Clear existing rows
+        data.forEach(entry => {
+            const tr = document.createElement('tr');
+            const idCell = document.createElement('td');
+            const usernameCell = document.createElement('td');
+            const gamesPlayedCell = document.createElement('td');
+            const averageScoreCell = document.createElement('td');
+            const winsCell = document.createElement('td');
+            const lossesCell = document.createElement('td');
+            const highestScoreCell = document.createElement('td');
+            const actionCell = document.createElement('td');
+
+            idCell.innerText = entry.id;
+            usernameCell.innerText = entry.username;
+            gamesPlayedCell.innerText = entry.user_games_played;
+            averageScoreCell.innerText = entry.average_score;
+            winsCell.innerText = entry.wins;
+            lossesCell.innerText = entry.losses;
+            highestScoreCell.innerText = entry.highest_score;
+
+            // Create Update button
+            const updateBtn = document.createElement('button');
+            updateBtn.innerText = 'Update';
+            updateBtn.onclick = () => updateEntry(entry.id);
+            // Create Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerText = 'Delete';
+            deleteBtn.onclick = () => deleteEntry(entry.id);
+
+            actionCell.appendChild(updateBtn);
+            actionCell.appendChild(deleteBtn);
+
+            tr.appendChild(idCell);
+            tr.appendChild(usernameCell);
+            tr.appendChild(gamesPlayedCell);
+            tr.appendChild(averageScoreCell);
+            tr.appendChild(winsCell);
+            tr.appendChild(lossesCell);
+            tr.appendChild(highestScoreCell);
+            tr.appendChild(actionCell);
+
+            tableBody.appendChild(tr);
+        });
+    } catch (error) {
+        resultContainer.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+    }
+});
+
+document.getElementById('createLeaderboardEntryButton').addEventListener('click', async () => {
+    const username = document.getElementById('username').value;
+    const gamesPlayed = document.getElementById('gamesPlayed').value;
+    const averageScore = document.getElementById('averageScore').value;
+    const wins = document.getElementById('wins').value;
+    const losses = document.getElementById('losses').value;
+    const highestScore = document.getElementById('highestScore').value;
+    const resultContainer = document.getElementById('resultContainer');
+
+    if (!username || !gamesPlayed || !averageScore || !wins || !losses || !highestScore) {
+        resultContainer.innerHTML = `<p>Please fill in all fields.</p>`;
+        return;
+    }
+
+    try {
+        const response = await fetch('http://127.0.0.1:8887/api/firstPlaceLeaderboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                games_played: parseInt(gamesPlayed),
+                average_score: parseFloat(averageScore),
+                wins: parseInt(wins),
+                losses: parseInt(losses),
+                highest_score: parseInt(highestScore)
+            })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            resultContainer.innerHTML = `<p>Entry created: ${data.username}</p>`;
+            document.getElementById('getAllLeaderboardButton').click(); // Refresh the list
+        } else {
+            resultContainer.innerHTML = `<p>Error: ${data.error}</p>`;
+        }
+    } catch (error) {
+        resultContainer.innerHTML = `<p>Error creating entry: ${error.message}</p>`;
+    }
+});
+
+function deleteEntry(entryId) {
+    const resultContainer = document.getElementById('resultContainer');
+    fetch(`http://127.0.0.1:8887/api/firstPlaceLeaderboard`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: entryId })
+    })
+    .then(response => {
+        if (response.ok) {
+            resultContainer.innerHTML = `<p>Entry deleted successfully.</p>`;
+            document.getElementById('getAllLeaderboardButton').click(); // Refresh the list
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error);
+            });
+        }
+    })
+    .catch(error => {
+        resultContainer.innerHTML = `<p>Error deleting entry: ${error.message}</p>`;
+    });
+}
+
+function updateEntry(entryId) {
+    const newGamesPlayed = prompt("Enter new games played:");
+    const newAverageScore = prompt("Enter new average score:");
+    const newWins = prompt("Enter new wins:");
+    const newLosses = prompt("Enter new losses:");
+    const newHighestScore = prompt("Enter new highest score:");
+
+    if (newGamesPlayed && newAverageScore && newWins && newLosses && newHighestScore) {
+        fetch(`http://127.0.0.1:8887/api/firstPlaceLeaderboard`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: entryId,
+                games_played: parseInt(newGamesPlayed),
+                average_score: parseFloat(newAverageScore),
+                wins: parseInt(newWins),
+                losses: parseInt(newLosses),
+                highest_score: parseInt(newHighestScore)
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const resultContainer = document.getElementById('resultContainer');
+            if (data) {
+                resultContainer.innerHTML = `<p>Entry updated successfully: ${data.username}</p>`;
+                document.getElementById('getAllLeaderboardButton').click(); // Refresh the list
+            }
+        })
+        .catch(error => {
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = `<p>Error updating entry: ${error.message}</p>`;
+        });
+    }
+}
+
+
+
 // Static json, this can be used to test data prior to API and Model being ready
 const json = '[{"_name": "Jim", "_uid": "jim_is_the_best", "_GamesPlayed": "5", "_AverageScore": "5.0", "_Wins": "3", "_Losses": "2", "_HighestScore": "10"}, {"_name": "Tim", "_uid": "tim_10", "_GamesPlayed": "3", "_AverageScore": "3.0", "_Wins": "2", "_Losses": "1", "_HighestScore": "5"}, {"_name": "Bum", "_uid": "dum_bum", "_GamesPlayed": "7", "_AverageScore": "4.0", "_Wins": "4", "_Losses": "3", "_HighestScore": "7"}, {"_name": "Tum", "_uid": "tum123", "_GamesPlayed": "4", "_AverageScore": "4.5", "_Wins": "3", "_Losses": "1", "_HighestScore": "8"}]';
 
@@ -224,6 +335,32 @@ data.forEach(user => {
       alert("Delete: " + user._uid);
     };
     action.appendChild(deleteBtn);  
+
+    const apiBaseUrl = 'http://127.0.0.1:8887/api/firstPlaceLeaderboard';
+
+async function deleteUserFromLeaderboard(userId) {
+  try {
+    const response = await fetch('${pythonURI}/api/firstPlaceLeaderboard', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: userId })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete user: ' + response.statusText);
+    }
+
+    const result = await response.json();
+    console.log('User successfully deleted:', result);
+    alert('User successfully deleted');
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    alert('Error deleting user: ' + error.message);
+  }
+}
+
 
     // add data to row
     tr.appendChild(name);

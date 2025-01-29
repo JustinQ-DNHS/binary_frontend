@@ -11,11 +11,13 @@ comments: false
         background-color: green;
         margin-top: 20px;
     }
+
 #toggle-btn {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
 }
+
 /* Style for the sliding bar */
 #slide-bar {
     position: fixed;
@@ -29,12 +31,14 @@ comments: false
     box-sizing: border-box;
     transition: right 0.3s ease-in-out; /* Slide-in and slide-out transition */
 }
+
 .text-box {
     position: absolute;
     bottom: 0;
     margin-bottom: 15px;
 }
 </style>
+
 ### Comments that exist in the table should show by pressing the button below
 <div>
     <button id="toggle-btn">Toggle Slide Bar</button>
@@ -48,9 +52,14 @@ comments: false
         <button id="commentButton">Comment</button>
     </div>
 </div>
+
+
+
 <script type="module">
 import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js'
+
 const commentsAPI = `${pythonURI}/api/comments`
+
 async function fetchComments() {
     const commentsResponse = await fetch(commentsAPI, fetchOptions)
     if (!commentsResponse.ok) throw new Error('Failed to fetch comments');
@@ -58,15 +67,18 @@ async function fetchComments() {
     // console.log(comments)
     return comments
 }
+
 async function buildComments() {
     try {
         const comments = await fetchComments(); // Ensure comments are fetched properly
         // console.log('Successfully fetched comments:', comments);
+
         // Check if comments are empty or undefined
         if (!comments || comments.length === 0) {
             console.log('No comments available to display.');
             return;
         }
+
         comments.forEach(comment => {
             const commentContainer = document.createElement('div');
             commentContainer.classList.add("commentContainer")
@@ -89,6 +101,7 @@ async function buildComments() {
         console.error('Error building comments:', error);
     }
 }
+
 async function postComments() {
     const content = document.getElementById("comment").value;
     const commentRequest = await fetch(commentsAPI, {
@@ -100,13 +113,17 @@ async function postComments() {
     })
     document.getElementById('comment').value = '';
 }
+
 const constButton = document.getElementById("commentButton")
 constButton.addEventListener("click", postComments)
+
 buildComments()
 </script>
+
 <script>
 const toggleBtn = document.getElementById("toggle-btn");
 const slideBar = document.getElementById("slide-bar");
+
 // Function to toggle the sliding bar
 toggleBtn.addEventListener("click", function() {
     if (slideBar.style.right === "0px") {

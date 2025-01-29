@@ -100,7 +100,7 @@ const Questions = [
         },
         correctAnswer: "c"
     }
-    ];
+];
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -198,7 +198,7 @@ function deleteAttempt(id) {
 async function loadAttempts() {
     const quizGrading = await fetch(quizGradingsApi, fetchOptions)
     if (!quizGrading.ok) {console.error("Error loading attempts:", quizGrading);}
-    
+
     const quizResults = await quizGrading.json();
     // console.log(quizResults)
 
@@ -238,6 +238,24 @@ function editAttempt(id) {
     }
 }
 
+function createAttempt() {
+    const quizgrade = prompt("Enter quiz grade:");
+    const attempt = prompt("Enter attempt number:");
+    if (quizgrade && attempt) {
+        fetch(quizGradingsApi, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ quizgrade, attempt }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Attempt created:", data);
+            loadAttempts(); // Reload table
+        })
+        .catch((error) => console.error("Error creating attempt:", error));
+    }
+}
+
 window.onload = () => {
     const selectedQuestions = randomizeQuestions(Questions, 5);
     buildQuiz(selectedQuestions);
@@ -245,5 +263,9 @@ window.onload = () => {
 
     document.getElementById('submit').addEventListener('click', () => {
         showResults(selectedQuestions);
+    });
+
+    document.getElementById('createAttempt').addEventListener('click', () => {
+        createAttempt();
     });
 };

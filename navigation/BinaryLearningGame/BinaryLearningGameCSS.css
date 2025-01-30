@@ -1,0 +1,417 @@
+  /* Disable scrolling on the entire page */
+  html, body {
+    overflow: hidden;
+    height: 100%;
+  }
+
+
+:root {
+    --easy: #8bd39a;
+    --medium: #ffc85e;
+    --hard: #ff5a5a;
+    --extreme: #5a497c;
+    --background: #f9fafb;
+    --text-dark: #222222;
+    --text-light: #ffffff;
+    --border: #dcdcdc;
+    --shadow: rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
+.game-container {
+    text-align: center;
+    width: 100%;
+    /* Use full width */
+    max-width: 800px;
+    /* Increase max width further */
+    background: var(--text-light);
+    color: var(--text-dark);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow);
+    box-sizing: border-box;
+    /* Ensure padding doesn't reduce width */
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+
+.difficulty-header {
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: var(--text-light);
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+
+    /* Flexbox for centering */
+    display: flex;
+    justify-content: center;
+    /* Horizontally center */
+    align-items: center;
+    /* Vertically center */
+
+    /* Ensure container has a height */
+    min-height: 50px;
+    /* Adjust as necessary */
+}
+
+
+
+.difficulty-header[data-level="play"] {
+    background-color: rgb(0, 145, 194);
+}
+
+.difficulty-header[data-level="easy"] {
+    background-color: var(--easy);
+}
+
+.difficulty-header[data-level="medium"] {
+    background-color: var(--medium);
+}
+
+.difficulty-header[data-level="hard"] {
+    background-color: var(--hard);
+}
+
+.difficulty-header[data-level="extreme"] {
+    background-color: var(--extreme);
+}
+
+.difficulty-header {
+    cursor: pointer;
+    /* Make the header look clickable */
+    text-align: center;
+}
+
+.question {
+    font-size: 1.6rem;
+    margin: 20px 0;
+    line-height: 1.4;
+}
+
+.input-container {
+    margin: 20px 0;
+}
+
+input[type="text"] {
+    padding: 12px;
+    width: 100%;
+    font-size: 1rem;
+    margin: 10px 0;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--shadow);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--medium);
+    color: var(--text-light);
+    transition: background-color 0.2s ease, transform 0.1s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--hard);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.message {
+    font-size: 1.2rem;
+    color: red;
+    font-weight: bold;
+}
+
+.scoreboard {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-weight: bold;
+}
+
+.popup-content {
+    background: var(--text-light);
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 6px 20px var(--shadow);
+    color: black;
+    /* Ensure the text in all paragraphs and elements is black */
+}
+
+.popup h2,
+.popup p,
+.popup ul,
+.popup li {
+    color: black;
+    /* Ensure all text elements inside the popup are black */
+}
+
+.popup ul {
+    list-style-type: none;
+    /* Optional: remove bullets from the list */
+    padding: 0;
+    /* Optional: remove padding */
+}
+
+.popup button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.popup button:hover {
+    background-color: #0056b3;
+}
+
+.popup button:active {
+    background-color: #003d80;
+    transform: scale(0.95);
+}
+
+.popup.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    color: black !important;
+    /* Ensure text in the popup is black */
+}
+
+.level-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--text-light);
+    background-color: var(--extreme);
+    transition: transform 0.2s ease, background-color 0.3s;
+}
+
+.level-button:hover {
+    background-color: var(--hard);
+}
+
+.hearts-container {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.heart {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    height: auto;
+}
+
+@keyframes jiggle {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.jiggle {
+    animation: jiggle 0.5s ease-in-out;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        width: 95%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+}
+
+
+.rules-button {
+    display: block;
+    margin: 10px auto;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff !important;
+    color: black !important;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.rules-button:hover {
+    background-color: lightgrey !important;
+    transform: scale(1.1);
+}
+
+.rules-button:active {
+    background-color: grey !important;
+    transform: scale(0.95);
+}
+
+/* Additional styles for rules popup */
+#rules-popup .popup-content {
+    width: 80%;
+    max-width: 600px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+#rules-popup ul {
+    list-style-type: disc;
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+#rules-popup #close-rules-btn {
+    margin-top: 20px;
+}
+
+.popup .table-container {
+    max-height: 500px; /* Adjust the height as needed */
+    overflow-y: auto;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+
+/* Styles for the tables in the scores popups */
+.popup table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup table th,
+.popup table td {
+    padding: 12px 15px;
+    border: none;
+    color: black;
+}
+
+.popup table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.popup table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.popup table tr:hover {
+    background-color: #ddd;
+}
+
+.popup table td {
+    background-color: white;
+    color: black;
+}
+
+.popup table td .button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    background-color: #006400 !important; /* Dark green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.popup table td .button:hover {
+    background-color: #004d00 !important; /* Slightly darker green */
+    transform: scale(1.05); /* Expand slightly */
+}
+
+.popup table td .button:active {
+    background-color: #003300 !important; /* Even darker green */
+    transform: scale(0.95); /* Shrink slightly */
+}

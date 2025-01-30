@@ -200,23 +200,33 @@ async function loadAttempts() {
     if (!quizGrading.ok) {console.error("Error loading attempts:", quizGrading);}
 
     const quizResults = await quizGrading.json();
-    // console.log(quizResults)
+    console.log(quizResults)
 
     // Finds table body and clears existing rows, then replaces it with data
     const tableBody = document.getElementById('attemptsTable');
     tableBody.innerHTML = ''; // Clear existing rows
     quizResults.forEach(attempt => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${attempt.id}</td>
-            <td>${attempt.quizgrade}</td>
-            <td>${attempt.attempt}</td>
-            <td>
-                <button onclick="deleteAttempt(${attempt.id})">Delete</button>
-                <button onclick="editAttempt(${attempt.id})">Edit</button>
-            </td>
-        `;
-        tableBody.appendChild(row);
+        const idCell = document.createElement('td')
+        idCell.innerHTML = attempt.id;
+        const quizgradeCell = document.createElement('td')
+        quizgradeCell.innerHTML = attempt.quizgrade;
+        const attemptCell = document.createElement('td')
+        attemptCell.innerHTML = attempt.attempt;
+        const actionCell = document.createElement('td'); 
+        const deleteButton = document.createElement('button')
+        deleteButton.innerHTML = 'Delete';
+        deleteButton.addEventListener('click', () => deleteAttempt(attempt.id));
+        const editButton = document.createElement('button')
+        editButton.innerHTML = 'Edit';
+        editButton.addEventListener('click', () => editAttempt(attempt.id));
+        row.append(idCell);
+        row.append(quizgradeCell);
+        row.append(attemptCell);
+        row.append(actionCell);
+        actionCell.append(deleteButton);
+        actionCell.append(editButton);
+        tableBody.append(row);
     });
 }
 

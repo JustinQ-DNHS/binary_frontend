@@ -1,5 +1,4 @@
 import {pythonURI, fetchOptions} from '../../assets/js/api/config.js';
-
 const quizGradingsApi = `${pythonURI}/api/quizgrading`;
 
 const Questions = [

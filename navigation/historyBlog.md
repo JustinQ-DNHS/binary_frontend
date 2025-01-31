@@ -16,315 +16,186 @@ permalink: /binary_history/blog
 - Allow users to learn about an essential part of history
 - Let users share their own knowledge about events related to the history of binary
 
-## Input and Output
+#### Input and Output:
 
-#### Input:
-- One example of an input feature in my code is me clickling on the "Submit Event" button and the site sending my event year and description to my database.
-
+``` javascript
+    <textarea placeholder="Enter the year" id="eventYear" style="height: 30px; width: 200px;"></textarea>
+    <p></p>
+    <textarea placeholder="Enter the event description here..." id="eventDescription"></textarea>
+    <p></p>
+    <button class="regularButton" onclick="addEvent()">Submit Event</button>
 ```
-button class="regularButton" onclick="addEvent()"> Submit Event /button> //Runs the addEvent function when clicked
 
-async function addEvent() { // Define an async function to add an event
-        const year = document.getElementById('eventYear').value.trim(); // Get year value from input
-        const description = document.getElementById('eventDescription').value.trim(); 
-        // Get description value from input
+- This is where the user enters an event related to the history of binary
+- They can enter the year and description of the event, which aligns with the variables I'm saving
+- Afterwards, click on the button to submit event, which triggers the addEvent() function to run
 
+Here is the addEvent() function:
+
+``` javascript
+    async function addEvent() { 
+        const year = document.getElementById('eventYear').value.trim();
+        const description = document.getElementById('eventDescription').value.trim();
         if (!year || !description) {
-            alert('Please fill in both the year and event description.'); // Alert if inputs are invalid
+            alert('Please fill in both the year and event description.');
             return;
         }
+        const eventData = {
+            year: parseInt(year, 10),
+            description: description,
+        };
+        try {
+            const response = await fetch(pythonURI + "/api/binary-history", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(eventData)
+            });
+        }
+    }
+    if (!response.ok) {
+                throw new Error("Failed to add event");
+            }
+    alert("Event added successfully!");
+    document.getElementById('eventYear').value = '';
+    document.getElementById('eventDescription').value = '';
+fetchAndDisplayBinaryHistory(); 
+```
 
-        const eventData = { // Create an object with the event data
-            year: parseInt(year, 10), // Parses year as an integer
-            description: description, // Add description
+- The function gets the elements "year" and "description" through the input of the user, and raises an error if either of the elements are missing
+- The data is saved into a dictionary where the year is parsed as an integer and the description is saves as a description
+- The user inputted data is sent to my binary history api using the post method, and before it is sent it is converted from JSON into string format so it is readable by the API
+- If the response is not 'ok' then it will tell the user that it failed to add the event, or else the event is added successfully and the eventYear and eventDescription textboxes are cleared
+
+Here is the binary history api's GET and POST method:
+
+``` python
+class BinaryHistoryAPI:
+    class _CRUD(Resource):
+        def get(self):
+            try:
+                entries = BinaryHistory.query.all()
+                results = [entry.read() for entry in entries]
+                return jsonify(results)
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
+        def post(self):
+            data = request.get_json()
+            post = BinaryHistory(data['year'], data['description'])
+            post.create()
+            return jsonify(post.read())
+```
+
+- Within the binary history API class is the CRUD method class that has the get and post self functions
+    - The self varibale is used to gert access to the CRUD class itself so that the data requested by the user can be handled properly
+- For the get method, python uses the query method from SQLAlchemy to retrieve the entries in the binary history table, and the list of entries are made into a list of dictionaries before being converted to JSON format so they can be interpreted by the frontend and changed into user-readale data
+- The post method starts with obtaining the request data sent by the user (using the RESTful client API to retrieve the data) and turns the data into a new entry in the database
+    - post.create() is used to make the post and return method is used to output the new entry in JSON format
+
+As an output:
+- A new entry (post) is created in the binary_history database, and in case of using postman, the new post is sent back to Postman and displayed in JSON format
+
+#### List Requests:
+
+``` javascript
+const eventData = {
+            year: parseInt(year, 10),
+            description: description,
         };
 
         try {
-            fetch(pythonURI + "/api/binary-history", { // Send a POST request to add the event
-                method: "POST", // Use POST method
+            const response = await fetch(pythonURI + "/api/binary-history", {
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json", // Set request headers
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(eventData) // Send event data in the body of the request
-            })
-            .then(response => { // Handle the response
-                if (response.ok) {
-                    alert("Saved successfully!"); // Check if the response is there
-                    return response.json(); // Parse the JSON if response is there
-                }
-                throw new Error("Network response failed"); // Handle error if response is not there
-            })
-            .then(data => { // Process the response data
-                document.getElementById('eventYear').value = ''; // Clear the input fields
-                document.getElementById('eventDescription').value = '';
-                fetchAndDisplayBinaryHistory(); // Refresh the displayed history
-            })
-            .catch(error => { // Handle any errors during fetch
-                console.error("There was a problem with the fetch", error);
+                body: JSON.stringify(eventData)
             });
-
-        } catch (error) { // Handle any errors during the function execution
-            console.error('Error fetching binary history:', error);
         }
-    }
 ```
 
-- Comments about functionality are included within the code
+- The user inputted year and description are converted into a dictionary in JSON format, eventData, so that it can be sent to the backend through RESTful client API
+- The eventData dictionary is converted to string before being sent to /api/binary-history through POST method
 
-#### Output
-
-- One example of my output is my get request to retrieve data stored in the database:
-    ```
-    async function fetchAndDisplayBinaryHistory() { 
-        try {
-            fetch(pythonURI + "/api/binary-history", // Fetch binary history from the given URI
-            {
-                method: "GET", // Use GET method
-                headers: {
-                    "Content-Type": "application/json", // Set request headers
-                }
-            })
-            .then(response => { // Handle the response
-                if (response.ok) {
-                    return response.json(); // Parse the JSON if the response is there
-                }
-                throw new Error("Network response failed"); // Handle error if response is not there
-            })
-            .then(data => { // Process the received data
-
-                // Sort events from oldest year to newest year
-                data.sort((a, b) => a.year - b.year);
-
-                // Get the container where history will be displayed
-                const historyContainer = document.getElementById('binary-history');
-
-                // Clear any previous content
-                historyContainer.innerHTML = '';
-
-                // Display each event
-                data.forEach((event) => { // Iterate through each event in the data
-                    const eventDiv = document.createElement('div'); // Create a div for each event
-                    eventDiv.classList.add('event'); // Add a class for styling
-
-                    const title = document.createElement('h3'); // Create element for the year
-                    title.textContent = event["year"]; // Set the year as text content
-
-                    const description = document.createElement('p'); // Create element for description
-                    description.textContent = event.description; // Set description as text content
-
-                    eventDiv.appendChild(title); // Append title to the event div
-                    eventDiv.appendChild(description); // Append description to the event div
-
-                    historyContainer.appendChild(eventDiv); // Append the event div to the container
-                });
-            })
-            .catch(error => { // Handle any errors during fetch
-                console.error("There was a problem with the fetch", error);
-            });
-            
-        } catch (error) { // Handle any errors during the function execution
-            console.error('Error fetching binary history:', error);
-        }
-    }
-
-    fetchAndDisplayBinaryHistory(); //Calls the function and runs it without any preset parameters
-```
+``` python
+class _CRUD(Resource):
+        def get(self):
+            try:
+                entries = BinaryHistory.query.all()
+                results = [entry.read() for entry in entries]
+                return jsonify(results)
 ```
 
-- When I post a new event into postman, the event shows up inside of the database, categorized by year and description
-- When I run db_init it initializes the database, when I run db_restore it restores the data previously in the databse, and when I run db_backup it backs up the data to the backup databse
+- The database "BinaryHistory" is queried and returns a Python list of entries
+    - The query method is from SQLAlchemy and retrieves the entries in the database
+- The Python list undergoes "read" method from CRUD and is converted to JSON format so it becomes a dictionary
 
-## List Requests
+#### Algorithmic Code Requests
 
-- I use lists in my table that iterates through and shows all of the events from the database:
-    
-```
-    data.sort((a, b) => a.year - b.year); // Sort events by year in ascending order
-
-data.forEach((event) => { // Iterate through the list of events
-    const eventDiv = document.createElement('div'); // Create a div for each event
-    eventDiv.classList.add('event'); // Add a class for styling
-
-    const title = document.createElement('h3'); // Display year
-    title.textContent = event["year"];
-
-    const description = document.createElement('p'); // Display description
-    description.textContent = event.description;
-
-    eventDiv.appendChild(title); 
-    eventDiv.appendChild(description);
-    historyContainer.appendChild(eventDiv); 
-});
-```
-
-#### Dictionaries and database iteration
-
-- Each object is represented as a python dictionary (JSON Format) with the key-value pairs "year" and "description"
-- It is imported from a third party library which is SQAlchemy, used to interact with the database from binary_backend
-
-```
-const eventData = { 
-    year: parseInt(year, 10), // Key-value pair for year
-    description: description, // Key-value pair for description
-};
-```
-
-#### Methods in class
-
- - I have a binary history class in my backend model to run CRUD operations:
-
-```
-class BinaryHistory(db.Model):
-def create(self):
-        """
-        Adds the event to the database and commits the transaction.
-        """
+``` python
+class _CRUD(Resource):
+    def get(self):
         try:
-            db.session.add(self)
-            db.session.commit()
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            raise e
+            entries = BinaryHistory.query.all()
+            results = [entry.read() for entry in entries]
+            return jsonify(results)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-    def read(self):
-        """
-        Returns the event details as a dictionary.
-        """
-        return {
-            "id": self.id,
-            "year": self.year,
-            "description": self.description,
-        }
+    def post(self):
+        data = request.get_json()
+        post = BinaryHistory(data['year'], data['description'])
+        post.create()
+        return jsonify(post.read())
 
-    def update(self, data):
-        """
-        Updates the event with new data and commits the changes.
-        """
-        for key, value in data.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-        try:
-            db.session.commit()
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            raise e
+    def put(self):
+        data = request.get_json()
+        post = BinaryHistory.query.get(data['id'])
+        post.year = data['year']
+        post.description = data['description']
+        post.update()
+        return jsonify(post.read())
 
     def delete(self):
-        """
-        Deletes the event from the database and commits the transaction.
-        """
-        try:
-            db.session.delete(self)
-            db.session.commit()
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            raise e
+        data = request.get_json()
+        post = BinaryHistory.query.get(data['id'])
+        post.delete()
+        return jsonify({"message": "Post deleted"})
 ```
 
-## Algorithmic Code Request
+- The API class with Resource as a parameter uses flask_restful.Resource to obtain the user-inputted data sent through RESTful client API in a string format
+- The _CRUD class defined the HTTP methods for the API to handle data from the database and user, including get (reads a post), post (creates a new post), update (updates a post), and delete (deletes a post)
+- All of the methods return a JSON formatted version of the result; for get it is reading all of the data in the table, for post and update it is reading the new post to the client, and for delete saying "Post deleted"
+- Sequencing: For each of the method, the different lines of code go in sequential order
+- Selection: For the get method, the output is a selection between raising an error or returning the response
+- Iteration: For the get method, the "results" is a list of dictionaries, where it reads each entry retrieved from the database until there are no more entries left to read
 
-#### Code blocks to handle requests
+#### Call to Algorithm Request:
 
-- My addEvent() function is a good example of a code block that can handle requests:
-
-```
-async function addEvent() { // Define an async function to add an event
-        const year = document.getElementById('eventYear').value.trim(); // Get year value from input
-        const description = document.getElementById('eventDescription').value.trim(); 
-        // Get description value from input
-
-        if (!year || !description) {
-            alert('Please fill in both the year and event description.'); // Alert if inputs are invalid
-            return;
-        }
-
-        const eventData = { // Create an object with the event data
-            year: parseInt(year, 10), // Parse year as an integer
-            description: description, // Add description
-        };
-
+``` javascript
+async function fetchAndDisplayBinaryHistory() { 
         try {
-            fetch(pythonURI + "/api/binary-history", { // Send a POST request to add the event
-                method: "POST", // Use POST method
+            const response = await fetch(pythonURI + "/api/binary-history", {
+                method: "GET",
                 headers: {
-                    "Content-Type": "application/json", // Set request headers
-                },
-                body: JSON.stringify(eventData) // Send event data in the body of the request
-            })
-            .then(response => { // Handle the response
-                if (response.ok) {
-                    alert("Saved successfully!"); // Check if the response is there
-                    return response.json(); // Parse the JSON if response is there
+                    "Content-Type": "application/json",
                 }
-                throw new Error("Network response failed"); // Handle error if response is not there
-            })
-            .then(data => { // Process the response data
-                document.getElementById('eventYear').value = ''; // Clear the input fields
-                document.getElementById('eventDescription').value = '';
-                fetchAndDisplayBinaryHistory(); // Refresh the displayed history
-            })
-            .catch(error => { // Handle any errors during fetch
-                console.error("There was a problem with the fetch", error);
             });
-
-        } catch (error) { // Handle any errors during the function execution
-            console.error('Error fetching binary history:', error);
+            if (!response.ok) {
+                throw new Error("Network response failed");
+            }
+            const data = await response.json();
+            data.sort((a, b) => a.year - b.year);
         }
-    }
+}
 ```
 
-#### Demonstration of sequencing, selection, and iteration
+- In the fetch function, the response is a fetch to the binary-history api endpoint in backend, using the GET method defined in the CRUD class
+- A response from the fetch is waited for (await), and is the response is not ok the function seonds an error that the Network response failed
+    - Having invalid data or using the wrong method causes this to happen, and thus the rest of the function is unable to run due to the data not being able to be handled properly
+- Normally, the output (response) is converted into JSON format before being saved in a data variable, and the data is then manipulated to display certain results (as wanted) to the user on the site
 
-- A good example of code that both sequencing and selection is:
-
-    ```
-    data.forEach((event) => { // Iterate through each event in the data
-                    const eventDiv = document.createElement('div'); // Create a div for each event
-                    eventDiv.classList.add('event'); // Add a class for styling
-
-                    const title = document.createElement('h3'); // Create element for the year
-                    title.textContent = event["year"]; // Set the year as text content
-
-                    const description = document.createElement('p'); // Create element for description
-                    description.textContent = event.description; // Set description as text content
-
-                    eventDiv.appendChild(title); // Append title to the event div
-                    eventDiv.appendChild(description); // Append description to the event div
-
-                    historyContainer.appendChild(eventDiv); // Append the event div to the container
-                });
-    ```
-- Comments explain how the code iterates through each of the events in the data table
-
-    ```
-    data.sort((a, b) => a.year - b.year);
-    ```
-- This code sequences the data extracted from the databse so it is in ascending order by year
-
-#### Parameters and return type
-
-- The fetchAndDisplayBinaryHistory() function will take 2 different parameters
-    - The year of the event, which acts as the key
-    - The description of the event, which is the value pair for the year
-
-- The function will return all of the events in their year-description pair in sequential order as evidence that the process has run smoothly without errors
-
-## Call to Algorithm Request
-- A good example of this is my get method in fetchAndDisplayBinaryHistory():
-    ```
-    fetch(pythonURI + "/api/binary-history", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-})
-.then(response => {
-    if (response.ok) return response.json();
-    throw new Error("Network response failed");
-});
-    ```
-- Uses the GET method on the "/api/binary-history" resource in binary_backend to retrieve the events saved in the database
-- If there is a response it will allow the response to be converted into JSON format and be used in the frontend code
-- If there is not a response it will raise an error that is logged onto the console and shown to the user
-
-_________________________________________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________
 
 <button><a href="{{site.baseurl}}/binary_history">Return to Binary History</a></button>
